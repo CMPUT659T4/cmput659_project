@@ -1,0 +1,32 @@
+MG - Feb 2, 2016 -
+
+Reminder Notes
+Available preprocessed images at different resolutions + file size
+(For future records folder names are matched with the corresponding set of image file names. The following image files are in each subjects
+folder in /local/data3/FBIRN/...)
+
+MAIN FINAL IMAGES TO BE USED: 
+1- For every subject, the main preprocessed image file name is:
+ 4D_Preproc_Norm_trilin_lowresRef.nii.gz
+
+2- The downsampled at 4x4x3 to 13_16_12 images file name is:
+ 4D_Preproc_Norm_trilin_lowresRef_4.nii.gz
+(Possible to use all pair-wise correlations with this one. ~731 supervoxels.)
+
+-rw-rw-r-- 1 mina mina 255M Mar 19  2015
+4D_Preproc_Norm_sinc.nii.gz
+-rw-rw-r-- 1 mina mina  25M May 12  2015
+4D_Preproc_Norm_trilin_lowresRef.nii.gz
+-rw-rw-r-- 1 mina mina 7.0M Aug 24 20:39
+4D_Preproc_Norm_trilin_lowresRef_2.nii.gz
+-rw-rw-r-- 1 mina mina 1.3M Oct  1 23:44
+4D_Preproc_Norm_trilin_lowresRef_3.nii.gz
+-rw-rw-r-- 1 mina mina 750K Oct  2 02:54
+4D_Preproc_Norm_trilin_lowresRef_4.nii.gz
+-rw-rw-r-- 1 mina mina  15M Dec  9 19:29
+4D_Preproc_Norm_trilin_lowresRef_avgrgs.nii.gz
+
+Sinc is not used, too high res! 
+_2 and _3 were used for tlms-DLPF (or MFG SFG regions) all pair-wise correlations.Not used elsewhere/any more.
+
+
