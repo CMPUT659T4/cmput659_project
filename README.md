@@ -3,8 +3,9 @@ Diagnosing Schizophrenia with fMRI and PGMs
 
 Authors:
 Neil Borle
-<<<<<<< HEAD
 Farhad Haqiqat
+<<<<<<< HEAD
+
 =======
 Mario Silva
 >>>>>>> origin/master
