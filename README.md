@@ -5,7 +5,9 @@ Authors:
 Neil Borle
 Farhad Haqiqat
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
-Mario Silva
+=======
 >>>>>>> origin/master
+Mario Silva
