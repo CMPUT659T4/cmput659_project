@@ -1,4 +1,4 @@
-mode = 'degrees'; %'regions';
+mode = 'regions'; %'regions';
 
 if strcmp(mode, 'regions')
     M = csvread('mmc2.csv');
