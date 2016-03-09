@@ -23,9 +23,12 @@ for j=1:n_labels
     prior(j)=size(find(y==labels(j)),1); 
 end
 prior = prior/n;
-        
+       size(X) ;
+       size(lambdas);
+       lambdas=lambdas*ones(1,n_labels);
 for j=1:n_labels
     ind = find(y==labels(j));
+    ind;
     conditional(j) = learn_mrf(X(ind,:),method, lambdas(j));
 end
 
