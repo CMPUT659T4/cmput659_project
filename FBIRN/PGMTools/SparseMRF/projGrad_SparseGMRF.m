@@ -121,12 +121,14 @@ while(gaprel>=tolrel)&(i<=maxIter)
     if (i-1)/10==floor((i-1)/10)
         fprintf('iter %5d, t=%5.3e, gaprel=%8.4e,\n',i,t,gaprel);
     end
-    drawnow;
+    %drawnow;
     i=i+1;
 end
 if i==maxIter
+    drawnow;
     statusF='Maximum iteration reached';
 else
+    drawnow;
     statusF='solved';
     fprintf('Solved! iter %d, t=%5.3e, gaprel=%8.4e,\n',i,t,gaprel);
 end

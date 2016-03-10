@@ -14,9 +14,9 @@ EmpCov = (1/n)*data'*data; % empirical covariance matrix
 tic;
 
 %%%MArio ==> Added these codes (not clear what these does )
-rho=0.6;             % Controls sparsity
-prec=1e-1;
-maxiter=50;
+rho=0.7;             % Controls sparsity
+prec=1e-2;
+maxiter=1000;
 switch lower(method)
     case 'projected_gradient'
         % Yuanqing's implementation of projected gradient

@@ -32,12 +32,12 @@ addpath('FBIRN/PGMTools/MRFC','-end');
 %addpath('FBIRN/PGMTools/SparseMRF','-end')
 load('FBIRN/finaldata_AO/features\fBIRN_AudOdd_allsites_0003_log_degrees_Tlms_MFG_SFG_.mat');
 trainLimit=304;
-X_train=data(1:trainLimit,1:end-1);
+X_train=data(1:trainLimit,1:end/2);
 Y_train=data(1:trainLimit,end);
-X_test=data(trainLimit+1:end,1:end-1);
+X_test=data(trainLimit+1:end,1:end/2);
 Y_test=data(trainLimit+1:end,end);
 lambdas=[0 0.01 0.1 0.5 1 5];
-lambdas=[0 0.1];% 0.5 1 5];
+lambdas=[0.1];% 0.5 1 5];
 method='projected_gradient';
 
 
