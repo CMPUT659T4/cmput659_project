@@ -1,0 +1,15 @@
+%n density b b_old_avg lambda glcalls_avg lse TP FP 
+%n density b b_old lambda lse TP FP 
+150 0.0614 1 0.3450380 2702.48 26 1.007820 0 0
+%n density b b_old lambda lse TP FP 
+150 0.0614 10 0.3833256 377.8247 14 1.002019 0 0
+%n density b b_old lambda lse TP FP 
+150 0.0614 100 0.45191 64.88863 7 1.029341 0 0
+%n density b b_old lambda lse TP FP 
+150 0.0614 200 0.3462105 37.53968 6 1.00645 0 0
+%n density b b_old lambda lse TP FP 
+150 0.0614 1000 0.376624 8.794199 6 1.057465 0.307393 0.143192
+%n density b b_old lambda lse TP FP 
+150 0.0614 2000 0.3430408 4.359529 6 1.125309 0.5875486 0.4419348
+%n density b b_old lambda lse TP FP 
+150 0.0614 10000 0.3616474 0.9133915 6 1.470180 0.8832685 0.8231408

@@ -1,0 +1,430 @@
+\documentclass{beamer}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{verbatim}
+
+\usetheme{Darmstadt}
+\usefonttheme[onlylarge]{structurebold}
+\setbeamerfont*{frametitle}{size=\normalsize,series=\bfseries}
+\setbeamertemplate{navigation symbols}{}
+\pagenumbering{arabic}
+
+\title{"Recovering  the Structure of Sparse Markov Networks from High-Dimensional Data" }
+\author{Narges Bani Asadi   \\
+\hskip25pt Irina Rish \hskip82pt Dimitri Kanevsky\\
+\hskip20pt Katya Scheinberg \hskip80pt Bhuvana Ramabhadran}
+\institute {IBM TJ Watson Research Center}
+\date{\today}
+
+\begin{document}
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+  \begin{itemize}
+   \item Guassian Markov Network
+   \vskip10pt
+    \pause
+   \item Learning Sparse Gaussian Networks
+    \pause
+    \vskip10pt
+   \item Learning the Sparsity of the Sparse Gaussian Networks
+   \pause
+   \vskip10pt
+   \item Results
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Markov Networks}
+%\begin{itemize}
+\begin{figure}[hp]
+\centering
+\includegraphics[width = 110pt,height = 80 pt]{net.png}
+\label{ORACLE_IMAGE_1.png}
+\end{figure}
+$X = \{X_1,...,X_p\}$ \\
+\vskip10pt
+$G=(V,E)$\\
+\vskip10pt
+$P(\boldsymbol{X}) = \frac{1}{\boldsymbol{Z}} \prod_{k}\Phi_{k}(\boldsymbol{X}) $\\
+\vskip10pt
+Lack of edge : conditional independence
+% talk about markov blanket and markov property
+% put a picture of a markov network
+%say what do we mean by a clique
+
+
+%\end{itemize}
+\end{frame}
+
+
+
+
+\begin{frame}{Gaussian Markov Networks}
+\begin{itemize}
+\item $P(\textbf{x}) = (2\pi)^{-\frac{p}{2}} \det(\Sigma)^{-\frac{1}{2}}  \exp \left( -\frac{1}{2} (\boldsymbol{x}- \boldsymbol{\mu} )^T \Sigma^{-1} (\boldsymbol{x} - \boldsymbol{\mu} )\right) $\\
+\vskip10pt
+\item Zeros in $\Sigma$: marginal independence
+\vskip10pt
+\item Zeros in $\Sigma^{-1}$ : conditional independence : Sparsity
+\vskip10pt
+\item Sparsity  \begin{itemize} \item Interpretation\\ \item Prediction \end{itemize}
+% talk about markov blanket and markov property
+% put a picture of a markov network
+%say what do we mean by a clique
+
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Maximum Likelihood Estimation of the Inverse Covariance}
+\begin{itemize}
+\item $\Sigma^{-1}=\underset{C} \arg\max \left( { \log\det C - Tr(CS) } \right ) $\\
+$\Sigma^{-1}=S^{-1}$
+
+\begin{figure}[hp]
+\centering
+\includegraphics[width = 160pt,height = 70 pt]{sparse.png}
+\end{figure}
+\begin{tiny} [borrowed from A. d’Aspremont presentation] \end{tiny}
+
+\item How do we make $\Sigma^{-1}$ Sparse : Penalize the likelihood
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Penalized Likelihood Estimation}
+
+$\Sigma^{-1}=\underset{C} \arg\max \left( { \log\det C - Tr(CS) -\lambda Card(C)} \right )$\\
+
+$Card(C)=$number of nonzero elements of C
+\vskip10pt
+\begin{itemize}
+\item $\lambda=2/(N+1)$ for AIC
+\vskip10pt
+\item $\lambda=\log(N+1)/(N+1)$ for BIC
+\vskip10pt
+\item This is a NP-Hard combinatorial problem
+
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{L-1 Regularized Likelihood Estimation}
+\begin{itemize}
+\item $\Sigma^{-1} =\underset{C} \arg\max \log(P(X))$ \\
+Subject to $ ||C||_{1} \leq s $
+\vskip20pt
+\item This is qual to solve \\
+\vskip20pt
+$\Sigma^{-1}=\underset{C} \arg\max logdet C - tr (SC) - \lambda ||C||_{1} $\\
+\item Convex problem with unique solution for a given $\lambda$
+%%optimized with respect to $\boldsymbol{\mu}$
+\end{itemize}
+
+\end{frame}
+
+
+
+\begin{frame}{The Role and Choice of the Sparsity parameter: $\lambda$}
+\begin{itemize}
+\item $\lambda$ decides the amount of sparsity
+\vskip20pt
+\item What is the criteria to pick the best $\lambda$?
+\begin{itemize}
+ \item Model structure recovery\\
+ \item Prediction power on test data\\
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Learning the Sparsity Parameter $\lambda$}
+\begin{itemize}
+\item Cross Validation on Training Data\\
+\begin{itemize}
+\item To maximize prediction power, ignoring the structure \\
+\item Over fit to Model, almost No Sparsity! \\
+\end{itemize}
+
+\vskip10pt
+
+\item Method suggested by Banerjee et. al:\\
+\vskip7pt
+\hskip30pt
+$\lambda(\alpha) = (\max \sigma_i \sigma_j) \frac{t_{n-2}(\alpha/p^2)}{\sqrt{N-2 + t_{n-2}^2(\alpha/p^2) } } $
+\vskip7pt
+
+\begin{itemize}
+\item Constructs back sparse $\Sigma$ not the $\Sigma^{-1}$
+\item Learns a Too Sparse model!
+\item Weak prediction
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Being Bayesian about $\lambda$}
+\begin{itemize}
+\item $\lambda$ as a random variable: learn its distribution
+\item Maximize the joint log likelihood
+\vskip8pt
+${ \Sigma^{-1},\widehat{\lambda} }= \underset{C,\lambda} \arg\max \log(P(X)) $\\
+\vskip8pt
+$P(X)=P(X|C)P(C|\lambda)P(\lambda)$\\
+\vskip8pt
+$\log P(X)=\log\det C-Tr(CS)-\lambda||C||_1 + P^2\log(\lambda/2)+\log P(\lambda)$\\
+\vskip8pt
+\item The choice of P($\lambda$)\\
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{The Bayesian $\lambda$}
+\hskip130pt ROC Curve
+\vskip5pt
+\begin{figure}[hp]
+\centering
+\includegraphics[width = 220pt,height = 135 pt]{roc.png}
+\vskip5pt
+\end{figure}
+\end{frame}
+
+
+
+
+\begin{frame}{ The Optimization Method}
+\begin{itemize}
+\item Alternating minimization with line search
+\vskip10pt
+\begin{itemize}
+\item Estimate $\Sigma^{-1}$ for an initial $\lambda$\\
+\vskip10pt
+\item Update $\lambda$ in the direction of the gradient: $P^2/\lambda - ||C||_1$
+\vskip10pt
+\item Iterate until convergence
+\vskip10pt
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+
+
+\begin{frame}{The Joint likelihood with Flat prior on $\lambda$}
+\begin{itemize}
+\item When $N \gg P $ we get a global maximum
+\begin{figure}[hp]
+\centering
+\includegraphics[width = 200pt,height = 100 pt]{obj.png}
+\vskip5pt
+\end{figure}
+
+\item But unbounded for $N \leq P $
+\begin{itemize}
+\item Add  regularization to the objective function
+\item Assume a non-flat prior for $\lambda$
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+
+
+\begin{frame}{ The Regularized likelihood with Flat Prior on $\lambda$}
+\begin{itemize}
+\vskip10pt
+\item Do not penalize the diagonal elements in the estimation of the $\Sigma^{-1}$
+\vskip10pt
+\item Update $\lambda$ as before
+\end{itemize}
+\vskip10pt
+$\log P(X)=\log\det C-Tr(CS)-\lambda||C||_1 + P^2\log(\lambda/2)+\log P(\lambda)$\\
+\end{frame}
+
+
+
+\begin{frame}{ The Joint likelihood with Exponential Prior on $\lambda$}
+$ P(\lambda)= -b \exp(-b \lambda )$ \hskip10pt $E(\lambda)=1/b$
+\begin{itemize}
+\item How to learn b from data?
+\item b indicates density of the empirical inverse covariance
+\item approximate b with $||S^{-1}||_1/P^{2}$ multiply it by $P/N$
+\begin{figure}[hp]
+\centering
+\includegraphics[width = 200pt,height = 100 pt]{b.png}
+\vskip5pt
+\end{figure}
+\hskip50pt b for P=50 as a function of N
+\end{itemize}
+\end{frame}
+
+
+
+
+
+
+\begin{frame}{Results with Original Density = 4\% and with the Prior on $\lambda$ }
+\begin{tabular}{|c|c|c|c|c|c|}
+	     \hline
+	     \textbf{P} & \textbf{N}& $\boldsymbol {\lambda}$ & \textbf{TP} & \textbf{FP }& \textbf{Prediction Error} \\
+	     \hline
+         \hline
+		 100  & 30 & \textcolor{red}{$\lambda$=34} & \textcolor{red}{108} & \textcolor{red}{510} & \textcolor{red}{1.5} \\
+         &   & $\lambda_b$=603 & 2 & 0 & 3.2 \\
+         &    & $\lambda_c$=2 & 294 & 3097 & 0.5 \\
+         \hline
+         100 & 50 & \textcolor{red}{$\lambda$=50} & \textcolor{red}{122} & \textcolor{red}{516} & \textcolor{red}{1.4} \\
+         &    & $\lambda_b$=693 & 2 & 0 & 3.2 \\
+         &   & $\lambda_c$=1 & 350 & 5087 & 0.6 \\
+         \hline
+         100  & 500 & \textcolor{red}{$\lambda$=62} & \textcolor{red}{328} & \textcolor{red}{1236} & \textcolor{red}{0.35} \\
+         &   & $\lambda_b$=2510 & 46 & 136 & 3.2 \\
+         &    & $\lambda_c$=0.1 & 356 & 9390 & 0.32 \\
+         \hline
+         100  & 1000 & \textcolor{red}{$\lambda$=26} & \textcolor{red}{356} & \textcolor{red}{2388} & \textcolor{red}{0.28} \\
+         &    & $\lambda_b$=3415 & 60 & 204 & 3.2 \\
+         &    & $\lambda_c$=0.1 & 356 & 9421 & 0.34 \\
+         		
+\hline
+\end{tabular}
+
+\end{frame}
+
+
+
+
+
+\begin{frame}{Results with Original Density = 52\% and with the Prior on $\lambda$ }
+\begin{tabular}{|c|c|c|c|c|c|}
+	     \hline
+	     \textbf{P} & \textbf{N} & $\boldsymbol {\lambda}$ & \textbf{TP} & \textbf{FP} & \textbf{Prediction Error} \\
+	     \hline
+        \hline
+		 100  & 30 & \textcolor{red}{$\lambda$=32} & \textcolor{red}{690} & \textcolor{red}{616} & \textcolor{red}{1.9} \\
+         &   & $\lambda_b$=1120 & 2 & 2 & 6.5 \\
+         &    & $\lambda_c$=0.4 & 2630 & 2157 & 0.62 \\
+         \hline
+         100 & 50 & \textcolor{red}{$\lambda$=47} & \textcolor{red}{694} & \textcolor{red}{86} & \textcolor{red}{1.9} \\
+         &    & $\lambda_b$=2209 & 6 & 12 & 6.47 \\
+         &   & $\lambda_c$=0.4 & 3225 & 2555 & 0.42 \\
+         \hline
+         100  & 500 & \textcolor{red}{$\lambda$=24} & \textcolor{red}{2286} & \textcolor{red}{1376} & \textcolor{red}{0.38} \\
+         &   & $\lambda_b$=5710 & 116& 158 & 5.9 \\
+         &    & $\lambda_c$=0.1 & 5089 & 4480 & 0.17 \\
+         \hline
+         100  & 1000 & \textcolor{red}{$\lambda$=14} & \textcolor{red}{3465} & \textcolor{red}{1957} & \textcolor{red}{0.20} \\
+         &    & $\lambda_b$=7691 & 186 & 240 & 4.3 \\
+         &    & $\lambda_c$=0.1 & 5102 & 4623 & 0.15 \\
+         		
+\hline
+\end{tabular}
+
+\end{frame}
+
+
+
+
+\begin{frame}{Results with Original Density = 4\% and Regularized Likelihood}
+\begin{tabular}{|c|c|c|c|c|c|}
+	     \hline
+	     \textbf{P} &  \textbf{N} & \textbf{$\boldsymbol {\lambda}$} & \textbf{TP} & \textbf{FP} & \textbf{Prediction Error} \\
+	     \hline
+         \hline
+		 100  & 30 & \textcolor{red}{$\lambda$=190} & \textcolor{red}{22} & \textcolor{red}{60} & \textcolor{red}{3.2} \\
+         &   & $\lambda_b$=603 & 2 & 0 & 3.2 \\
+         &    & $\lambda_c$=2 & 294 & 2976 & 0.48 \\
+         \hline
+         100 & 50 &\textcolor{red}{ $\lambda$=208} & 1\textcolor{red}{48} & \textcolor{red}{156} &\textcolor{red}{ 1.4} \\
+         &    & $\lambda_b$=693 & 2 & 0 & 3.2 \\
+         &   & $\lambda_c$=1 & 350 & 4979 & 0.6 \\
+         \hline
+         100  & 500 &\textcolor{red}{ $\lambda$=55} & \textcolor{red}{336} & \textcolor{red}{1132} & \textcolor{red}{0.33} \\
+         &   & $\lambda_b$=2510 & 46 & 136 & 3.2 \\
+         &    & $\lambda_c$=0.1 & 356 & 9390 & 0.32 \\
+         \hline
+         100  & 1000 & \textcolor{red}{$\lambda$=27} & \textcolor{red}{356} & \textcolor{red}{2174} & \textcolor{red}{0.28} \\
+         &    & $\lambda_b$=3415 & 60 & 204 & 3.2 \\
+         &    & $\lambda_c$=0.1 & 356 & 9421 & 0.34 \\
+         		
+\hline
+\end{tabular}
+
+\end{frame}
+
+
+
+
+
+\begin{frame}{Results with Original Density = 52\% and Regularized Likelihood}
+\begin{tabular}{|c|c|c|c|c|c|}
+	     \hline
+	     \textbf{P} &  \textbf{N} & $\boldsymbol {\lambda}$ & \textbf{TP} & \textbf{FP} & \textbf{Prediction Error} \\
+	     \hline
+        \hline
+		 100  & 30 & \textcolor{red}{$\lambda$=500} & \textcolor{red}{44} & \textcolor{red}{72} & \textcolor{red}{6.4} \\
+         &   & $\lambda_b$=1120 & 2 & 2 & 6.5 \\
+         &    & $\lambda_c$=0.4 & 2630 & 2157 & 0.62 \\
+         \hline
+         100 & 50 & \textcolor{red}{$\lambda$=500} & \textcolor{red}{120} & \textcolor{red}{156} & \textcolor{red}{4.2} \\
+         &    & $\lambda_b$=2209 & 6 & 12 & 6.3 \\
+         &   & $\lambda_c$=0.4 & 3225 & 2555 & 0.42 \\
+         \hline
+         100  & 500 & \textcolor{red}{$\lambda$=24} & \textcolor{red}{2183} & \textcolor{red}{1304} & \textcolor{red}{0.35} \\
+         &   & $\lambda_b$=5710 & 116 & 158 & 5.9 \\
+         &    & $\lambda_c$=0.1 & 5085 & 4480 & 0.17 \\
+         \hline
+         100  & 1000 & \textcolor{red}{$\lambda$=14} & \textcolor{red}{3430} & \textcolor{red}{1899} & \textcolor{red}{0.20} \\
+         &    & $\lambda_b$=7691 & 186 & 240 & 4.3 \\
+         &    & $\lambda_c$=0.1 & 5102 & 4625 & 0.15 \\
+         		
+\hline
+\end{tabular}
+
+\end{frame}
+
+
+
+
+
+\begin{frame}{ The Results on fMRI data}
+\begin{itemize}
+\item Test on 2007 PBAIC competition
+\item Filtering with correlation
+\vskip10pt
+\item comparison with the Elastic Net Results on correlation of the estimated response with the true response on the test data
+\begin{itemize}
+\item On the 24th response c=0.82 with 127 pre-selected voxels  Elastic Net: c=0.69 with 300 pre-selected voxels
+\vskip10pt
+\item On the 15th response c=0.74 with 126 pre-selected voxels  Elastic Net: c=0.66  with 300 pre-selected voxels
+\end{itemize}
+
+\end{itemize}
+\end{frame}
+
+
+
+
+
+\begin{frame}{ On-going Work}
+\begin{itemize}
+\item Different $\lambda$ for each variable in the network
+\item Learning appropriate prior for $\lambda$
+\item Alternative penalties for the likelihood
+\item Application of non-convex optimization methods : EBW
+\end{itemize}
+\end{frame}
+
+
+
+
+
+
+
+
+\end{document} 

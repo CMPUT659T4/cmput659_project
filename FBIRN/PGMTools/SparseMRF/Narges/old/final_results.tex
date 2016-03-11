@@ -1,0 +1,121 @@
+
+\documentclass{article}
+
+% For figures
+%\usepackage{epsfig} % less modern
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{verbatim}
+
+
+
+\begin{document}
+%\ninept
+%
+
+
+
+
+%% Pos=456-100 Neg=9544
+\begin{table}
+\caption{Results with Structured Matrices Avg Density = 10\%}
+\begin{tabular}{|c|c|c|c|c|c|}
+	     \hline
+	     \textbf{P} &  \textbf{N} &$\lambda$& \textbf{ avg TP} & \textbf{avg FP} & \textbf{Avg PE} \\
+	     \hline
+         \hline
+		 100&30   & $\lambda_sg$ & 0 & 0 &1.09\\
+         &   & $\lambda_vg$& 0.01 & 0.002 & 1.09 \\
+         \hline
+         100&50    &$\lambda_sg$ & 0 & 0 &1.1\\
+         &    &$\lambda_vg$& 0.054 & 0.015 & 1.09 \\
+         \hline
+         100&500   &$\lambda_sg$ & 1.e-3 & 0.7e-5 &1.1\\
+         &    &$\lambda_vg$ & 0.79 & 0.12 & 1.05 \\
+         \hline
+         100&  1000    &$\lambda_sg$& 0.25 & 5e-4 & 1.09\\
+         &    &$\lambda_vg$ & 0.97 & 0.17 & 1.02 \\
+         		
+\hline
+\end{tabular}
+\label{table:t1}
+\end{table}
+
+
+
+
+%% Pos=456-100 Neg=9544
+\begin{table}
+\caption{Results with Random Matrices Avg Density = 8\%}
+\begin{tabular}{|c|c|c|c|c|c|}
+	     \hline
+	     \textbf{P} &  \textbf{N} &$\lambda$& \textbf{ avg TP} & \textbf{avg FP} & \textbf{Avg PE} \\
+	     \hline
+         \hline
+		 100&30   & $\lambda_sg$ & 0.12 & 0.058 &2.9\\
+         &   & $\lambda_vg$& 0.53 & 0.12 & 1.35 \\
+         \hline
+         100&50    &$\lambda_sg$ & 0.17 & 0.07 &2.1\\
+         &    &$\lambda_vg$& 0.66 & 0.14 & 1.04 \\
+         \hline
+         100&500   &$\lambda_sg$ & 0.88 & 0.16 &0.68\\
+         &    &$\lambda_vg$ & 0.79 & 0.12 & 1.05 \\
+         \hline
+         100&  1000    &$\lambda_sg$& 0.99 & 0.24 & 0.61\\
+         &    &$\lambda_vg$ & 0.99 & 0.31 & 0.61\\
+         		
+\hline
+\end{tabular}
+\label{table:t1}
+\end{table}
+
+
+\begin{table}
+\caption{Results on PBAIC 2007 Competition}
+\begin{tabular}{|c|c|c|c|c|}
+
+	     \hline
+	     \textbf{Response} &  \textbf{Method} & \textbf{Min Correlation} & \textbf{Max Correlation} & \textbf{Avg Correlation} \\
+	     \hline
+        \hline
+		  22 & vg & 0.72 & 0.84 & 0.80 \\
+           
+          \hline
+		  24 & vg & 0.60 & 0.66 & 0.62 \\
+           
+          \hline
+		  3 & vg & 0.3 & 0.53 & 0.43 \\
+           
+         	 \hline
+		  15 & vg & 0.55& 0.66 & 0.60 \\
+           
+\hline
+
+\end{tabular}
+\label{table:t2}
+\end{table}
+
+
+
+
+
+\end{document} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

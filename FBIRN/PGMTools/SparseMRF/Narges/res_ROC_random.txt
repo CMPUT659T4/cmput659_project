@@ -1,0 +1,56 @@
+----------------------------------------------------------
+P=100  with Banerjee 
+density= 
+0.04888889
+N= 
+20
+banerjee lambda
+0.1
+Prediction Mean Squared Error of the learned model 
+1.937157
+TP of the learned C 
+1
+FP of the learned C 
+0.8574766
+----------------------------------------------------------
+P=100  with Banerjee 
+density= 
+0.04888889
+N= 
+30
+banerjee lambda
+0.1
+Prediction Mean Squared Error of the learned model 
+2.130065
+TP of the learned C 
+1
+FP of the learned C 
+0.9158879
+----------------------------------------------------------
+P=100  with Banerjee 
+density= 
+0.0296
+N= 
+30
+banerjee lambda
+0.1
+Prediction Mean Squared Error of the learned model 
+2.142557
+TP of the learned C 
+1
+FP of the learned C 
+0.8256389
+----------------------------------------------------------
+P=100  with Banerjee 
+density= 
+0.0158
+N= 
+30
+banerjee lambda
+0.1
+Prediction Mean Squared Error of the learned model 
+1.509659
+TP of the learned C 
+1
+FP of the learned C 
+0.591648

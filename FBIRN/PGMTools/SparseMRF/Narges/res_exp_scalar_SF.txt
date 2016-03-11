@@ -1,0 +1,175 @@
+----------------------------------------------------------
+P=100  NOT Scaled  and no normalization of the data 
+density= 
+0.0614
+N= 
+150
+b= 
+1
+learned lambda
+2702.48
+Prediction Mean Squared Error of the learned model 
+1.007820
+TP of the learned C 
+0
+FP of the learned C 
+0
+----------------------------------------------------------
+lambda_avg
+2702.48
+lse_avg
+1.007820
+TP_avg
+0
+FP_avg
+0
+----------------------------------------------------------
+P=100  NOT Scaled  and no normalization of the data 
+density= 
+0.0614
+N= 
+150
+b= 
+10
+learned lambda
+377.8247
+Prediction Mean Squared Error of the learned model 
+1.002019
+TP of the learned C 
+0
+FP of the learned C 
+0
+----------------------------------------------------------
+lambda_avg
+377.8247
+lse_avg
+1.002019
+TP_avg
+0
+FP_avg
+0
+----------------------------------------------------------
+P=100  NOT Scaled  and no normalization of the data 
+density= 
+0.0614
+N= 
+150
+b= 
+100
+learned lambda
+64.88863
+Prediction Mean Squared Error of the learned model 
+1.029341
+TP of the learned C 
+0
+FP of the learned C 
+0
+----------------------------------------------------------
+lambda_avg
+64.88863
+lse_avg
+1.029341
+TP_avg
+0
+FP_avg
+0
+----------------------------------------------------------
+P=100  NOT Scaled  and no normalization of the data 
+density= 
+0.0614
+N= 
+150
+b= 
+200
+learned lambda
+37.53968
+Prediction Mean Squared Error of the learned model 
+1.00645
+TP of the learned C 
+0
+FP of the learned C 
+0
+----------------------------------------------------------
+lambda_avg
+37.53968
+lse_avg
+1.00645
+TP_avg
+0
+FP_avg
+0
+----------------------------------------------------------
+P=100  NOT Scaled  and no normalization of the data 
+density= 
+0.0614
+N= 
+150
+b= 
+1000
+learned lambda
+8.794199
+Prediction Mean Squared Error of the learned model 
+1.057465
+TP of the learned C 
+0.307393
+FP of the learned C 
+0.143192
+----------------------------------------------------------
+lambda_avg
+8.794199
+lse_avg
+1.057465
+TP_avg
+0.307393
+FP_avg
+0.143192
+----------------------------------------------------------
+P=100  NOT Scaled  and no normalization of the data 
+density= 
+0.0614
+N= 
+150
+b= 
+2000
+learned lambda
+4.359529
+Prediction Mean Squared Error of the learned model 
+1.125309
+TP of the learned C 
+0.5875486
+FP of the learned C 
+0.4419348
+----------------------------------------------------------
+lambda_avg
+4.359529
+lse_avg
+1.125309
+TP_avg
+0.5875486
+FP_avg
+0.4419348
+----------------------------------------------------------
+P=100  NOT Scaled  and no normalization of the data 
+density= 
+0.0614
+N= 
+150
+b= 
+10000
+learned lambda
+0.9133915
+Prediction Mean Squared Error of the learned model 
+1.470180
+TP of the learned C 
+0.8832685
+FP of the learned C 
+0.8231408
+----------------------------------------------------------
+lambda_avg
+0.9133915
+lse_avg
+1.470180
+TP_avg
+0.8832685
+FP_avg
+0.8231408

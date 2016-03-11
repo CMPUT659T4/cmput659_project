@@ -1,0 +1,8 @@
+%n density lambda lse TP FP 
+20 0.04888889 0.1 1.937157 1 0.8574766
+%n density lambda lse TP FP 
+30 0.04888889 0.1 2.130065 1 0.9158879
+%n density lambda lse TP FP 
+30 0.0296 0.1 2.142557 1 0.8256389
+%n density lambda lse TP FP 
+30 0.0158 0.1 1.509659 1 0.591648

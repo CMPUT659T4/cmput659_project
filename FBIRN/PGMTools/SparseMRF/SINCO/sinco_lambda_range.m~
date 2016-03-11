@@ -1,0 +1,94 @@
+function [Csol_set] = sinco_lambda_range(EmpCov, N, l_range, Cstart, Wstart, fstart, Sbase, ifvec, precision, tol)
+%  call SINCO with a range of (decreasing) lambda values
+% 
+% Csol_set - a 3-d array of empirical covariance matrices Csol_set(:,:,i),
+% one per i-th value of lambda in the l_range 
+% each column corresponds to lambda (or lambda-vector)
+
+% EmpCov  - empirical covariance matrix
+% N - the number of samples
+% l_range - the range of decreasing values of lambda
+% Sbase - initial matrix of weights
+% ifvec - vector formulation(1) or scalar formulation(0)
+% precision, tol - SINCO's parameters
+ 
+% Note that lambda = rho*N/2, i.e. rho = (2/N)*lambda where rho is used by
+% Banerjee's formulation
+
+if nargin < 10
+    tol =0.000001;
+end
+
+if nargin < 9
+    precision = 0.005;
+end
+
+if nargin < 8
+    ifvec = 0;
+end
+
+if nargin < 7
+    Sbase=ones(p,p);
+end
+
+if nargin < 6 
+    fstart= - trace(EC*Cstart);   
+end
+ 
+if nargin < 5
+    Wstart=eye(p);   
+end
+    
+if nargin < 4
+    Cstart = eye(p);
+end
+
+
+
+p = size(EmpCov,1);
+ 
+% Katya's COVSEL settings
+
+EC=N*0.5*EmpCov;
+
+K=N*0.5;
+
+if (ifvec)
+ lambdaold=zeros(p,1);
+ %lambdaouter=zeros(p,1);
+else
+  lambdaold=0;
+  %lambdaouter=0;  
+end
+mult=1;
+
+nlambdas=  size(lambda_range,2);
+Csol_set = zeros(p,p,nlambdas);
+
+for j=1:nlambdas  % each column corresponds to lambda (or lambda-vector)
+    lambda = lambda_range(:,j);
+    if (ifvec) 
+        for i=1:p
+            S(:,i)=Sbase(:,i)*lambda(i);
+            fstart=fstart - sum(abs(lambda(i)*Sbase(:,i).*Cstart(:,i))-...
+                       abs(lambdaold(i)*Sbase(:,i).*Cstart(:,i)));
+  %fstart=fstart - sum(abs((lambda(i)-lambdaold(i))*Sbase(:,i).*Cstart(:,i)));
+        end
+    else 
+        S=Sbase*lambda;
+        fstart=fstart - sum(sum(abs((lambda-lambdaold)*Sbase.*Cstart)));
+    end
+    
+    [Csol, Wsol, fsol]=...
+        sinco(Cstart, fstart, Wstart, EC, S, mult, K, tol);
+    
+    Cstart=Csol;
+    Wstart=Wsol;
+    fstart=fsol;
+    Csol_set(:,:,j) = Csol;         
+    
+    lambdaold = lambda;
+    
+    
+end
+
