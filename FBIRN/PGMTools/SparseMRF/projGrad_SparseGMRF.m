@@ -118,15 +118,17 @@ while(gaprel>=tolrel)&(i<=maxIter)
     gaprels(i)=gaprel;
     figure(10); subplot(2,1,1); semilogy(gaps,'r:.'); title('Duality gap')
     subplot(2,1,2); semilogy(gaprels,'r:.'); title('Relative duality gap'); xlabel('Iterations')
-    if (i-1)/10==floor((i-1)/10)
+    if (i-1)/100==floor((i-1)/100)
         fprintf('iter %5d, t=%5.3e, gaprel=%8.4e,\n',i,t,gaprel);
     end
-    drawnow;
+    
     i=i+1;
 end
 if i==maxIter
     statusF='Maximum iteration reached';
+    drawnow;
 else
+    drawnow;
     statusF='solved';
     fprintf('Solved! iter %d, t=%5.3e, gaprel=%8.4e,\n',i,t,gaprel);
 end

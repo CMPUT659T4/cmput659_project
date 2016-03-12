@@ -12,7 +12,11 @@ cond = model.class_cond; % k-dimensional array of structs with fields C and mu
 
 % select max-likelihood label:
 % max_i P(Y=i|X=x) = max_i P(X=x,Y=i) label since P(Y=i|X) = P(X=x,Y=i)/P(X=x)
-
+CC = inv(cond(1).C);
+    CC = (CC + CC')/2;
+    cond(1).mu;
+   mvnpdf(X,cond(1).mu, CC );
+   X;
 pyx = zeros(n,k);
 % compute P(X,Y=i)=P(Y=i)*P(X=x|Y=i) for each class lable i
 for class=1:k
@@ -21,7 +25,7 @@ for class=1:k
     pyx(:,class) = py(class)*mvnpdf(X,cond(class).mu, CC ); % multivar gaussian pdf
 end
 
-
+pyx;
 [a,ind]=max(pyx');
 y=zeros(n,1);
 for i=1:n

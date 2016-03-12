@@ -15,8 +15,8 @@ tic;
 
 %%%MArio ==> Added these codes (not clear what these does )
 rho=0.7;             % Controls sparsity
-prec=1e-2;
-maxiter=1000;
+prec=1e-10;
+maxiter=5000;
 switch lower(method)
     case 'projected_gradient'
         % Yuanqing's implementation of projected gradient
@@ -95,6 +95,15 @@ switch lower(method)
         [C obj_func] = learn_featsel_ggm(EmpCov, rho, rho_diag, tau, group_norm, T);
         
     case 'covsel'
+         %  COVSEL
+        %  set Algorithm's parameters ....
+        %rho=0.6;             % Controls sparsity
+        prec=1e-1;           % Numerical precision
+        maxiter=2;           % Maximum Number of sweeps in coordinate descent
+        algot='nest';        % Algorith for solving BoxQP: 'sedumi' uses SEDUMI, 'nest' uses smooth minimization (usually faster)
+        maxnest=1000;        % Maximum number of iterations in the smooth BoxQP solver
+        
+        [C,X] = spmlcdvec(EmpCov,rho,maxiter,prec,maxnest,algot); % Inverse covariance is stored in Umat
     otherwise
         %  COVSEL
         %  set Algorithm's parameters ....
