@@ -2,7 +2,7 @@ function [X_Train,Y_Train,X_Test,Y_Test]=generateDataSet(site,k)
 % this returns the training set and test from the feature files.
 % 1/k th portion of the data is selected for the test and the rest is
 % selected for the training set
-load('FBIRN/finaldata_AO/features\fBIRN_AudOdd_allsites_0003_log_degrees_Tlms_MFG_SFG_.mat');
+load('FBIRN/finaldata_AO/features/fBIRN_AudOdd_allsites_0003_log_degrees_Tlms_MFG_SFG_.mat');
 
 if site==6 
     %Select from all the data (We dont worry about balancing the training
