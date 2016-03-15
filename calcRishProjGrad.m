@@ -14,15 +14,15 @@ Accuracy=zeros(1,itterat);
 for i=1:itterat
     %%% generating the test and the training set   
    
-   [X_train,Y_train,X_test,Y_test]=generateDataSet(site,5);
+   [X_train,Y_train,X_test,Y_test]=generateBalancedDataSet(6,5,3);
     X_train=X_train(:,1:limit);
      X_test=X_test(:,1:limit);  
     lambdas=[0 0.01 0.1 0.5 1 5];
     %lambdas=[0.7];% 0.5 1 5];
     %lambdas=[0.1:0.2:0.9];;% 0.5 1 5];
     lambdas=0.7;
-    method='projected_gradient';
-    %method='varsel_mrf';
+   % method='projected_gradient';
+    method='varsel_mrf';
     %method='sinco';
     
     
@@ -40,7 +40,9 @@ for i=1:itterat
         FPerr = size(find(predicted_Y > 0 & Y_test < 0 ),1);
         FNerr = size(find(predicted_Y < 0 & Y_test > 0 ),1);
         err = FPerr +FNerr;
-        fprintf('Fasle positives = %d, false negatives = %d, Error Rate for lambda=%.2f is %.2f\n',FPerr,FNerr,lambda1,err/(376*.2));
+        HTot=length(find(Y_test<0));
+        STot=length(find(Y_test>0));
+        fprintf('Fasle Positives = %.2f, Missed Patients = %.2f, Error Rate for lambda=%.2f is %.2f\n',FPerr/HTot,FNerr/STot,lambda1,err/(376*.2));
         if err < min_err
             min_err=err;
             best_model=model;
@@ -52,7 +54,7 @@ for i=1:itterat
     Y_test;
     predicted_Y = best_pred;
     Accuracy(i)=(1-err/length(Y_test));
-    PErrVec(i)=FPerr;
-    FErrVec(i)=FNerr;
+    PErrVec(i)=FPerr/HTot;
+    FErrVec(i)=FNerr/STot;
 end
 

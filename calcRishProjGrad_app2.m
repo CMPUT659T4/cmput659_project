@@ -6,32 +6,23 @@ addpath('FBIRN/PGMTools/MRFC','-end');
 addpath('FBIRN/PGMTools/SparseMRF/','-end');
 addpath(genpath('FBIRN/PGMTools/SparseMRF/'))
 %addpath('FBIRN/PGMTools/SparseMRF','-end')
-load('FBIRN/finaldata_AO/features\fBIRN_AudOdd_allsites_0003_log_degrees_Tlms_MFG_SFG_.mat');
-%load('FBIRN/finaldata_AO\features\fBIRN_AudOdd_allsites_0003_degrees.mat');
 
 site2=site;
-trainLimit=40;
-PErrVec=zeros(1,itterat);
+ErrVec=zeros(1,itterat);
 FErrVec=zeros(1,itterat);
 Accuracy=zeros(1,itterat);
 for i=1:itterat
-    %%% generating the test and the training set
-    Indices = crossvalind('Kfold', 95, 5);
-    % all the indices with number 5 is taken away as the testing set
-    % Extend this indices to the 380 numbers
-    Indices=kron(Indices,[1 1 1 1]');
-    Train=data(find(Indices<=4),:);
-    Test=data(find(Indices>4),:);
-    X_train=Train(:,1:limit);
-    Y_train=Train(:,end);
-    X_test=Test(:,1:limit);
-    Y_test=Test(:,end);
+    %%% generating the test and the training set   
+   
+   [X_train,Y_train,X_test,Y_test]=generateDataSet(6,5);
+    X_train=X_train(:,1:limit);
+     X_test=X_test(:,1:limit);  
     lambdas=[0 0.01 0.1 0.5 1 5];
     %lambdas=[0.7];% 0.5 1 5];
     %lambdas=[0.1:0.2:0.9];;% 0.5 1 5];
     lambdas=0.7;
-    method='projected_gradient';
-    %method='varsel_mrf';
+   % method='projected_gradient';
+    method='varsel_mrf';
     %method='sinco';
     
     
@@ -44,7 +35,7 @@ for i=1:itterat
         %for lambda2 = lambdas
         % model = MRFC_learn(X_train, Y_train, method, lambda1,lambda2);  %learn MRF classifier (MRFC)
         model = MRFC_learn(X_train, Y_train, method, lambda1);  %learn MRF classifier (MRFC)
-        predicted_Y = MRFC_predict(X_test,model); %test MRFC
+        predicted_Y = MRFC_predict_app2(X_test,model); %test MRFC
         
         FPerr = size(find(predicted_Y > 0 & Y_test < 0 ),1);
         FNerr = size(find(predicted_Y < 0 & Y_test > 0 ),1);
