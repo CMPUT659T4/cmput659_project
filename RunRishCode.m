@@ -54,8 +54,8 @@ lambdas=[0 0.01 0.1 0.5 1 5];
 %lambdas=[0.7];% 0.5 1 5];
 %lambdas=[0.1:0.2:0.9];;% 0.5 1 5];
 lambdas=0.7;
-method='projected_gradient';
-%method='varsel_mrf';
+%method='projected_gradient';
+method='varsel_mrf';
 %method='sinco';
 
 
