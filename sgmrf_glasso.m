@@ -75,13 +75,24 @@ for iteration = 1:10
     %      's_kfold', 'h_kfold', 's_test_inds', 'h_test_inds', ...
     %      's_train_inds', 'h_train_inds', 's_train', 'h_train', ...
     %      's_test', 'h_test', 's_covar', 'h_covar', 's_precision', 'h_precision')
+    
+    prior = [size(s_train, 1); size(h_train, 1)] / (size(s_train, 1) + size(h_train, 1));
+    l = unique(labels);   n_l = size(l,1);
+    conditional(1) = struct('C', s_precision, 'mu', mean(s_train));
+    conditional(2) = struct('C', h_precision, 'mu', mean(h_train));
+    model = struct('nvars', size(s_train, 2), 'nlabels', n_l, 'labels', l, ...
+                   'class_cond', conditional, 'class_prior', prior, ...
+                   'lambdas', 0);
 
     test = cat(3, s_test, h_test);
     t_labels = [ones(size(s_test, 3), 1); -1 * ones(size(h_test, 3), 1)];
     predictions = zeros(size(test, 3), 1);
     for i = 1:size(test, 3)
-        s_ll = gaussianFit(s_precision, squeeze(test(:, :, i))', 0);
-        h_ll = gaussianFit(h_precision, squeeze(test(:, :, i))', 0);
+        %s_ll = gaussianFit(s_precision, squeeze(test(:, :, i))', 0);
+        %h_ll = gaussianFit(h_precision, squeeze(test(:, :, i))', 0);
+        [y,pyx] = MRFC_predict(squeeze(test(:, :, i))', model);
+        s_ll = sum(y == 1);
+        h_ll = sum(y == -1);
         if s_ll > h_ll
             predictions(i) = 1;
         else
