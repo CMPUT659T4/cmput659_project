@@ -1,30 +1,96 @@
 addpath('lasso','-end');
 %load('FBIRN/finaldata_AO/features/fBIRN_AudOdd_allsites_0003_degrees.mat')
 %load('FBIRN/finaldata_AO/features/fBIRN_AudOdd_allsites_0003_log_degrees.mat')
-load('FBIRN/finaldata_AO/features/fBIRN_AudOdd_allsites_0003_log_degrees_Tlms_MFG_SFG_.mat')
-s_inds = data(:, end) == 1;
-h_inds = data(:, end) == -1;
-s_data = data(s_inds, :);
-h_data = data(h_inds, :);
+% load('FBIRN/finaldata_AO/features/fBIRN_AudOdd_allsites_0003_log_degrees_Tlms_MFG_SFG_.mat')
+% s_inds = data(:, end) == 1;
+% h_inds = data(:, end) == -1;
+% s_data = data(s_inds, :);
+% h_data = data(h_inds, :);
+% 
+% s_kfold = crossvalind('Kfold', size(s_data, 1) / 4, 10);
+% s_kfold = [s_kfold, s_kfold, s_kfold, s_kfold]';
+% s_kfold = s_kfold(:);
+% 
+% h_kfold = crossvalind('Kfold', size(h_data, 1) / 4, 10);
+% h_kfold = [h_kfold, h_kfold, h_kfold, h_kfold]';
+% h_kfold = h_kfold(:);
+% 
+% s_test_inds = logical((s_kfold == 1) + (s_kfold == 2) + (s_kfold == 3));
+% h_test_inds = logical((h_kfold == 1) + (h_kfold == 2) + (h_kfold == 3));
+% s_train_inds = ~s_test_inds;
+% h_train_inds = ~h_test_inds;
+% 
+% s_train = s_data(s_train_inds, :);
+% h_train = h_data(h_train_inds, :);
+% 
+% s_test = s_data(s_test_inds, :);
+% h_test = h_data(h_test_inds, :);
+% 
+% [s_covar, s_precision, ~, ~, ~] = GraphicalLasso(s_train(:, 1:end-1), 0.1);
+% [h_covar, h_precision, ~, ~, ~] = GraphicalLasso(h_train(:, 1:end-1), 0.1);
 
-s_kfold = crossvalind('Kfold', size(s_data, 1) / 4, 10);
-s_kfold = [s_kfold, s_kfold, s_kfold, s_kfold]';
-s_kfold = s_kfold(:);
 
-h_kfold = crossvalind('Kfold', size(h_data, 1) / 4, 10);
-h_kfold = [h_kfold, h_kfold, h_kfold, h_kfold]';
-h_kfold = h_kfold(:);
+load('concat_roi_avg.mat')
 
-s_test_inds = logical((s_kfold == 1) + (s_kfold == 2) + (s_kfold == 3));
-h_test_inds = logical((h_kfold == 1) + (h_kfold == 2) + (h_kfold == 3));
-s_train_inds = ~s_test_inds;
-h_train_inds = ~h_test_inds;
+for s = 1:size(labels, 1)
+    for r = 1:size(data, 1)
+        series = squeeze(data(r, :, s));
+        data(r, :, s) = (series - mean(series)) / std(series);
+    end
+end
 
-s_train = s_data(s_train_inds, :);
-h_train = h_data(h_train_inds, :);
+data([81, 82, 128, 184, 247, 248, 249, 250], :, :) = [];
 
-s_test = s_data(s_test_inds, :);
-h_test = h_data(h_test_inds, :);
+s_inds = labels(:) == 1;
+h_inds = labels(:) == -1;
+s_data = data(:, :, s_inds);
+h_data = data(:, :, h_inds);
 
-[s_covar, s_precision, ~, ~, ~] = GraphicalLasso(s_train(:, 1:end-1), 0.1);
-[h_covar, h_precision, ~, ~, ~] = GraphicalLasso(h_train(:, 1:end-1), 0.1);
+a = zeros(10, 1);
+for iteration = 1:10
+    s_kfold = crossvalind('Kfold', size(s_data, 3) / 4, 10);
+    s_kfold = [s_kfold, s_kfold, s_kfold, s_kfold]';
+    s_kfold = s_kfold(:);
+
+    h_kfold = crossvalind('Kfold', size(h_data, 3) / 4, 10);
+    h_kfold = [h_kfold, h_kfold, h_kfold, h_kfold]';
+    h_kfold = h_kfold(:);
+
+    s_test_inds = logical((s_kfold == 1) + (s_kfold == 2) + (s_kfold == 3));
+    h_test_inds = logical((h_kfold == 1) + (h_kfold == 2) + (h_kfold == 3));
+    s_train_inds = ~s_test_inds;
+    h_train_inds = ~h_test_inds;
+
+    s_train = s_data(:, :, s_train_inds);
+    s_train = reshape(s_train, [size(s_train, 1), size(s_train, 2) * size(s_train, 3)])';
+    h_train = h_data(:, :, h_train_inds);
+    h_train = reshape(h_train, [size(h_train, 1), size(h_train, 2) * size(h_train, 3)])';
+
+    s_test = s_data(:, :, s_test_inds);
+    h_test = h_data(:, :, h_test_inds);
+
+    [s_covar, s_precision, ~, ~, ~] = GraphicalLasso(s_train, 0.1);
+    [h_covar, h_precision, ~, ~, ~] = GraphicalLasso(h_train, 0.1);
+    % save(['post_glasso.mat'], 's_inds', 'h_inds', 's_data', 'h_data', ...
+    %      's_kfold', 'h_kfold', 's_test_inds', 'h_test_inds', ...
+    %      's_train_inds', 'h_train_inds', 's_train', 'h_train', ...
+    %      's_test', 'h_test', 's_covar', 'h_covar', 's_precision', 'h_precision')
+
+    test = cat(3, s_test, h_test);
+    t_labels = [ones(size(s_test, 3), 1); -1 * ones(size(h_test, 3), 1)];
+    predictions = zeros(size(test, 3), 1);
+    for i = 1:size(test, 3)
+        s_ll = gaussianFit(s_precision, squeeze(test(:, :, i))', 0);
+        h_ll = gaussianFit(h_precision, squeeze(test(:, :, i))', 0);
+        if s_ll > h_ll
+            predictions(i) = 1;
+        else
+            predictions(i) = -1;
+        end
+    end
+
+    a(iteration) = sum(predictions == t_labels) / length(t_labels);
+end
+min(a)
+max(a)
+mean(a)
