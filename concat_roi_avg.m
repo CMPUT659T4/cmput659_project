@@ -28,4 +28,4 @@ for file = 1:length(dirs)
     labels(file) = site_info.labels(lbl_ind);
 end
 
-save(['concat_roi_avg.mat'], 'data', 'labels', 'site')
+save(['concat_roi_avg.mat'], 'data', 'labels', 'sites')
