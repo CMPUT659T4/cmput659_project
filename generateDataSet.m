@@ -1,4 +1,4 @@
-function [X_Train,Y_Train,X_Test,Y_Test]=generateDataSet(site,k)
+function [X_Train,Y_Train,X_Test,Y_Test]=generateDataSet(site,k,feature)
 % this returns the training set and test from the feature files.
 % 1/k th portion of the data is selected for the test and the rest is
 % selected for the training set
