@@ -5,7 +5,7 @@ if internal==0,
     prompt = 'Please enter number of Principal component that you want to have(less than 304): ';
     principal = input(prompt);
     train_X_pca= ppca(train_X,principal);
-    test_X_pca = ppca(X_Test,principal);
+    test_X_pca = ppca(test_X,principal);
 else 
     
     train_X_pca = getPCA(train_X,k);
