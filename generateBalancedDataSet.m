@@ -7,12 +7,12 @@ function [X_Train,Y_Train,X_Test,Y_Test]=generateBalancedDataSet(site,k,feature)
 
 switch feature
     case 1
-        load('FBIRN/finaldata_AO/features/fBIRN_AudOdd_allsites_0003_degrees.mat');
+        load('FBIRN/finaldata_AO/features/OurTestAllVoxels.mat');
     case 2
-        load('FBIRN/finaldata_AO/features/fBIRN_AudOdd_allsites_0003_log_degrees.mat');
+        load('FBIRN/finaldata_AO/features/OurTestAllVoxelsLogDegrees.mat');
 
     case 3
-        load('FBIRN/finaldata_AO/features/fBIRN_AudOdd_allsites_0003_log_degrees_Tlms_MFG_SFG_.mat');
+        load('FBIRN/finaldata_AO/features/OurTestMFG_SFGVoxelsLogDegrees.mat');
 end
 %data=data(1:20,:);
 if site==6 
