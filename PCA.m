@@ -1,4 +1,4 @@
-function [train_X,test_X_pca]=PCA(internal)
+function [train_X_pca,test_X_pca]=PCA(internal)
 [train_X,train_Y,test_X,test_Y] = generateBalancedDataSet(feature,k);
 
 if internal==0,
