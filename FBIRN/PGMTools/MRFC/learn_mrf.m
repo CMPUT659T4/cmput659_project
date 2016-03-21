@@ -14,7 +14,7 @@ EmpCov = (1/n)*data'*data; % empirical covariance matrix
 tic;
 
 %%%MArio ==> Added these codes (not clear what these does )
-rho=0.7;             % Controls sparsity
+%rho=0.7;             % Controls sparsity
 prec=1e-10;
 maxiter=5000;
 switch lower(method)

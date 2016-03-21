@@ -16,8 +16,8 @@ for i=1:itterat
     %%% generating the test and the training set   
    
    [H P H_t P_t X_train,Y_train,X_test,Y_test]=getTwoFeatureSets(5,1);
-  diff_mu=mean(H)-mean(P);%get the difference between the 
-  [K index]=sort(diff_mu);
+  diff_mu=abs(mean(H)-mean(P));%get the difference between the means of each voxel for healthy and Schizophrenic subjects
+  [K index]=sort(diff_mu,'descend');%Sort the differences and get the widely changed pixel values
    
    
    size(X_test);
@@ -63,4 +63,7 @@ for i=1:itterat
     PErrVec(i)=FPerr/HTot;
     FErrVec(i)=FNerr/STot;
 end
+fprintf('****************************************************************\n \n');
+fprintf('Running using absolute values of differences between patient-Healthy for %d features\n',limit);
+fprintf('Accuracy = %.2f with std=%.2f Minimum=%.2f Max=%.2f \n False positives=%.2f \n Missed Patients=%.2f\n',mean(Accuracy),std(Accuracy,1),min(Accuracy),max(Accuracy),mean(PErrVec),mean(FErrVec));
 

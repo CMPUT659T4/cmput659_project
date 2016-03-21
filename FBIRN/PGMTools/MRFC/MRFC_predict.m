@@ -22,7 +22,7 @@ pyx = zeros(n,k);
 for class=1:k
     CC = inv(cond(class).C);
     CC = (CC + CC')/2;
-    pyx(:,class) = py(class)*logmvnpdf(X,cond(class).mu, CC ); % multivar gaussian pdf
+    pyx(:,class) = log(py(class))+logmvnpdf(X,cond(class).mu, CC ); % multivar gaussian pdf
 end
 
 pyx;

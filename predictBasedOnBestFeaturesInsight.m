@@ -1,6 +1,9 @@
-function [Accuracy,PErrVec,FErrVec,site2]=predictBasedOnBestFeatures(limit,site,itterat)
+function [Accuracy,PErrVec,FErrVec,site2,Met,WrongMAt,GoodMat]=predictBasedOnBestFeaturesInsight(limit,site,itterat)
 %limit is the number of variables we are interested in. ie, if limit=10, we
 %only look at the first 10 columns of the data vector
+Met=[];
+WrongMAt=[];
+GoodMat=[];
 addpath('FBIRN/PGMTools/SparseMRF','-end');
 addpath('FBIRN/PGMTools/MRFC','-end');
 addpath('FBIRN/PGMTools/SparseMRF/','-end');
@@ -41,14 +44,24 @@ for i=1:itterat
         %for lambda2 = lambdas
         % model = MRFC_learn(X_train, Y_train, method, lambda1,lambda2);  %learn MRF classifier (MRFC)
         model = MRFC_learn(X_train, Y_train, method, lambda1);  %learn MRF classifier (MRFC)
-        predicted_Y = MRFC_predict(X_test,model); %test MRFC
+        [predicted_Y Probs] = MRFC_predict(X_test,model); %test MRFC
         
+        
+          %Just checking underfit_Overfit
+%         [predicted_Y Probs] = MRFC_predict(X_train,model); %test MRFC
+%         
+%         FPerr = size(find(predicted_Y > 0 & Y_train < 0 ),1)
+%         FNerr = size(find(predicted_Y < 0 & Y_train > 0 ),1)
+%         err = FPerr +FNerr
+%         HTot=length(find(Y_train<0))
+%         STot=length(find(Y_train>0))
+
         FPerr = size(find(predicted_Y > 0 & Y_test < 0 ),1);
         FNerr = size(find(predicted_Y < 0 & Y_test > 0 ),1);
         err = FPerr +FNerr;
         HTot=length(find(Y_test<0));
-        STot=length(find(Y_test>0));
-        fprintf('Fasle Positives = %.2f, Missed Patients = %.2f, Error Rate for lambda=%.2f is %.2f\n',FPerr/HTot,FNerr/STot,lambda1,err/(376*.2));
+       STot=length(find(Y_test>0));
+        fprintf('Fasle Positives = %.2f, Missed Patients = %.2f, Error Rate for lambda=%.2f is %.2f\n',FPerr/HTot,FNerr/STot,lambda1,err/(length(Y_test)));
         if err < min_err
             min_err=err;
             best_model=model;
@@ -56,6 +69,19 @@ for i=1:itterat
         end
         % end
     end    
+    
+    Met=[Probs (Probs(:,1)-Probs(:,2)) Y_test predicted_Y];
+   Prob=Met;
+    Prob(:,1)=exp(Met(:,1));
+    Prob(:,2)=exp(Met(:,2));
+  
+    Prob(:,1)=exp(Met(:,1))./(exp(Met(:,1))+exp(Met(:,2)));;
+    Prob(:,2)=exp(Met(:,2))./(exp(Met(:,1))+exp(Met(:,2)));;
+    Met=Prob;
+    WrongMAt=Met(find(Y_test~=predicted_Y),:);
+    GoodMat=Met(find(Y_test==predicted_Y),:);
+    
+    
     model=best_model;
     Y_test;
     predicted_Y = best_pred;
