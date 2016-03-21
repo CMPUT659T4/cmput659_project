@@ -4,16 +4,24 @@ function [Healthy,Patients,Healthy_Test,Patient_Test X_Train,Y_Train,X_Test,Y_Te
 %for the test and the rest is
 % selected for he training set
 
+% switch feature
+%     case 1
+%         load('FBIRN/finaldata_AO/features/fBIRN_AudOdd_allsites_0003_degrees.mat');
+%     case 2
+%         load('FBIRN/finaldata_AO/features/fBIRN_AudOdd_allsites_0003_log_degrees.mat');
+%         
+%     case 3
+%         load('FBIRN/finaldata_AO/features/fBIRN_AudOdd_allsites_0003_log_degrees_Tlms_MFG_SFG_.mat');
+% end
 switch feature
     case 1
-        load('FBIRN/finaldata_AO/features/fBIRN_AudOdd_allsites_0003_degrees.mat');
+        load('FBIRN/finaldata_AO/features/OurTestAllVoxels.mat');
     case 2
-        load('FBIRN/finaldata_AO/features/fBIRN_AudOdd_allsites_0003_log_degrees.mat');
-        
-    case 3
-        load('FBIRN/finaldata_AO/features/fBIRN_AudOdd_allsites_0003_log_degrees_Tlms_MFG_SFG_.mat');
-end
+        load('FBIRN/finaldata_AO/features/OurTestAllVoxelsLogDegrees.mat');
 
+    case 3
+        load('FBIRN/finaldata_AO/features/OurTestMFG_SFGVoxelsLogDegrees.mat');
+end
 %Select from all the data (We dont worry about balancing the training
 %and the testing sets with equal number of patients and controls)
 data;
