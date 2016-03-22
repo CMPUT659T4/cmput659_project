@@ -1,9 +1,12 @@
-function [train_X_pca,test_X_pca]=PCA(internal,feature)
+function [train_X_pca,test_X_pca]=PCA(internal,feature,k)
 fold=generateDataSetBalanced(feature,k);
 train_X = fold(2:k).fold;
+train_X =train_X';
 test_X = fold(1).fold;
+test_X = test_X';
 if internal==0,
-    prompt = 'Please enter number of Principal component that you want to have(less than 304): ';
+    mini = min(size(train_X));
+    prompt = sprintf('Please enter number of Principal component that you want to have(less than %d): ',mini);
     principal = input(prompt);
     train_X_pca= ppca(train_X,principal);
     test_X_pca = ppca(test_X,principal);
