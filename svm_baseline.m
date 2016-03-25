@@ -2,7 +2,7 @@ addpath('lasso','-end');
 %load('FBIRN/finaldata_AO/features/fBIRN_AudOdd_allsites_0003_degrees.mat')
 %load('FBIRN/finaldata_AO/features/fBIRN_AudOdd_allsites_0003_log_degrees.mat')
 % load('FBIRN/finaldata_AO/features/fBIRN_AudOdd_allsites_0003_log_degrees_Tlms_MFG_SFG_.mat')
-% load('concat_roi_avg.mat')
+load('concat_roi_avg.mat')
 % 
 % for s = 1:size(labels, 1)
 %     for r = 1:size(data, 1)
