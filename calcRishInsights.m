@@ -1,4 +1,4 @@
-function [Accuracy,PErrVec,FErrVec,site2,Met,WrongMAt,GoodMat]=calcRishInsights(limit,site,itterat)
+function [Accuracy,PErrVec,FErrVec,Met,WrongMAt,GoodMat]=calcRishInsights(limit,itterat)
 %limit is the number of variables we are interested in. ie, if limit=10, we
 %only look at the first 10 columns of the data vector
 Met=[];
@@ -11,7 +11,6 @@ addpath(genpath('FBIRN/PGMTools/SparseMRF/'))
 addpath(genpath('FBIRN/PGMTools/MRFC/'))
 %addpath('FBIRN/PGMTools/SparseMRF','-end')
 
-site2=site;
 ErrVec=zeros(1,itterat);
 FErrVec=zeros(1,itterat);
 Accuracy=zeros(1,itterat);

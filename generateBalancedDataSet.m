@@ -5,14 +5,17 @@ function [X_Train,Y_Train,X_Test,Y_Test]=generateBalancedDataSet(site,k,feature)
 % 1/k th portion of the data is selected for the test and the rest is
 % selected for he training set
 
+
 switch feature
     case 1
         load('FBIRN/finaldata_AO/features/OurTestAllVoxels.mat');
+        data=OurTestAllVoxels;
     case 2
-        load('FBIRN/finaldata_AO/features/OurTestAllVoxelsLogDegrees.mat');
-
+       load('FBIRN/finaldata_AO/features/OurTestAllVoxelsLogDegrees.mat');
+        data=OurTestAllVoxelsLogDegrees;
     case 3
         load('FBIRN/finaldata_AO/features/OurTestMFG_SFGVoxelsLogDegrees.mat');
+        data=OurTestMFG_SFGVoxelsLogDegrees;
 end
 %data=data(1:20,:);
 if site==6 

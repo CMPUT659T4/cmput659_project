@@ -1,4 +1,4 @@
-function [Accuracy,PErrVec,FErrVec,site2,Met,WrongMAt,GoodMat]=predictBasedOnBestFeaturesInsight(limit,site,itterat)
+function [Accuracy,PErrVec,FErrVec,Met,WrongMAt,GoodMat]=predictBasedOnBestFeaturesInsight(limit,itterat)
 %limit is the number of variables we are interested in. ie, if limit=10, we
 %only look at the first 10 columns of the data vector
 Met=[];
@@ -11,7 +11,6 @@ addpath(genpath('FBIRN/PGMTools/SparseMRF/'))
 addpath(genpath('FBIRN/PGMTools/MRFC/'))
 %addpath('FBIRN/PGMTools/SparseMRF','-end')
 
-site2=site;
 ErrVec=zeros(1,itterat);
 FErrVec=zeros(1,itterat);
 Accuracy=zeros(1,itterat);
@@ -21,8 +20,7 @@ for i=1:itterat
    [H P H_t P_t X_train,Y_train,X_test,Y_test]=getTwoFeatureSets(5,2);
   diff_mu=-(mean(H)-mean(P));%get the difference between the means of each voxel for healthy and Schizophrenic subjects
   [K index]=sort(diff_mu,'descend');%Sort the differences and get the widely changed pixel values
-   
-   
+     
    size(X_test);
     X_train=X_train(:,index(1:limit));
      X_test=X_test(:,index(1:limit));  

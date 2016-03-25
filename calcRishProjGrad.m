@@ -1,4 +1,4 @@
-function [Accuracy,PErrVec,FErrVec,site2]=calcRishProjGrad(limit,site,itterat)
+function [Accuracy,PErrVec,FErrVec]=calcRishProjGrad(limit,itterat)
 %limit is the number of variables we are interested in. ie, if limit=10, we
 %only look at the first 10 columns of the data vector
 addpath('FBIRN/PGMTools/SparseMRF','-end');
@@ -8,7 +8,7 @@ addpath(genpath('FBIRN/PGMTools/SparseMRF/'))
 addpath(genpath('FBIRN/PGMTools/MRFC/'))
 %addpath('FBIRN/PGMTools/SparseMRF','-end')
 
-site2=site;
+
 ErrVec=zeros(1,itterat);
 FErrVec=zeros(1,itterat);
 Accuracy=zeros(1,itterat);
@@ -16,6 +16,7 @@ for i=1:itterat
     %%% generating the test and the training set   
    
    [X_train,Y_train,X_test,Y_test]=generateBalancedDataSet(6,5,3);
+   %We use the MFG_SFG degree file to run this code
    size(X_test);
     X_train=X_train(:,1:limit);
      X_test=X_test(:,1:limit);  
@@ -53,7 +54,6 @@ for i=1:itterat
         % end
     end    
     model=best_model;
-    Y_test;
     predicted_Y = best_pred;
     Accuracy(i)=(1-err/length(Y_test));
     PErrVec(i)=FPerr/HTot;
