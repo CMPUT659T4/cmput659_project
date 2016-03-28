@@ -56,8 +56,8 @@ for iteration = 1:10
     h_kfold = [h_kfold, h_kfold, h_kfold, h_kfold]';
     h_kfold = h_kfold(:);
 
-    s_test_inds = logical((s_kfold == 1) + (s_kfold == 2) + (s_kfold == 3));
-    h_test_inds = logical((h_kfold == 1) + (h_kfold == 2) + (h_kfold == 3));
+    s_test_inds = logical((s_kfold == 1) + (s_kfold == 2));% + (s_kfold == 3));
+    h_test_inds = logical((h_kfold == 1) + (h_kfold == 2));% + (h_kfold == 3));
     s_train_inds = ~s_test_inds;
     h_train_inds = ~h_test_inds;
 
@@ -69,8 +69,8 @@ for iteration = 1:10
     s_test = s_data(:, :, s_test_inds);
     h_test = h_data(:, :, h_test_inds);
 
-    [s_covar, s_precision, ~, ~, ~] = GraphicalLasso(s_train, 0.1);
-    [h_covar, h_precision, ~, ~, ~] = GraphicalLasso(h_train, 0.1);
+    [s_covar, s_precision, ~, ~, ~] = GraphicalLasso(s_train, 0.01);
+    [h_covar, h_precision, ~, ~, ~] = GraphicalLasso(h_train, 0.01);
     % save(['post_glasso.mat'], 's_inds', 'h_inds', 's_data', 'h_data', ...
     %      's_kfold', 'h_kfold', 's_test_inds', 'h_test_inds', ...
     %      's_train_inds', 'h_train_inds', 's_train', 'h_train', ...
@@ -88,11 +88,11 @@ for iteration = 1:10
     t_labels = [ones(size(s_test, 3), 1); -1 * ones(size(h_test, 3), 1)];
     predictions = zeros(size(test, 3), 1);
     for i = 1:size(test, 3)
-        %s_ll = gaussianFit(s_precision, squeeze(test(:, :, i))', 0);
-        %h_ll = gaussianFit(h_precision, squeeze(test(:, :, i))', 0);
-        [y,pyx] = MRFC_predict(squeeze(test(:, :, i))', model);
-        s_ll = sum(y == 1);
-        h_ll = sum(y == -1);
+        s_ll = gaussianFit(s_precision, squeeze(test(:, :, i))', 0);
+        h_ll = gaussianFit(h_precision, squeeze(test(:, :, i))', 0);
+        %[y,pyx] = MRFC_predict(squeeze(test(:, :, i))', model);
+        %s_ll = sum(y == 1);
+        %h_ll = sum(y == -1);
         if s_ll > h_ll
             predictions(i) = 1;
         else
