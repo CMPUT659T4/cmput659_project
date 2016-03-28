@@ -1,19 +1,42 @@
-function [train_X_pca,test_X_pca]=PCA(internal,feature,k)
+function PC=PCA(internal,feature,k)
+comp = struct('coeff', [],'score', [],'pcvar' ,[]);
+h = comp;
+s = comp;
+PC = struct('h', [],'s', []);
 fold=generateDataSetBalanced(feature,k);
-train_X = fold(2:k).fold;
-train_X =train_X';
-test_X = fold(1).fold;
-test_X = test_X';
-if internal==0,
-    mini = min(size(train_X));
+
+train_hel = cat(1, fold(1).fold_hel ,fold(2:end).fold_hel);
+%train_hel =train_hel;
+%test_X_hel = fold(1).fold_hel;
+%test_X_hel = test_X_hel';
+
+train_sch = cat(1,fold(1).fold_sch,fold(2:end).fold_sch);
+%train_sch =train_sch';
+%test_X_sch = fold(1).fold_sch;
+%test_X_sch = test_X_sch';
+if internal~=1000,
+    size(train_hel)
+    mini = min(size(train_hel));
     prompt = sprintf('Please enter number of Principal component that you want to have(less than %d): ',mini);
     principal = input(prompt);
-    train_X_pca= ppca(train_X,principal);
-    test_X_pca = ppca(test_X,principal);
+    [coeff,score,pcvar]= ppca(train_hel,principal);
+    PC.h.coeff= coeff;
+    PC.h.score = score;
+    PC.h.pcvar = pcvar;
+    %PC.test_X_hel = ppca(test_X_hel,principal);
+    [coeff,score,pcvar]= ppca(train_sch,principal);
+    PC.s.coeff= coeff;
+    PC.s.score = score;
+    PC.s.pcvar = pcvar;
+    %PC.test_X_sch = ppca(test_X_sch,principal);
 else 
     
-    train_X_pca = getPCA(train_X,k);
-    test_X_pca = getPCA(test_X,k);
+    [h_coeff,score,h_pcvar] = getPCA(train_hel,k);
+    PC.train_hel= [h_coeff,score,h_pcvar];
+    %PC.test_X_hel = getPCA(test_X_hel,k);
+    [s_coeff,s_score,s_pcvar] = getPCA(train_sch,k);
+    PC.train_sch = [s_coeff,s_score,s_pcvar];
+    %PC.test_X_sch = getPCA(test_X_sch,k);
 end
 end
 function Z=getPCA(X,k)
