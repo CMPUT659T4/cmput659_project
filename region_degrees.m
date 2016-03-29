@@ -20,7 +20,7 @@ for i = 1:size(data, 3)
     new_data(:, i) = sum(c > 0.7);
 end
 data = new_data;
-%save(['region_degrees.mat'], 'data')
+%save(['region_degrees.mat'], 'data', 'labels')
 
 s_inds = labels(:) == 1;
 h_inds = labels(:) == -1;
