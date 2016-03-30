@@ -35,7 +35,7 @@ Y_train=data(:,end);
 %fprintf('size of H is %d and P is %d, total training set %d, Test set %d\n',size(H,1),size(P,1),size(X_train,1),size(X_test,1));
 %diff_mu=-(mean(Healthy)-mean(Patients));%get the difference between the means of each voxel for healthy and Schizophrenic subjects
 
-diff_mu=abs(mean(Healthy)-mean(Patients));
+diff_mu=-(mean(Healthy)-mean(Patients));
 
 [K index]=sort(diff_mu,'descend');%Sort the differences and get the widely changed pixel values
 X_train=X_train(:,index(1:limit));
@@ -54,7 +54,7 @@ model = MRFC_learn(X_train, Y_train, method, lambdas);  %learn MRF classifier (M
 
 load('FBIRN/finaldata_AO/features/FinalTestVoxelDegreesLog.mat');
 test=FinalTestLog;
-X_test=test(:,1:limit);
+X_test=test(:,index(1:limit));
 Y_test=test(:,end);
 
 
