@@ -18,11 +18,13 @@ CC = inv(cond(1).C);
    mvnpdf(X,cond(1).mu, CC );
    X;
 pyx = zeros(n,k);
+py;
 % compute P(X,Y=i)=P(Y=i)*P(X=x|Y=i) for each class lable i
 for class=1:k
     CC = inv(cond(class).C);
     CC = (CC + CC')/2;
     pyx(:,class) = log(py(class))+logmvnpdf(X,cond(class).mu, CC ); % multivar gaussian pdf
+    %pyx(:,class) = logmvnpdf(X,cond(class).mu, CC ); % multivar gaussian pdf
 end
 
 pyx;

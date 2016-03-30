@@ -1,9 +1,8 @@
-function [Accuracy,PErrVec,FErrVec,Met,WrongMAt,GoodMat]=RishMFG_SFG_CrossValidation(limit,itterat)
+function [Accuracy,PErrVec,FErrVec,AnalyseMatrix]=RishMFG_SFG_CrossValidation(limit,itterat)
 %limit is the number of variables we are interested in. ie, if limit=10, we
 %only look at the first 10 columns of the data vector
-Met=[];
-WrongMAt=[];
-GoodMat=[];
+AnalyseMatrix=[];
+
 addpath('FBIRN/PGMTools/SparseMRF','-end');
 addpath('FBIRN/PGMTools/MRFC','-end');
 addpath('FBIRN/PGMTools/SparseMRF/','-end');
@@ -11,18 +10,20 @@ addpath(genpath('FBIRN/PGMTools/SparseMRF/'))
 addpath(genpath('FBIRN/PGMTools/MRFC/'))
 
 
-
-
 PErrVec=zeros(5,itterat);
 FErrVec=zeros(5,itterat);
 Accuracy=zeros(5,itterat);
+
 for i=1:itterat
     %%% generating the test and the training set
-    
-    
+%     
+%     
     load('FBIRN/finaldata_AO/features/OurTestMFG_SFGVoxelsLogDegrees.mat');
     data=OurTestMFG_SFGVoxelsLogDegrees;
     
+%     load('FBIRN/finaldata_AO/features/OurTestMBI_stat.mat');
+%     data=(OurTestMBI_stat);
+%     
     
     Set1=find(data(:,end)==-1)';%healthy
     Set2=find(data(:,end)==1)'; % patients
@@ -49,7 +50,7 @@ for i=1:itterat
         X_test=Test(:,1:limit);
         Y_test=Test(:,end);
         
-        lambdas=0.7;
+        lambdas=0.6;
         % method='projected_gradient';
         method='varsel_mrf';
         %method='sinco';
@@ -91,16 +92,8 @@ for i=1:itterat
         
         %Convert the log likelihoods to normal space
         %
-        Met=[Probs (Probs(:,1)-Probs(:,2)) Y_test predicted_Y];
-        Prob=Met;
-        %     Prob(:,1)=exp(Met(:,1));
-        %     Prob(:,2)=exp(Met(:,2));
-        
-        Prob(:,1)=exp(Met(:,1))./(exp(Met(:,1))+exp(Met(:,2)));;
-        Prob(:,2)=exp(Met(:,2))./(exp(Met(:,1))+exp(Met(:,2)));;
-        Met=Prob;
-        WrongMAt=Met(find(Y_test~=predicted_Y),:);
-        GoodMat=Met(find(Y_test==predicted_Y),:);
+        AnalyseMatrix=[AnalyseMatrix;Probs Y_test predicted_Y];
+       
         model=best_model;
         Y_test;
         predicted_Y = best_pred;

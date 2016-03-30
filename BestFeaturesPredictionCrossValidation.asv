@@ -59,17 +59,14 @@ for i=1:itterat
 %         for fi=1:size(Patients,1)
 %             Patients(fi,:)=(Patients(fi,:)-mean(Patients(fi,:)))/std(Patients(fi,:));
 %         end
-       
+         for fi=1:size(Healthy,2)
+             Healthy(fi,:)=(Healthy(fi,:)-mean(Healthy(fi,:)))/std(Healthy(fi,:));
+         end
         %fprintf('size of H is %d and P is %d, total training set %d, Test set %d\n',size(H,1),size(P,1),size(X_train,1),size(X_test,1));
-        %diff_mu=-(mean(Healthy)-mean(Patients));%get the difference between the means of each voxel for healthy and Schizophrenic subjects
+        diff_mu=-(mean(Healthy)-mean(Patients));%get the difference between the means of each voxel for healthy and Schizophrenic subjects
         
-        size(Healthy,1);
-        size(Patients,1);
         
-        Adg=(std(Healthy).^2/size(Healthy,1)+std(Patients).^2/size(Patients,1)).^0.5;
-        
-        diff_mu=-((mean(Healthy)-mean(Patients))./Adg);
-        
+        diff_mu=-(mean(Healthy)-mean(Patients))/(std(Healthy);
         [K index]=sort(diff_mu,'descend');%Sort the differences and get the widely changed pixel values
        
         
