@@ -2,6 +2,5 @@ FBIRN/finaldata_AO/lowresRef_4
 FBIRN/finaldata_AO/lowresRef
 lasso/*.mex*
 Bad.mat
-FBIRN/PGMTools/SparseMRF/LearnSFMN/pathdef.m
 ROI_files
-
+FBIRN/PGMTools/SparseMRF/LearnSFMN/pathdef.m
