@@ -1,7 +1,11 @@
-function [Accuracy,PErrVec,FErrVec]=BestFeaturesPredictionCrossValidation(limit,itterat)
+function [Accuracy,PErrVec,FErrVec,AnalyseMatrix]=BestFeaturesPredictionCrossValidation(limit,itterat)
 %limit is the number of variables we are interested in. ie, if limit=10, we
 %only look at the first 10 columns of the data vector
 %This time doing the 5-fold cros validation over the data set
+
+AnalyseMatrix=[];
+
+
 addpath('FBIRN/PGMTools/SparseMRF','-end');
 addpath('FBIRN/PGMTools/MRFC','-end');
 addpath('FBIRN/PGMTools/SparseMRF/','-end');
@@ -49,22 +53,30 @@ for i=1:itterat
         X_test=Test(:,1:(end-1));
         Y_test=Test(:,end);
         
-        
+%         for fi=1:size(Healthy,1)
+%             Healthy(fi,:)=(Healthy(fi,:)-mean(Healthy(fi,:)))/std(Healthy(fi,:));
+%         end
+%         for fi=1:size(Patients,1)
+%             Patients(fi,:)=(Patients(fi,:)-mean(Patients(fi,:)))/std(Patients(fi,:));
+%         end
+       
         %fprintf('size of H is %d and P is %d, total training set %d, Test set %d\n',size(H,1),size(P,1),size(X_train,1),size(X_test,1));
-        diff_mu=abs(mean(Healthy)-mean(Patients));%get the difference between the means of each voxel for healthy and Schizophrenic subjects
+        %diff_mu=-(mean(Healthy)-mean(Patients));%get the difference between the means of each voxel for healthy and Schizophrenic subjects
+        
+        size(Healthy,1);
+        size(Patients,1);
+        
+        %Adg=(std(Healthy).^2/size(Healthy,1)+std(Patients).^2/size(Patients,1)).^0.5;
+         %diff_mu=-((mean(Healthy)-mean(Patients))./Adg);
+        diff_mu=(mean(Healthy)-mean(Patients));
+        
         [K index]=sort(diff_mu,'descend');%Sort the differences and get the widely changed pixel values
-        %   diff_mu(index(1:10))
-        %    diff_mu=abs(mean(H)-mean(P));%get the difference between the means of each voxel for healthy and Schizophrenic subjects
-        %   [K index]=sort(diff_mu,'descend');%Sort the differences and get the widely changed pixel values
-        %   diff_mu(index(1:10))
-        %    diff_mu=(mean(H)-mean(P));%get the difference between the means of each voxel for healthy and Schizophrenic subjects
-        %   [K index]=sort(diff_mu,'descend');%Sort the differences and get the widely changed pixel values
-        %   diff_mu(index(1:10))
+       
         
         X_train=X_train(:,index(1:limit));
         X_test=X_test(:,index(1:limit));
         
-        lambdas=0.1;
+        lambdas=0.7;
         % method='projected_gradient';
         method='varsel_mrf';
         %method='sinco';
@@ -77,7 +89,7 @@ for i=1:itterat
         %for lambda2 = lambdas
         % model = MRFC_learn(X_train, Y_train, method, lambda1,lambda2);  %learn MRF classifier (MRFC)
         model = MRFC_learn(X_train, Y_train, method, lambdas);  %learn MRF classifier (MRFC)
-        predicted_Y = MRFC_predict(X_test,model); %test MRFC
+        [ predicted_Y Probs] = MRFC_predict(X_test,model); %test MRFC
         
         FPerr = size(find(predicted_Y > 0 & Y_test < 0 ),1);
         FNerr = size(find(predicted_Y < 0 & Y_test > 0 ),1);
@@ -91,7 +103,7 @@ for i=1:itterat
             best_pred = predicted_Y;
         end
         % end
-        
+         AnalyseMatrix=[AnalyseMatrix;Y_test Probs Probs(:,1)-Probs(:,2)  predicted_Y];
         model=best_model;
         predicted_Y = best_pred;
         Accuracy(k,i)=(1-err/length(Y_test));

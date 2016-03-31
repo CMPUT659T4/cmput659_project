@@ -3,7 +3,7 @@ addpath('lasso','-end');
 %load('FBIRN/finaldata_AO/features/fBIRN_AudOdd_allsites_0003_log_degrees.mat')
 % load('FBIRN/finaldata_AO/features/fBIRN_AudOdd_allsites_0003_log_degrees_Tlms_MFG_SFG_.mat')
 load('concat_roi_avg.mat')
-% 
+
 % for s = 1:size(labels, 1)
 %     for r = 1:size(data, 1)
 %         series = squeeze(data(r, :, s));
@@ -21,16 +21,18 @@ load('concat_roi_avg.mat')
 %     i
 % end
 % data = new_data;
-% save(['precision_data_7.mat'], 'data')
+% save(['precision_data.mat'], 'data')
 load('precision_data.mat')
 
-s_inds = labels(:) == 1;
-h_inds = labels(:) == -1;
+holdout = data(:, :, holdout_set);
+data = data(:, :, train_set);
+s_inds = train_labels(:) == 1;
+h_inds = train_labels(:) == -1;
 s_data = data(:, :, s_inds);
 h_data = data(:, :, h_inds);
 
-a = zeros(10, 1);
-for iteration = 1:10
+a = zeros(5, 1);
+for iteration = 1:5
     s_kfold = crossvalind('Kfold', size(s_data, 3) / 4, 10);
     s_kfold = [s_kfold, s_kfold, s_kfold, s_kfold]';
     s_kfold = s_kfold(:);
@@ -89,3 +91,9 @@ end
 min(a)
 max(a)
 mean(a)
+
+data = reshape(data, [size(data, 1) * size(data, 2), size(data, 3)])';
+holdout = reshape(holdout, [size(holdout, 1) * size(holdout, 2), size(holdout, 3)])';
+SVMStruct = svmtrain(data, train_labels);
+predictions = svmclassify(SVMStruct, holdout);
+sum(predictions == holdout_labels) / length(holdout_labels)
