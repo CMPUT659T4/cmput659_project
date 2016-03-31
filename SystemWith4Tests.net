@@ -1,0 +1,87 @@
+net
+{
+	propagationenginegenerator1791944048146838126L = "edu.ucla.belief.approx.BeliefPropagationSettings@4c8f530f";
+	huginenginegenerator3061656038650325130L = "edu.ucla.belief.inference.JoinTreeSettings@37c8bbf0";
+	recoveryenginegenerator6944530267470113528l = "edu.ucla.util.SettingsImpl@16cb8a00";
+	node_size = (130 55);
+}
+
+node Test4
+{
+	states = ("Negative" "Positive" );
+	position = (571 -254);
+	diagnosistype = "AUXILIARY";
+	DSLxSUBMODEL = "Root Submodel";
+	ismapvariable = "false";
+	ID = "variable4";
+	label = "Test4";
+	excludepolicy = "include whole CPT";
+}
+node Test1
+{
+	states = ("Negative" "Positive" );
+	position = (133 -218);
+	diagnosistype = "AUXILIARY";
+	DSLxSUBMODEL = "Root Submodel";
+	ismapvariable = "false";
+	ID = "variable1";
+	label = "Test1";
+	excludepolicy = "include whole CPT";
+}
+node Subject
+{
+	states = ("Healthy" "Schizophrenic" );
+	position = (325 -148);
+	diagnosistype = "AUXILIARY";
+	DSLxSUBMODEL = "Root Submodel";
+	ismapvariable = "false";
+	ID = "variable0";
+	label = "Subject";
+	excludepolicy = "include whole CPT";
+}
+node Test2
+{
+	states = ("Negative" "Positive" );
+	position = (246 -298);
+	diagnosistype = "AUXILIARY";
+	DSLxSUBMODEL = "Root Submodel";
+	ismapvariable = "false";
+	ID = "variable2";
+	label = "Test2";
+	excludepolicy = "include whole CPT";
+}
+node Test3
+{
+	states = ("Negative" "Positive" );
+	position = (426 -306);
+	diagnosistype = "AUXILIARY";
+	DSLxSUBMODEL = "Root Submodel";
+	ismapvariable = "false";
+	ID = "variable3";
+	label = "Test3";
+	excludepolicy = "include whole CPT";
+}
+potential ( Test4 | Subject )
+{
+	data = ((	0.57	0.43	)
+		(	0.45	0.55	));
+}
+potential ( Test1 | Subject )
+{
+	data = ((	0.57	0.43	)
+		(	0.24	0.76	));
+}
+potential ( Subject | )
+{
+	data = (	0.51	0.49	);
+}
+potential ( Test2 | Subject )
+{
+	data = ((	0.66	0.34	)
+		(	0.35	0.65	));
+}
+potential ( Test3 | Subject )
+{
+	data = ((	0.44	0.56	)
+		(	0.58	0.42	));
+}

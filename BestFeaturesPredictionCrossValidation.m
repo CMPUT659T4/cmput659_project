@@ -66,9 +66,9 @@ for i=1:itterat
         size(Healthy,1);
         size(Patients,1);
         
-        Adg=(std(Healthy).^2/size(Healthy,1)+std(Patients).^2/size(Patients,1)).^0.5;
-        
-        diff_mu=-((mean(Healthy)-mean(Patients))./Adg);
+        %Adg=(std(Healthy).^2/size(Healthy,1)+std(Patients).^2/size(Patients,1)).^0.5;
+         %diff_mu=-((mean(Healthy)-mean(Patients))./Adg);
+        diff_mu=(mean(Healthy)-mean(Patients));
         
         [K index]=sort(diff_mu,'descend');%Sort the differences and get the widely changed pixel values
        
@@ -76,7 +76,7 @@ for i=1:itterat
         X_train=X_train(:,index(1:limit));
         X_test=X_test(:,index(1:limit));
         
-        lambdas=0.8;
+        lambdas=0.7;
         % method='projected_gradient';
         method='varsel_mrf';
         %method='sinco';

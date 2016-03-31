@@ -31,39 +31,50 @@ h_inds = labels(:) == -1;
 s_data = data(:, s_inds);
 h_data = data(:, h_inds);
 
-lambdas=0.9;
+lambdas=0.5;
 method='varsel_mrf';
 %a = zeros(10, 1);
+size(data)
 for iteration = 1:itterat
     s_kfold = crossvalind('Kfold', size(s_data, 2) / 4, 10);
     s_kfold = [s_kfold, s_kfold, s_kfold, s_kfold]';
     s_kfold = s_kfold(:);
-
+    
     h_kfold = crossvalind('Kfold', size(h_data, 2) / 4, 10);
     h_kfold = [h_kfold, h_kfold, h_kfold, h_kfold]';
     h_kfold = h_kfold(:);
-
+    
     s_test_inds = logical((s_kfold == 1) + (s_kfold == 2));% + (s_kfold == 3));
     h_test_inds = logical((h_kfold == 1) + (h_kfold == 2));% + (h_kfold == 3));
     s_train_inds = ~s_test_inds;
     h_train_inds = ~h_test_inds;
-
+    
     s_train = s_data(:, s_train_inds)';
     h_train = h_data(:, h_train_inds)';
-
+    
     s_test = s_data(:, s_test_inds)';
     h_test = h_data(:, h_test_inds)';
     
-    model = MRFC_learn([s_train; h_train], [ones(size(s_train, 1), 1); -1 * ones(size(h_train, 1), 1)], method, lambdas);
-    predictions = MRFC_predict([s_test; h_test], model);
-
-
-     t_labels = [ones(size(s_test, 1), 1); -1 * ones(size(h_test, 1), 1)];
+    
+    
+    SVMStruct = svmtrain([s_train; h_train], [ones(size(s_train, 1), 1); -1 * ones(size(h_train, 1), 1)]);
+    predictions = svmclassify(SVMStruct, [s_test; h_test]);
+    t_labels = [ones(size(s_test, 1), 1); -1 * ones(size(h_test, 1), 1)];
+    
+    
+    %
+    %     model = MRFC_learn([s_train; h_train], [ones(size(s_train, 1), 1); -1 * ones(size(h_train, 1), 1)], method, lambdas);
+    %     predictions = MRFC_predict([s_test; h_test], model);
+    %
+    %
+    %      t_labels = [ones(size(s_test, 1), 1); -1 * ones(size(h_test, 1), 1)];
+    
+    
     FPerr = size(find(predictions > 0 & t_labels < 0 ),1);
-        FNerr = size(find(predictions < 0 & t_labels > 0 ),1);
+    FNerr = size(find(predictions < 0 & t_labels > 0 ),1);
     a(iteration) = sum(predictions == t_labels) / length(t_labels);
-     HTot=length(find(t_labels<0));
-        STot=length(find(t_labels>0));
+    HTot=length(find(t_labels<0));
+    STot=length(find(t_labels>0));
     PErrVec(iteration)=FPerr/HTot;
     FErrVec(iteration)=FNerr/STot;
 end

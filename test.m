@@ -1,9 +1,17 @@
 addpath(genpath('FBIRN/PGMTools/'))
 addpath(genpath('E:\Google Drive\University\Proabilistic Graphical Models\Project'))
+
+
+addpath('FBIRN/PGMTools/SparseMRF','-end');
+addpath('FBIRN/PGMTools/MRFC','-end');
+addpath('FBIRN/PGMTools/SparseMRF/','-end');
+addpath(genpath('FBIRN/PGMTools/SparseMRF/'))
+addpath(genpath('FBIRN/PGMTools/MRFC/'))
+
 load('testInd.mat');
 
 
-load('fBIRN_AudOdd_allsites_0003_degrees.mat')
+load('FBIRN/finaldata_AO/features/fBIRN_AudOdd_allsites_0003_degrees.mat')
 %load('fBIRN_AudOdd_allsites_0003_all_corr.mat')
 %load('fBIRN_AudOdd_allsites_0003_log_degrees.mat')
 %load('fBIRN_AudOdd_allsites_0003_log_degrees_Tlms_MFG_SFG_.mat')
@@ -12,7 +20,7 @@ load('fBIRN_AudOdd_allsites_0003_degrees.mat')
 %load('fBIRN_AudOdd_allsites_0003_log_disconnection_Tlms_MFG_SFG.mat')
 %load('fBIRN_AudOdd_allsites_0003_mbi_stats.mat')
 %load('fBIRN_AudOdd_allsites_0003_norm_avgrgs_degrees.mat')
-numFeatures= 1000;
+numFeatures= 200;
 %y=data(:,end);
 %a=find(y==1);
 %sch=a(1:38);
