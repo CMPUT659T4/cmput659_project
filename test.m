@@ -1,3 +1,4 @@
+function Accuracy = test(rho,numFeatures)
 addpath(genpath('FBIRN/PGMTools/'))
 addpath(genpath('E:\Google Drive\University\Proabilistic Graphical Models\Project'))
 
@@ -20,7 +21,7 @@ load('FBIRN/finaldata_AO/features/fBIRN_AudOdd_allsites_0003_degrees.mat')
 %load('fBIRN_AudOdd_allsites_0003_log_disconnection_Tlms_MFG_SFG.mat')
 %load('fBIRN_AudOdd_allsites_0003_mbi_stats.mat')
 %load('fBIRN_AudOdd_allsites_0003_norm_avgrgs_degrees.mat')
-numFeatures= 1000;
+%numFeatures= 1000;
 %y=data(:,end);
 %a=find(y==1);
 %sch=a(1:38);
@@ -38,10 +39,11 @@ X_ = data(test_ind,ind);
 y = data(train,end);
 y_ = data(test_ind,end);
 method ='varsel_mrf'; %'kataya';%'projected_grad';%'covsel';%'varsel_mrf';
-model = MRFC_learn(X, y, method, 0.7);
+model = MRFC_learn(X, y, method, rho);
 [y,pyx] = MRFC_predict(X_, model);
 
 Accuracy = (sum(y==y_)/length(y))*100
 if Accuracy>=70,
     fprintf('Holy Moly Cow!!!!');
 end;
+end
