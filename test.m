@@ -9,7 +9,7 @@ addpath('FBIRN/PGMTools/SparseMRF/','-end');
 addpath(genpath('FBIRN/PGMTools/SparseMRF/'))
 addpath(genpath('FBIRN/PGMTools/MRFC/'))
 
-load('testInd.mat');
+load('test_ind1.mat');
 
 
 load('FBIRN/finaldata_AO/features/fBIRN_AudOdd_allsites_0003_degrees.mat')
