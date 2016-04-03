@@ -30,21 +30,24 @@ for i=1:itterat
     data2=OurTestAllVoxelsLogDegrees;
     
     %&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& TEST 4 &&&&&&&&&&&&&&&&&&&&&&&
-    load('FBIRN/finaldata_AO/features/train_concat_roi_avg.mat')
-    data4=train_concat_roi_avg;
-    data4([81, 82, 128, 184, 247, 248, 249, 250], :, :) = [];
+%     load('FBIRN/finaldata_AO/features/train_concat_roi_avg.mat')
+%     data4=train_concat_roi_avg;
     
-    new_data = zeros(size(data4, 1), size(data4, 3));
-    for j = 1:size(data4, 3)
-        c = corr(squeeze(data4(:, :, j))');
-        c = c - diag(diag(c));
-        new_data(:, j) = sum(c > 0.7);
-    end
-    
-    %data4 = log(0.1+new_data);
-     data4 = new_data;
+        load('FBIRN/finaldata_AO/features/train_concat_roi_all.mat')
+    data4=train_concat_roi_all;
+%     data4([81, 82, 128, 184, 247, 248, 249, 250], :, :) = [];
+%     
+%     new_data = zeros(size(data4, 1), size(data4, 3));
+%     for j = 1:size(data4, 3)
+%         c = corr(squeeze(data4(:, :, j))');
+%         c = c - diag(diag(c));
+%         new_data(:, j) = sum(c > 0.7);
+%     end
+%     
+%     %data4 = log(0.1+new_data);
+%      data4 = new_data;
      
-    limit=20;
+    limit=4;
     limit2=10;
     limit3=20;
     Set1=find(data1(:,end)==-1)';%healthy
@@ -85,7 +88,7 @@ for i=1:itterat
         
         Train2=data2(trainInd,:); % Extract the training data
         Test2=data2(testInd,:); %Extract the tes tdata
-        
+        Y_test-Test2(:,end);
         X_train2=Train2(:,1:(end-1));
         Y_train2=Train2(:,end);
         X_test2=Test2(:,1:(end-1));
@@ -112,7 +115,7 @@ for i=1:itterat
         X_train3=Train3(:,1:(end-1));
         Y_train3=Train3(:,end);
         X_test3=Test3(:,1:(end-1));
-        
+        Y_test-Test3(:,end);
         diff_mu=(mean(Healthy)-mean(Patients));
         
         [K index]=sort(diff_mu,'descend');%Sort the differences and get the widely changed pixel values
@@ -129,19 +132,20 @@ for i=1:itterat
         
         %&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& TEST 4 &&&&&&&&&&&&&&&&&&&&&&&
             
-        s_test_inds = Set2(find(Indices2==k))';% + (s_kfold == 3));
-        h_test_inds = Set1(find(Indices1==k))';% + (h_kfold == 3));
-        s_train_inds = Set2(find(Indices2~=k))';
-        h_train_inds = Set1(find(Indices1~=k))';
+        s_test_inds = Set2(find(Indices2==k));% + (s_kfold == 3));
+        h_test_inds = Set1(find(Indices1==k));% + (h_kfold == 3));
+        s_train_inds = Set2(find(Indices2~=k));
+        h_train_inds = Set1(find(Indices1~=k));
         
-        s_train = data4(:,s_train_inds)';
-        h_train = data4(:,h_train_inds)';
-              
+        wk=.01;
+        s_train = log(wk+data4(s_train_inds,1:end-1));
+        h_train = log(wk+data4(h_train_inds,1:end-1));            
+        s_test = log(wk+data4(s_test_inds,1:end-1));
+        h_test =  log(wk+data4(h_test_inds,1:end-1));
         
-        s_test = data4(:,s_test_inds)';
-        h_test =  data4(:,h_test_inds)';
-        indt=data4(:,testInd)';
         
+        indt=data4(testInd,1:end-1);
+        Y_test=data4(testInd,end);
         SVMStruct = svmtrain([s_train; h_train], [ones(size(s_train, 1), 1); -1 * ones(size(h_train, 1), 1)]);
         %Test4 = svmclassify(SVMStruct, [s_test; h_test]);
         Test4 = svmclassify(SVMStruct, [indt]);
@@ -149,7 +153,7 @@ for i=1:itterat
         %&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& Ensembling &&&&&&&&&&&&&&&&&&&&&&&
         
         predicted_Y=Test4;
-        
+        %predicted_Y=PGM_EnsembleTest3(Test1, Test2,Test3);
         FPerr = size(find(predicted_Y > 0 & Y_test < 0 ),1);
         FNerr = size(find(predicted_Y < 0 & Y_test > 0 ),1);
         err = FPerr +FNerr;
