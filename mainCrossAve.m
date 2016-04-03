@@ -1,4 +1,4 @@
-function result = mainCross()
+function result = mainCrossAve()
 
 addpath(genpath('FBIRN/PGMTools/'))
 addpath(genpath('E:\Google Drive\University\Proabilistic Graphical Models\Project'))
@@ -26,30 +26,20 @@ if size(data,1)~=380,
         error('Data format is incompatible with current test format!!');
 end
 
-rho = [0.01,0.1,0.7];
-numFeatures = [4,40,400,1000];
-numFolds = 5;
+rho = 0.7;
+numFeatures = 1000;
+numLoops = 5;
 percentage = 20;
-result = zeros(length(rho),length(numFeatures));
-result_t = zeros(length(rho),length(numFeatures),numFolds);
-test_ind = TestInd(data,percentage);
-train_ind = setdiff([1:size(data,1)],test_ind);
-data_t = data(train_ind,:);
-save('test_ind2.mat','test_ind');
-for i=1:length(rho),
-    for j=1:length(numFeatures),
-        for k=1:numFolds
-            ind = crossind(data_t,numFolds);
-            cross_test = find(ind==k);
-            result_t(i,j,k) = testCross(data_t,rho(i),numFeatures(j),cross_test);
-        end
-    end
+
+result_t = zeros(numLoops);
+
+test_ind = struct('ind',(percentage*380)/100);
+for i=1:numLoops,
+    test_ind(i).ind = TestInd(data,percentage);
+    result_t(i) = testCross(data,rho,numFeatures,test_ind(i).ind);
 end
-for i=1:length(rho),
-    for j=1:length(numFeatures),
-        result(i,j) = mean(result_t(i,j,:));
-    end
-end
-save('result.mat','result');
-save('result_t.mat','result_t');
+%save('test_ind_vector.mat','test_ind');
+result = mean(result_t(:));
+save('result_Loop.mat','result');
+save('result_t_Loop.mat','result_t');
 end
