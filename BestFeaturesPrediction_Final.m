@@ -17,19 +17,22 @@ addpath(genpath('FBIRN/PGMTools/MRFC/'))
 
 %%% generating the test and the training set
 %[H P H_t P_t X_train,Y_train,X_test,Y_test]=getTwoFeatureSets(5,2);
-load('FBIRN/finaldata_AO/features/OurTestAllVoxelsLogDegrees.mat');
-data=OurTestAllVoxelsLogDegrees;
+%load('FBIRN/finaldata_AO/features/OurTestAllVoxelsLogDegrees.mat');
+load('FBIRN/finaldata_AO/features/fBIRN_AudOdd_allsites_0003_log_degrees.mat');
+
+%data=OurTestAllVoxelsLogDegrees;
+data1=data(93:end,:);
 
 %Select from all the data (We dont worry about balancing the training
 %and the testing sets with equal number of patients and controls)
-Set1=find(data(:,end)==-1)';%healthy
-Set2=find(data(:,end)==1)'; % patients
+Set1=find(data1(:,end)==-1)';%healthy
+Set2=find(data1(:,end)==1)'; % patients
 
-Healthy=data(Set1,1:end-1); %First k-1 sets are for the training set
-Patients=data(Set2,1:end-1);
+Healthy=data1(Set1,1:end-1); %First k-1 sets are for the training set
+Patients=data1(Set2,1:end-1);
 
-X_train=data(:,1:(end-1));
-Y_train=data(:,end);
+X_train=data1(:,1:(end-1));
+Y_train=data1(:,end);
 
 
 %fprintf('size of H is %d and P is %d, total training set %d, Test set %d\n',size(H,1),size(P,1),size(X_train,1),size(X_test,1));
@@ -52,8 +55,9 @@ min_err = Inf;
 % model = MRFC_learn(X_train, Y_train, method, lambda1,lambda2);  %learn MRF classifier (MRFC)
 model = MRFC_learn(X_train, Y_train, method, lambdas);  %learn MRF classifier (MRFC)
 
-load('FBIRN/finaldata_AO/features/FinalTestVoxelDegreesLog.mat');
-test=FinalTestLog;
+%load('FBIRN/finaldata_AO/features/FinalTestVoxelDegreesLog.mat');
+%test=FinalTestLog;
+test=data(1:92,:);
 X_test=test(:,index(1:limit));
 Y_test=test(:,end);
 

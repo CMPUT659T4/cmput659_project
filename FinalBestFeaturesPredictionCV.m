@@ -16,7 +16,9 @@ FErrVec=zeros(5,1);
 Accuracy=zeros(5,1);
 
 limits=[5 10 15 20 25 30 50 100 200 500];
-lambdaVec=[0.001 0.007 0.01 0.07 0.1 0.5 0.7 0.8 0.9];
+%limits=[10 15 20 25];
+%lambdaVec=[0.001 0.007 0.01 0.07 0.1 0.5 0.7 0.8 0.9];
+lambdaVec=[0.001 0.01 0.1 0.5 0.7 0.8 0.9];
 %lambdaVec=[0.001 0.007 0.1 0.7];
 FinPErrVec=zeros(length(lambdaVec),length(limits));
 FinFErrVec=zeros(length(lambdaVec),length(limits));
@@ -101,10 +103,8 @@ for i=1:itterat
             FinPErrVec(ghj,limK)=FinPErrVec(ghj,limK)+mean(mean(PErrVec));
             FinFErrVec(ghj,limK)=FinFErrVec(ghj,limK)+mean(mean(FErrVec));
             
-        end
-        
-        
-        
+        end    
+             
         
     end
 end
