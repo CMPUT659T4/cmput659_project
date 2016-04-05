@@ -8,3 +8,5 @@ FBIRN/finaldata_AO/features/test_ind1.mat
 *.asv
 test_ind1.mat
 FBIRN/PGMTools/SparseMRF/LearnSFMN/pathdef.m
+FBIRN/finaldata_AO/features/test_ind2.mat
+FBIRN/PGMTools/SparseMRF/LearnSFMN/pathdef.m

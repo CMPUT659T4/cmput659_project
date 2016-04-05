@@ -26,12 +26,12 @@ if size(data,1)~=380,
         error('Data format is incompatible with current test format!!');
 end
 
-rho = 0.7;
-numFeatures = 1000;
+rho = 0.01;
+numFeatures = 400;
 numLoops = 5;
 percentage = 20;
 
-result_t = zeros(numLoops);
+result_t = zeros(1,numLoops);
 
 test_ind = struct('ind',(percentage*380)/100);
 for i=1:numLoops,
@@ -39,7 +39,7 @@ for i=1:numLoops,
     result_t(i) = testCross(data,rho,numFeatures,test_ind(i).ind);
 end
 %save('test_ind_vector.mat','test_ind');
-result = mean(result_t(:));
-save('result_Loop.mat','result');
-save('result_t_Loop.mat','result_t');
+result = mean(result_t);
+save('resultAVe_LogDis.mat','result');
+save('resultAVe_LogDis_cros.mat','result_t');
 end
