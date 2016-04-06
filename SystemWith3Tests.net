@@ -1,22 +1,11 @@
 net
 {
 	propagationenginegenerator1791944048146838126L = "edu.ucla.belief.approx.BeliefPropagationSettings@4c8f530f";
-	huginenginegenerator3061656038650325130L = "edu.ucla.belief.inference.JoinTreeSettings@37c8bbf0";
 	recoveryenginegenerator6944530267470113528l = "edu.ucla.util.SettingsImpl@16cb8a00";
-	node_size = (130 55);
+	node_size = (130.0 55.0);
+	huginenginegenerator3061656038650325130L = "edu.ucla.belief.inference.JoinTreeSettings@37c8bbf0";
 }
 
-node Test1
-{
-	states = ("Negative" "Positive" );
-	position = (133 -218);
-	diagnosistype = "AUXILIARY";
-	DSLxSUBMODEL = "Root Submodel";
-	ismapvariable = "false";
-	ID = "variable1";
-	label = "Test1";
-	excludepolicy = "include whole CPT";
-}
 node Subject
 {
 	states = ("Healthy" "Schizophrenic" );
@@ -26,34 +15,44 @@ node Subject
 	ismapvariable = "false";
 	ID = "variable0";
 	label = "Subject";
+	DSLxEXTRA_DEFINITIONxDIAGNOSIS_TYPE = "AUXILIARY";
 	excludepolicy = "include whole CPT";
 }
 node Test2
 {
 	states = ("Negative" "Positive" );
-	position = (246 -298);
+	position = (390 -410);
 	diagnosistype = "AUXILIARY";
 	DSLxSUBMODEL = "Root Submodel";
 	ismapvariable = "false";
 	ID = "variable2";
 	label = "Test2";
+	DSLxEXTRA_DEFINITIONxDIAGNOSIS_TYPE = "AUXILIARY";
 	excludepolicy = "include whole CPT";
 }
 node Test3
 {
 	states = ("Negative" "Positive" );
-	position = (426 -306);
+	position = (633 -289);
 	diagnosistype = "AUXILIARY";
 	DSLxSUBMODEL = "Root Submodel";
 	ismapvariable = "false";
 	ID = "variable3";
 	label = "Test3";
+	DSLxEXTRA_DEFINITIONxDIAGNOSIS_TYPE = "AUXILIARY";
 	excludepolicy = "include whole CPT";
 }
-potential ( Test1 | Subject )
+node Test1
 {
-	data = ((	0.57	0.43	)
-		(	0.24	0.76	));
+	states = ("Negative" "Positive" );
+	position = (133 -218);
+	diagnosistype = "AUXILIARY";
+	DSLxSUBMODEL = "Root Submodel";
+	ismapvariable = "false";
+	ID = "variable1";
+	label = "Test1";
+	DSLxEXTRA_DEFINITIONxDIAGNOSIS_TYPE = "AUXILIARY";
+	excludepolicy = "include whole CPT";
 }
 potential ( Subject | )
 {
@@ -68,4 +67,9 @@ potential ( Test3 | Subject )
 {
 	data = ((	0.44	0.56	)
 		(	0.58	0.42	));
+}
+potential ( Test1 | Subject )
+{
+	data = ((	0.57	0.43	)
+		(	0.24	0.76	));
 }
