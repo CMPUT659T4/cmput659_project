@@ -1,4 +1,4 @@
-function Accuracy = test(rho,numFeatures)
+function Accuracy = testglasso(rho,numFeatures)
 addpath(genpath('FBIRN/PGMTools/'))
 addpath(genpath('E:\Google Drive\University\Proabilistic Graphical Models\Project'))
 
@@ -38,11 +38,37 @@ X = data(train,ind);
 X_ = data(test_ind,ind);
 y = data(train,end);
 y_ = data(test_ind,end);
-method ='varsel_mrf'; %'kataya';%'projected_grad';%'covsel';%'varsel_mrf';
-model = MRFC_learn(X, y, method, rho);
-[y,pyx] = MRFC_predict(X_, model);
 
-Accuracy = (sum(y==y_)/length(y))*100
+
+
+addpath('lasso','-end');
+
+s_inds = y(:) == 1;
+h_inds = y(:) == -1;
+s_train = X(s_inds,:);
+h_train = X(h_inds, :);
+[~, s_precision, ~, ~, ~] = GraphicalLasso(s_train, rho);
+[~, h_precision, ~, ~, ~] = GraphicalLasso(h_train, rho);
+predictions = zeros(size(test_ind, 1), 1);
+for i = 1:length(test_ind)
+    nll(1) = gaussianFit(s_precision, X_(i,:), 0);
+    nll(2) = gaussianFit(h_precision, X_(i,:), 0);
+    %[y,pyx] = MRFC_predict(squeeze(holdout(:, :, i))', model);
+    %nll = sum(pyx);
+    if nll(1) > nll(2)
+        predictions(i) = 1;
+    else
+        predictions(i) = -1;
+    end
+end
+
+
+
+% method ='varsel_mrf'; %'kataya';%'projected_grad';%'covsel';%'varsel_mrf';
+% %model = MRFC_learn(X, y, method, rho);
+% [y,pyx] = MRFC_predict(X_, model);
+
+Accuracy = (sum(predictions == y_)/length(y))*100
 if Accuracy>=70,
     fprintf('Holy Moly Cow!!!!');
 end;
