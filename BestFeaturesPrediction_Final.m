@@ -19,10 +19,12 @@ addpath(genpath('FBIRN/PGMTools/MRFC/'))
 %[H P H_t P_t X_train,Y_train,X_test,Y_test]=getTwoFeatureSets(5,2);
 %load('FBIRN/finaldata_AO/features/OurTestAllVoxelsLogDegrees.mat');
 load('FBIRN/finaldata_AO/features/fBIRN_AudOdd_allsites_0003_log_degrees.mat');
-
+IndicesToTest=TestInd(data,19);
+size(IndicesToTest);
 %data=OurTestAllVoxelsLogDegrees;
-data1=data(93:end,:);
-
+data1=data;
+data1(IndicesToTest,:)=[];
+size(data1);
 %Select from all the data (We dont worry about balancing the training
 %and the testing sets with equal number of patients and controls)
 Set1=find(data1(:,end)==-1)';%healthy
@@ -57,7 +59,8 @@ model = MRFC_learn(X_train, Y_train, method, lambdas);  %learn MRF classifier (M
 
 %load('FBIRN/finaldata_AO/features/FinalTestVoxelDegreesLog.mat');
 %test=FinalTestLog;
-test=data(1:92,:);
+test=data(IndicesToTest,:);
+size(test)
 X_test=test(:,index(1:limit));
 Y_test=test(:,end);
 

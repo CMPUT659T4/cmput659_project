@@ -19,6 +19,7 @@ CC = inv(cond(1).C);
    X;
 pyx = zeros(n,k);
 py;
+k;
 % compute P(X,Y=i)=P(Y=i)*P(X=x|Y=i) for each class lable i
 for class=1:k
     CC = inv(cond(class).C);
@@ -27,8 +28,9 @@ for class=1:k
     %pyx(:,class) = logmvnpdf(X,cond(class).mu, CC ); % multivar gaussian pdf
 end
 
-pyx;
+size(pyx);
 [a,ind]=max(pyx');
+
 y=zeros(n,1);
 for i=1:n
     y(i)=model.labels(ind(i));
