@@ -2,6 +2,9 @@
 \usepackage{nips15submit_e,times}
 \usepackage{hyperref}
 \usepackage{url}
+\usepackage{verbatim}
+
+
 \title{Using fMRI to Diagnose Schizophrenia}
 \author{%add name 
 	\\
@@ -27,10 +30,10 @@ University of Alberta\\
 \begin{document}
 	\maketitle
 	\begin{abstract}
-		      
+			Diagnosis of schizophrenia is a challenging task that yet to be addressed\cite{McGuire200891}. Although, in recent years methods which use Functional Magnetic Resonance Imaging(fMRI) for mental disorder diagnosis has become more popular, but in case of schizophrenia it still needs to become more robust and reliable. In similar studies\cite{Rish_2013}\cite{Rosa_2013} have been shown that fMRI can be used in conjunction with Sparse Gaussian Markov Random Field(SGMRF) to produce high accuracy in diagnosis of illness. However having a dataset with homogeneous distribution of illness makes this result less reliable and creates the need for more evidence using heterogeneous dataset in terms of illness. In this work we pursue two path to tackle this problem. First, we evaluate performance of Sparse Gaussian Markov Random Field(SGMRF) on fMRI data obtained through whole brain, and second we work on Regions of Interest(ROI) according to Power et al.\cite{Power_2011}. We have used 5 fold cross validation for hyper parameter tuning and 20\% holdout set for test. Accuracies that we have obtained through mentioned method are:------ for whole brain features and ---- for ROI features. While this result are slightly less than the results obtained by Rish et al. it is on par with Rosa et al. results.  
 	\end{abstract}
 	\section{Introduction}
-	Diagnosis of schizophrenia is a challenging task that yet to be addressed\cite{McGuire200891}. Although, in recent years methods which use Functional Magnetic Resonance Imaging(fMRI) for mental disorder diagnosis has become more popular, but in case of schizophrenia it still needs to become more robust and reliable. In similar studies\cite{Rish_2013}\cite{Rosa_2013} have been shown that fMRI can be used in conjunction with Sparse Gaussian Markov Random Field to produce high accuracy in diagnosis of illness. However having a dataset with homogeneous distribution of illness makes this result less reliable and creates the need for more evidence using heterogeneous dataset in terms of illness. 
+
 	
 	\bibliographystyle{plain}
 	\bibliography{T4_Report}
