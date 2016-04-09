@@ -28,16 +28,93 @@ University of Alberta\\
 \nipsfinalcopy 
 
 \begin{document}
-	\maketitle
-	\begin{abstract}
-			Diagnosis of schizophrenia is a challenging task that yet to be addressed\cite{McGuire200891}. Although, in recent years methods which use Functional Magnetic Resonance Imaging(fMRI) for mental disorder diagnosis has become more popular, but in case of schizophrenia it still needs to become more robust and reliable. In similar studies\cite{Rish_2013}\cite{Rosa_2013} have been shown that fMRI can be used in conjunction with Sparse Gaussian Markov Random Field(SGMRF) to produce high accuracy in diagnosis of illness. However having a dataset with homogeneous distribution of illness makes this result less reliable and creates the need for more evidence using heterogeneous dataset in terms of illness. In this work we pursue two path to tackle this problem. First, we evaluate performance of Sparse Gaussian Markov Random Field(SGMRF) on fMRI data obtained through whole brain, and second we work on Regions of Interest(ROI) according to Power et al.\cite{Power_2011}. We have used 5 fold cross validation for hyper parameter tuning and 20\% holdout set for test. Accuracies that we have obtained through mentioned method are:------ for whole brain features and ---- for ROI features. While this result are slightly less than the results obtained by Rish et al. it is on par with Rosa et al. results.  
-	\end{abstract}
-	\section{Introduction}
-	Functional Magnetic Resonance Imaging(fMRI) is a tool for recording functional changes caused by neuron activity. When a person is doing a task neuron activity fluctuate and human body in order to provide the energy needed for this activity increases the blood flow to feed the neurons with the needed glucose which is not stored in the brain. More blood flow also brings more oxygen through blood vessels. This change in the level of oxygenated blood know as oxyhemoglobin and deoxyhemoglobin (oxygenated or deoxygenated blood) changes the magnetic susceptibility of blood(BOLD signal) which is the base for detection in MRI machine.  
-	Schizophrenia is mental disorder that has been shown to affect blood flow in patient's brain\cite{Kenji_2010}.   
-  
-	
-	\bibliographystyle{plain}
-	\bibliography{T4_Report}
+\maketitle
+\begin{abstract}
+Diagnosis of schizophrenia is a challenging task that yet to be 
+addressed\cite{McGuire200891}. Although, in recent years methods which use 
+Functional Magnetic Resonance Imaging (fMRI) for mental disorder diagnosis has 
+become more popular, but in case of schizophrenia it still needs to become 
+more robust and reliable. In similar studies\cite{Rish_2013}\cite{Rosa_2013} 
+have been shown that fMRI can be used in conjunction with Sparse Gaussian 
+Markov Random Field (SGMRF) to produce high accuracy in diagnosis of illness. 
+However having a dataset with homogeneous distribution of illness makes this 
+result less reliable and creates the need for more evidence using 
+heterogeneous dataset in terms of illness. In this work we pursue two path to 
+tackle this problem. First, we evaluate performance of Sparse Gaussian Markov 
+Random Field (SGMRF) on fMRI data obtained through whole brain, and second we 
+work on Regions of Interest (ROI) according to Power et al.\cite{Power_2011}. 
+We have used 5 fold cross validation for hyper parameter tuning and $20\%$ 
+holdout set for test. Accuracies that we have obtained through mentioned 
+method are: ------ for whole brain features and ---- for ROI features. While 
+this result are slightly less than the results obtained by Rish \emph{et al.} 
+it is on par with Rosa \emph{et al.} results.  
+\end{abstract}
+
+
+\section{Introduction}
+Functional Magnetic Resonance Imaging (fMRI) is a tool for recording 
+functional changes caused by neuron activity. When a person is doing a task 
+neuron activity fluctuate and human body in order to provide the energy 
+needed for this activity increases the blood flow to feed the neurons with 
+the needed glucose which is not stored in the brain. More blood flow also 
+brings more oxygen through blood vessels. This change in the level of 
+oxygenated blood know as oxyhemoglobin and deoxyhemoglobin (oxygenated or 
+deoxygenated blood) changes the magnetic susceptibility of blood (BOLD signal) 
+which is the base for detection in MRI machine.  
+Schizophrenia is mental disorder that has been shown to affect blood flow in patient's brain\cite{Kenji_2010}.   
+
+
+\section{Background}
+
+\subsection{Schizophrenia}
+what is it and why do we care
+
+\subsection{ROI and Voxel by Voxel Analysis}
+
+\subsection{Fourier Transform}
+What is a FFT and how does it work
+
+\subsection{Principal Component Analysis}
+
+\subsection{Support Vector Machines}
+What is an SVM and how does it work
+
+\subsection{SGMRF}
+What is a SGMRF and how does it work
+
+
+\section{Methodology}
+
+\subsection{Data Set}
+Turn our slide into this section
+How do we have? Balance? 
+How we create the holdout set?
+
+
+\subsection{Your Approach? Mario}
+Describe your experiments
+
+\subsection{Your Approach? Neil}
+Describe your experiments
+
+\subsection{Your Approach? Farhad}
+Describe your experiments
+
+\section{Results}
+
+\subsection{Your Approach? Mario}
+Report your results
+
+\subsection{Your Approach? Neil}
+Report your results
+
+\subsection{Your Approach? Farhad}
+Report your results
+
+\section{Conclusions}
+
+
+\bibliographystyle{plain}
+\bibliography{T4_Report}
 	
 \end{document}
