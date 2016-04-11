@@ -1,11 +1,11 @@
-function [Accuracy,PErrVec,FErrVec,AnalyseMatrix]=BestFeaturesPrediction_Final(limit)
+function [predict labels]=BestFeaturesPrediction_Mario()
 %limit is the number of variables we are interested in. ie, if limit=10, we
 %only look at the first 10 columns of the data vector
 %This time doing the 5-fold cros validation over the data set
 
 AnalyseMatrix=[];
 
-
+limit=15;
 addpath('FBIRN/PGMTools/SparseMRF','-end');
 addpath('FBIRN/PGMTools/MRFC','-end');
 addpath('FBIRN/PGMTools/SparseMRF/','-end');
@@ -81,3 +81,6 @@ Accuracy=(1-err/length(Y_test));
 PErrVec=FPerr/HTot;
 FErrVec=FNerr/STot;
 fprintf('Accuracy=%.2f Fasle Positives = %.2f, Missed Patients = %.2f, Error Rate for lambda=%.2f\n',Accuracy,FPerr/HTot,FNerr/STot,lambdas)
+predict=predicted_Y ;
+labels=Y_test;
+end
