@@ -1,6 +1,18 @@
 \BOOKMARK [1][-]{section.1}{Introduction}{}% 1
-\BOOKMARK [1][-]{section.2}{Previous Work}{}% 2
-\BOOKMARK [1][-]{section.3}{Methods}{}% 3
-\BOOKMARK [1][-]{section.4}{Results}{}% 4
-\BOOKMARK [1][-]{section.5}{Discussion}{}% 5
-\BOOKMARK [1][-]{section.6}{Conclusion and future work}{}% 6
+\BOOKMARK [1][-]{section.2}{Background}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Schizophrenia}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{ROI and Voxel by Voxel Analysis}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.3}{Fourier Transform}{section.2}% 5
+\BOOKMARK [2][-]{subsection.2.4}{Principal Component Analysis}{section.2}% 6
+\BOOKMARK [2][-]{subsection.2.5}{Support Vector Machines}{section.2}% 7
+\BOOKMARK [2][-]{subsection.2.6}{SGMRF}{section.2}% 8
+\BOOKMARK [1][-]{section.3}{Methodology}{}% 9
+\BOOKMARK [2][-]{subsection.3.1}{Data Set}{section.3}% 10
+\BOOKMARK [2][-]{subsection.3.2}{Your Approach? Mario}{section.3}% 11
+\BOOKMARK [2][-]{subsection.3.3}{Your Approach? Neil}{section.3}% 12
+\BOOKMARK [2][-]{subsection.3.4}{Your Approach? Farhad}{section.3}% 13
+\BOOKMARK [1][-]{section.4}{Results}{}% 14
+\BOOKMARK [2][-]{subsection.4.1}{Your Approach? Mario}{section.4}% 15
+\BOOKMARK [2][-]{subsection.4.2}{Your Approach? Neil}{section.4}% 16
+\BOOKMARK [2][-]{subsection.4.3}{Your Approach? Farhad}{section.4}% 17
+\BOOKMARK [1][-]{section.5}{Conclusions}{}% 18
