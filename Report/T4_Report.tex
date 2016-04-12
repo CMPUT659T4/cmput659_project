@@ -54,38 +54,49 @@ it is on par with Rosa \emph{et al.} results.
 
 
 \section{Introduction}
-Functional Magnetic Resonance Imaging (fMRI) is a tool for recording 
-functional changes caused by neuron activity. When a person is doing a task, 
-neuron activity fluctuates and  in order to provide the energy 
-needed for this activity human body increases the blood flow to feed the neurons with 
-the needed glucose which is not stored in the brain. More blood flow also 
-brings more oxygen through blood vessels. This change in the level of 
-oxygenated blood known as oxyhemoglobin and deoxyhemoglobin (oxygenated or 
-deoxygenated blood) changes the magnetic susceptibility of blood (BOLD signal) 
-which is the base for detection in MRI machine. \\
-
-Schizophrenia is a mental disorder that has been shown to affect blood flow in patient's brain~\cite{Kenji_2010},and this makes fMRI a perfect match for detecting changes caused by Schizophrenia in the brain. The only disadvantage is the low resolution of fMRI compared to the scale of those changes. However, fMRI is still one of the most used and efficient tools in the study of psychiatric disorders such as Schizophrenia.   \\
-
-Another advantage of fMRI is that this method is non-invasive. This means that unlike some other imaging methods that need to use some types of instruments in patient's body, this method operates without using them. 
-
-One of the approaches that has been used for studying schizophrenia is Sparse Gaussian Markov Random Field(SGMRF)~\cite{Rish_2013}\cite{Rosa_2013}. A main advantage of using this method is that functional network of the brain can be captured using the precision matrix~\cite{Rish_2013}.
-By using the resulted network, one can differentiate between healthy subjects and schizophrenic ones, which depends on the functional connectivity in the brain.      
-
-
-\section{Background}
-
-\subsection{Schizophrenia}
-Schizophrenia is a psychiatric disorder~\cite{Rish_2013} where those who are 
-affected can experience hallucinations, delusions and diminished mental 
+Schizophrenia is a mental/psychiatric disorder~\cite{Rish_2013, Kenji_2010} 
+known affect blood flow in the brain~\cite{Kenji_2010} where those who are 
+affected can experience hollucinations, delusions and diminished mental 
 capacities to varying extents~\cite{jablensky2010diagnostic}. While several
 features of schizophrenia have proven useful for its diagnosis there are
 current no set of features that have sufficient sensitivity or specificity
 to be used in diagnostic tests~\cite{jablensky2010diagnostic}. This 
 effectively means that subjectivity plays a role when a physician is
-looking to diagnose a patient. Currently automated approaches to schizophrenia
-diagnosis have  been able to yield accuracies of $93\%$ for data that 
+looking to diagnose a patient. 
+
+Functional Magnetic Resonance Imaging (fMRI) is a tool for recording 
+functional changes caused by neuron activity\cite{}. When a person is doing a task, 
+neuron activity fluctuates and in order to provide the energy 
+needed for this activity human body increases the blood flow to feed the neurons with 
+the needed glucose which is not stored in the brain\cite{}. More blood flow also 
+brings more oxygen through blood vessels. This change in the level of 
+oxygenated blood known as oxyhemoglobin and deoxyhemoglobin (oxygenated or 
+deoxygenated blood) changes the magnetic susceptibility of blood (BOLD signal) 
+which is the base for detection in MRI machine\cite{}.
+
+As a mental disorder, schizophrenia is well suited to be analyzed using fMRI 
+because fMRI is able to detecting changes in the brain caused by Schizophrenia
+or other neuralogical disease\cite{}. The only disadvantage 
+is the low resolution of fMRI compared to the scale of those changes. 
+However, fMRI is still one of the most used and efficient tools in the study of 
+psychiatric disorders such as Schizophrenia\cite{}. Another advantage of fMRI 
+is that this method is non-invasive. This means that unlike some other imaging 
+methods that need to use some types of instruments in patient's body, this 
+method operates without using them\cite{}. 
+
+One of the approaches that has been used for studying schizophrenia is 
+Sparse Gaussian Markov Random Field(SGMRF)~\cite{Rish_2013}\cite{Rosa_2013}. 
+A main advantage of using this method is that functional network of the brain 
+can be captured using the precision matrix~\cite{Rish_2013}.
+By using the resulted network, one can differentiate between healthy subjects 
+and schizophrenic ones, which depends on the functional connectivity in the brain.      
+Currently automated approaches to schizophrenia
+diagnosis have been able to yeild accuracies of $93\%$ for data that 
 originates from a single location~\cite{Rish_2013} and up to approximately 
 $80\%$ for data that originates from multiple locations~\cite{Cheng2015}.
+
+
+\section{Background and Prior Work}
 
 \subsection{Regions of Interest and Single-Voxel Analysis}
 Traditionally in fMRI analysis there are two main approaches for extracting
@@ -116,16 +127,18 @@ represents a correlation value above the threshold and 0 represents a value
 below. Finally, for each voxel the number of 1 entries are summed (excluding 
 the comparison against itself) and this becomes the degree of the voxel.
 
-\subsection{Fourier Transform}
-A Fourier transform allows for the translation of any signal from the time
-domain to the frequency domain. More specifically, it takes a signal and
-decomposes it into a series constituent $\sin$ and $\cos$ components. When 
-taking the Fast Fourier Transform or FFT of real data the resulting peaks in 
-the frequency domain are conjugate symmetric~\cite{duhamel1990fast}, meaning 
-that methods that only require the real component of the data need only work 
-with half of the resulting component coefficients in the transform. These 
-Fourier coefficients can be used in place of the original signal as features
-provided to a machine learning classifier.
+%\subsection{Fourier Transform}
+%A Fourier transform allows for the translation of any signal from the time
+%domain to the frequency domain. More specifically, it takes a signal and
+%decomposes it into a series constituent $\sin$ and $\cos$ componets. When 
+%taking the Fast Fourier Transform or FFT of real data the resulting peaks in 
+%the frequency domain are conjugate symmetric~\cite{duhamel1990fast}, meaning 
+%that methods that only require the real component of the data need only work 
+%with half of the resulting component coefficients in the transform. These 
+%Fourier coefficients can be used in place of the original signal as features
+%provided to a machine learning classifier.
+
+\subsection{Multi-site Comparisons}
 
 \subsection{Principal Component Analysis}
 
