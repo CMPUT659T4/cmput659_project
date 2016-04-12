@@ -102,8 +102,30 @@ These regions contain substructures that agree that with known fuctional
 brain systems and therefore can be seen as fairly accuracte 
 representaitons~\cite{Power_2011}.
 
+\subsubsection{Calculating Degrees}
+% Double check with Rish paper, this needs work.
+When analyzing fMRI data features such as voxel degrees can be extracted for
+use with a machine learner. Voxel degrees represent the connectedness of
+voxels in the brain with the other voxels and are described as ``the number
+of voxel neighbours in a network''~\cite{Rish_2013}. Degrees are calculated 
+by performing
+multiple pearson correlation comparisons between the $i^{th}$ voxel and every
+other voxel. Once correlation values have be determined, a threshold is
+applied to the correlation matrix. This results in binary matrix where 1 
+represents a correlation value above the threshold and 0 represents a value 
+below. Finally, for each voxel the number of 1 entries are summed (excluding 
+the comparison against itself) and this becomes the degree of the voxel.
+
 \subsection{Fourier Transform}
-What is a FFT and how does it work
+A Fourier transform allows for the translation of any signal from the time
+domain to the frequency domain. More specifically, it takes a signal and
+decomposes it into a series constituent $\sin$ and $\cos$ componets. When 
+taking the fast fourier transform or FFT of real data the resulting peaks in 
+the frequency domain are conjugate symmetric\cite{duhamel1990fast}, meaning 
+that methods that only require the real component of the data need only work 
+with half of the resulting component coefficients in the transform. These 
+Fourier coefficients can be used in place of the original signal as features
+provided to a machine learning classifier.
 
 \subsection{Principal Component Analysis}
 
@@ -132,8 +154,16 @@ To select the best voxels out of the possible $28720$ voxels, we experimented mu
   \item Selecting the voxels based on the differences between the mean degrees of a voxel between healthy and schizophrenic subjects.
 \end{enumerate}
 Out of the above four approaches we obtained the highest accuracy on our cross validation set by the third approach. Also the number of voxels to select $k$ was decided by running the same approach for different $k$ values. And we found the optimum $k$ value as $20$ for our cross validation set. By using the selected voxels we obtained the precision matrices for schizophrenic and healthy subjects. Similar to the valueof $k$, the sparsity coefficient $\lambda$ was also obtained through a hyper parameter serach on our cross validation set.
-\subsection{Your Approach? Neil}
-Describe your experiments
+
+\subsection{Methods using Power \emph{et al.}'s ROIs}
+
+\subsubsection{ROI with Patient Concatenation}
+
+\subsubsection{ROI with Fouier Coefficients}
+
+\subsubsection{Region Degrees and SVMs}
+
+\subsubsection{Individual MRF Structure Classification}
 
 \subsection{Your Approach? Farhad}
 Describe your experiments
@@ -143,8 +173,15 @@ Describe your experiments
 \subsection{Your Approach? Mario}
 With the Rish et al. code we obtained a $ 69\%$ cross validation accuracy on our cross validation sets and $75 \%$ accuracy on the hold-out set.
 
-\subsection{Your Approach? Neil}
-Report your results
+\subsection{Methods using Power \emph{et al.}'s ROIs}
+
+\subsubsection{ROI with Patient Concatenation}
+
+\subsubsection{ROI with Fouier Coefficients}
+
+\subsubsection{Region Degrees and SVMs}
+
+\subsubsection{Individual MRF Structure Classification}
 
 \subsection{Your Approach? Farhad}
 Report your results
