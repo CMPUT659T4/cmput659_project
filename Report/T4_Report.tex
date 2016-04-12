@@ -123,8 +123,15 @@ How we create the holdout set?
 
 
 \subsection{Your Approach? Mario}
-Describe your experiments
+First, we ran the approach proposed by Rish et al. \cite{Rish_2013} on our data set. Here, we obtained the log degrees of each voxel for each subject. Thus we had a matrix of size  $380 \times 28720$. However, using all the available voxels resulted in computation difficulties and thus selecting the best voxels to separate the healthy and schizophrenic subjects is very important. 
 
+To select the best voxels out of the possible $28720$ voxels, we experimented multiple approaches. These include \begin{enumerate}
+  \item Selecting the voxels based on the t-test.
+  \item Selecting the voxels based on the absolute differences between the mean degrees of a voxel between schizophrenic and healthy subjects.
+  \item Selecting the voxels based on the differences between the mean degrees of a voxel between schizophrenic and healthy subjects.
+  \item Selecting the voxels based on the differences between the mean degrees of a voxel between healthy and schizophrenic subjects.
+\end{enumerate}
+Out of the above four approaches we obtained the highest accuracy on our cross validation set by the third approach. Also the number of voxels to select $k$ was decided by running the same approach for different $k$ values. And we found the optimum $k$ value as $20$ for our cross validation set. By using the selected voxels we obtained the precision matrices for schizophrenic and healthy subjects. Similar to the valueof $k$, the sparsity coefficient $\lambda$ was also obtained through a hyper parameter serach on our cross validation set.
 \subsection{Your Approach? Neil}
 Describe your experiments
 
@@ -134,7 +141,7 @@ Describe your experiments
 \section{Results}
 
 \subsection{Your Approach? Mario}
-Report your results
+With the Rish et al. code we obtained a $ 69\%$ cross validation accuracy on our cross validation sets and $75 \%$ accuracy on the hold-out set.
 
 \subsection{Your Approach? Neil}
 Report your results
