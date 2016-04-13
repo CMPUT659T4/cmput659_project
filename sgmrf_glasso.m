@@ -5,6 +5,11 @@ addpath('lasso','-end');
 
 load('concat_roi_avg.mat')
 load('holdout.mat')
+holdout_set = TestInd(labels, 19);
+holdout_labels = labels(holdout_set);
+train_set = [1:380]';
+train_set(holdout_set) = [];
+train_labels = labels(train_set);
 
 for s = 1:size(labels, 1)
     for r = 1:size(data, 1)
@@ -23,7 +28,7 @@ s_data = data(:, :, s_inds);
 h_data = data(:, :, h_inds);
 
 method='varsel_mrf';
-params = [0.7; 0.1; 0.07; 0.01; 0.007; 0.001];
+params = [0.7; 0.1; 0.07; 0.01; 0.007];
 param_acc = zeros(length(params), 1);
 for p = 1:length(params)
     p
