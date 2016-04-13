@@ -3,7 +3,7 @@
 \usepackage{hyperref}
 \usepackage{url}
 \usepackage{verbatim}
-
+\usepackage{amsmath}
 
 \title{Using fMRI to Diagnose Schizophrenia}
 \author{%add name 
@@ -149,7 +149,15 @@ What is an SVM and how does it work
 \subsection{SGMRF}
 What is a SGMRF and how does it work
 
-
+One variation of Markov Random Field is Gaussian Random which is mostly being used for continuous space of variables and has well-defined mathematic properties that can be computed. Multivariate Gaussian density function over set of random variables X is defined as below: 
+\begin{equation}\label{gaussian1}
+p(X) = (2\pi)^{-n/2} |\Sigma|^{-1/2} \exp\left\{ -\frac{1}{2}(X - \mu)^t \Sigma^{-1} (X - \mu) \right\}.
+\end{equation}
+ 
+Where $ \mu $   is mean and $ \Sigma $ is the covariance matrix. We can set the $ \mu$ to zero and replace $\Sigma^{-1}$ with $C$ the equation \eqref{gaussian1} can be written as the following form.
+\begin{equation}\label{gaussian2}
+p(X) = (2\pi)^{-n/2} |\Sigma|^{-1/2} \exp\left\{ -\frac{1}{2}(X - \mu)^t \Sigma^{-1} (X - \mu) \right\}.
+\end{equation}
 \section{Methodology}
 
 \subsection{Data Set}
