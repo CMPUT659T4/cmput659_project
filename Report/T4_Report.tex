@@ -49,7 +49,7 @@ In this work we pursue two paths to tackle this problem. First, we evaluate
 performance of Sparse Gaussian Markov Random Field (SGMRF) on fMRI data 
 brain scans, and second we study on Regions of Interest (ROI) as defined by
 Power \emph{et al.}~\cite{Power_2011}. 
-We used 5 fold cross validation for hyper parameter tuning and $20\%$ holdout 
+We used 5 fold cross validation for hyper parameter tuning and $20\%$ hold-out 
 set for test. Accuracies that We have obtained the following accuracies using 
 this method: —— for whole brain features and —- for ROI features. While these 
 result are slightly less than the results obtained by Rish \emph{et al.}, 
@@ -208,13 +208,90 @@ The last three voxel ranking methods are explained in Fig. \ref{fig:voxel_rank}.
 
 \subsection{Methods using Power \emph{et al.}'s ROIs}
 
-\subsubsection{ROI with Patient Concatenation}
+The following three methods used in this subsection all involve the $264$  
+regions of interest that are described in work by Power \emph{et al.}.
+Due to missing data resulting from incomplete scans of subjects, $8$
+regions were removed from analysis leaving $256$ ROIs. The regions removed
+are characterized by region number with the associated MNI coordinates 
+described in Power \emph{et al.} provided in parenthesis: 81 (-44, 12, -34), 
+82 (46, 16, -30), 128 (52, 7, -30), 184 (17, -80, -34), 247 (33, 12, -34), 
+248 (-31, -10, -36), 249 (49, -3, -38) and 250 (-50, -7, -39). We use the
+same approach as described by Vega \emph{et al.}~\cite{rvega} to summarize
+regions of interest by taking region averages for each of the $5mm$ radius
+spheres that define regions. Finally this results in a $137 \times 256$ matrix
+for each subject where each row is a time point across all regions and each
+column is the average time series for a single region.
 
-\subsubsection{ROI with Fouier Coefficients}
+\subsubsection{ROI with Subject Concatenation}
+For this approach we follow the method as described by Vega \emph{et al.}.
+Training set subjects in each class are first concatenated so that two large 
+matrices are created, one with dimension $ns * 137 \times 256$ and the other 
+with dimension $nh * 137 \times 256$ where $ns$ is the number of schizophenic 
+subjects in the training set and $nh$ is the number of health subjects. To
+make learning the MRF structure easier, feature normalization is performed
+were for each class and each region in that class, the region mean is 
+subtracted from each time point and each time point is divided by the 
+region standard deviation.
+
+\begin{equation}
+ClassRegion_i = \frac{ClassRegion_i - mean(ClassRegion_i)}{std(ClassRegion_i)}
+\end{equation}
+
+Next, with the use of GLasso, a SGMRF structure is learned for each class 
+which results in two sparse precision matrices that encode the independences
+learned. 
+
+Finally, when presented with a new subject from the hold-out set, the equation
+below is used to determine the likelihood of the subject belonging to each
+class. The class with the highest likelihood then becomes the predicted label
+for the subject.
+
+A modified version of this approach was also implemented and tested but has
+been omitted for brevity and due to it obtaining poor results. In this variant
+a Fourier transform was used on each of the subject's time series data to 
+obtain Fourier coefficients. These Fourier coefficients were then used in 
+place of the original time series for learning a classifier.
+
+\begin{equation}
+insert here
+\end{equation}
+
+%\subsubsection{ROI with Fouier Coefficients}
 
 \subsubsection{Region Degrees and SVMs}
+Like the work described in Rish \emph{et al.} region degrees are also used in
+this approach but in this case, we only consider the degrees that result from
+the $256$ ROIs. This process is illustrated in Figure!\ref{}. For each subject 
+we generate a correlation matrix that records the correlation between the 
+average time series in their $region_i$ and $region_j$. Because we are not 
+interested in the correlation between a region and itself (which is trivially 
+$1$) we subtract the diagonal of the correlation matrix from itself. Using a
+threshold of $0.7$ which was chosen based on work by Rish \emph{et al.}, we
+then proceed to create the binary matrix and sum the column values as 
+described previously.
+
+Now that we have a vector of region degrees ($1 \times 256$) for each subject,
+a SGMRF is used to again to build a classifier. This follows similarly from
+the previous approach except that now the input to GLasso is a $ns \times 256$
+matrix for schizophrenic patients and a $nh \times256$ matrix for healthy
+subjects. Again this results in two $256 \times 256$ precision matrices which
+we can use in likelihood calculations for subjects from the hold-out set.
+
+Additionally, we also used a linear SVM classifier trained directly on
+region degree data to compare its performance to the SGMRF classifier.
 
 \subsubsection{Individual MRF Structure Classification}
+This approach is similar to the region concatenation approach described 
+previously except that here we do not concatenate subjects and instead
+learn a precision matrix (sparse MRF structure) for each subject 
+individually. For example, if we have $ns_{total}$ schizophrenics in our 
+dataset and $nh_{total}$ healthy subjects ($ns_{total} + nh_{total}$ 
+$137 \times 256$ matrices) then we will use GLasso to generate $ns + nh$ 
+precision matrices.
+
+To build a classifier, a linear SVM is trained on the precision matrices 
+generated from the training set and then tested on the precision matrices 
+generated from the hold-out set.
 
 \subsection{Your Approach? Farhad}
 Describe your experiments
@@ -222,22 +299,32 @@ Describe your experiments
 \section{Results}
 
 \subsection{Your Approach? Mario}
-With the Rish et al. code we obtained a $ 69\%$ cross validation accuracy on our cross validation sets and $75 \%$ accuracy on the hold-out set.
+With the Rish \emph{et al.} code we obtained a $69\%$ cross validation 
+accuracy on our cross validation sets and $75\%$ accuracy on the hold-out 
+set.
 
 \subsection{Methods using Power \emph{et al.}'s ROIs}
 
 \subsubsection{ROI with Patient Concatenation}
+Average of 5 hold-out sets is 74.17\%
 
-\subsubsection{ROI with Fouier Coefficients}
+%\subsubsection{ROI with Fouier Coefficients}
 
 \subsubsection{Region Degrees and SVMs}
+Average of 5 hold-out sets is 60.65\% for SVM
 
 \subsubsection{Individual MRF Structure Classification}
+Average of 5 hold-out sets is 69.44\% for SVM
 
 \subsection{Your Approach? Farhad}
 Report your results
 
-\section{Conclusions}
+\section{Discussion}
+% this needs to be a well thought out section
+% We do we get the results we do, explain this
+
+\section{Conclusions and Future Work}
+% General conclusions and restatement of discussion
 
 \section{Acknowledgements}
 We would like to thank Dr. Mina Gheiratmand for preprocessing the fMRI data and co-coaching our project. Also we used the feature extraction codes provided by Dr. Irina Rish.
