@@ -4,6 +4,8 @@
 \usepackage{url}
 \usepackage{verbatim}
 \usepackage{amsmath}
+\usepackage{graphicx}
+
 
 \title{Using fMRI to Diagnose Schizophrenia}
 \author{%add name 
@@ -142,8 +144,7 @@ the comparison against itself) and this becomes the degree of the voxel.
 
 \subsection{Multi-site Comparisons}
 % Mario please add info on Chang
-Although, there were several prior work on the classification of schizophrenia patients using fMRI, most of them are based on data from a single site. However, in \cite{Cheng2015}, a multi site data set was analyzed. Here, the data comes from five different sites with different machines. They analyzed the data set using SVM and obtained accuracies in the range of $73.53- 80.92\%$. In this research we will try to obtain results with similar accuracies, but using probabilistic graphical methods.
-
+Although, there were several prior work on the classification of schizophrenia patients using fMRI, most of them are based on data from a single site. Classification from multi-site data is inherently difficult due to the batch effects resulted from the use of different machines and environments. At the same time, multi-site analysis can easily be generalized for a new data set from a totally different source. Cheng et al. \cite{Cheng2015} analyzes a multi site data set which is obtained from five different sites with different machines. They used SVM for classify schizophrenia patients and healthy controls and obtained accuracies in the range of $73.53- 80.92\%$. In this research we will try to obtain results with similar accuracies, but using probabilistic graphical methods.
 \subsection{Principal Component Analysis}
 
 \subsection{Support Vector Machines}
@@ -188,19 +189,22 @@ p(X) = (2\pi)^{-n/2} |C|^{1/2} \exp\left\{ -\frac{1}{2}(X - \mu)^t \Sigma^{-1} (
 \subsection{Data Set}
 Data used for this study were downloaded from the Function BIRN Data Repository (http://fbirnbdr.birncommunity.org:8080/BDR/). The original data contained nine sites and $235$ subjects. However, during the preprocessing steps some of the subjects were removed and we had $95$ subjects and five sites. Data were preprocessed by Dr. Mina Gheiratmand by using FSL software (http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/). Our data contained 46 schizophrenic subjects and 49 healthy subjects. Each subject had four runs so effectively our data set had $380$ subjects. Each run had $137$ time slices and each time slice had the signal amplitude of over $100,000$ voxels. The voxels were referred using the 3D coordinates and thus the dimensionality of a single run was $\mathcal R^{N_1\times N_2\times N_3 \times 137}$.
 
-We removed $80\%$ of subjects from each site as our holdout set and used the remaining set as our training set. Furthermore, we made sure that the holdout set is also balanced, so that the ratio between the patients and healthy subjects is same in the holdout and training sets for each site. Also we made sure that all the runs from the same subject either belonged to the holdout set or to the training set. The training set is used for finding the hyper parameters of the systems using five-hold cross validations. After finding the hyper parameters we used the full training set to train the system with the selected hyper parameter and obtained the accuracy on the hold out set. Furthermore, we repeated this procedure five times for different hold out sets to get an average accuracy. 
+We removed $80\%$ of subjects from each site as our holdout set and used the remaining set as our training set. Furthermore, we made sure that the holdout set is also balanced, so that the ratio between the patients and healthy subjects is same in the holdout and training sets for each site. Also we made sure that all the runs from the same subject either belonged to the holdout set or to the training set. The training set is used for finding the hyper parameters of the system using five-hold cross validations. After finding the hyper parameters we used the full training set to train the system with the selected hyper parameter and obtained the accuracy on the hold out set. Furthermore, we repeated this procedure five times for different hold out sets to get an average accuracy. 
 
+\subsection{SGMRF with log degrees of ranked voxels}
+\begin{figure}\label{fig:voxel_rank}
+\includegraphics[width=\textwidth]{Voxel_ranking.jpg}
+\caption{Voxel ranking methods to select best voxels, method 2 ranks the voxels based on the absolute difference between the average degrees, method 3 ranks based on the difference between the patients average degreees and healthy average degrees and method 4 ranks based on the difference between the healthy and patients average differences.}
+\end{figure}
+First, we executed the approach proposed by Rish \emph{et al.}~\cite{Rish_2013} on our data set. In the data set we used we had degrees of each voxels as well as the smoothed log values of the voxels for each subject. Furthermore, as some voxels of some subjects had zero values for the BOLD signal, an universal mask was used to select the voxels which had a non-zero BOLD signal value through the whole data set. This resulted in a $28719$ voxels per each subject. However, using all the available voxels resulted in computation difficulties and thus selecting the best voxels to separate the healthy and schizophrenic subjects was very important. 
 
-\subsection{Your Approach? Mario}
-First, we ran the approach proposed by Rish \emph{et al.}~\cite{Rish_2013} on our data set. Here, we obtained the log degrees of each voxel for each subject. Thus we had a matrix of size  $380 \times 28720$. However, using all the available voxels resulted in computation difficulties and thus selecting the best voxels to separate the healthy and schizophrenic subjects is very important. 
-
-To select the best voxels out of the possible $28720$ voxels, we experimented multiple approaches. These include \begin{enumerate}
+To select the best voxels out of the possible $28719$ voxels, we experimented multiple approaches. These include \begin{enumerate}
   \item Selecting the voxels based on the t-test.
   \item Selecting the voxels based on the absolute differences between the mean degrees of a voxel between schizophrenic and healthy subjects.
   \item Selecting the voxels based on the differences between the mean degrees of a voxel between schizophrenic and healthy subjects.
   \item Selecting the voxels based on the differences between the mean degrees of a voxel between healthy and schizophrenic subjects.
 \end{enumerate}
-Out of the above four approaches we obtained the highest accuracy on our cross validation set by the third approach. Also the number of voxels to select $k$ was decided by running the same approach for different $k$ values. And we found the optimum $k$ value as $20$ for our cross validation set. By using the selected voxels we obtained the precision matrices for schizophrenic and healthy subjects. Similar to the value of $k$, the sparsity coefficient $\lambda$ was also obtained through a hyper parameter serach on our cross validation set.
+The last three voxel ranking methods are explained in Fig. \ref{fig:voxel_rank}. Out of the above four approaches we obtained the highest accuracy on our cross validation set by the third approach. Also the number of voxels $k$ to be used in the SGMRF model was decided by running the experiment for different $k$ values and found the optimum value$20$ for our cross validation set. By using the selected voxels, we obtained the precision matrices for schizophrenic and healthy subjects. Similar to the value of $k$, the sparsity coefficient $\lambda$ was also obtained through a hyper parameter search on our cross validation set.
 
 \subsection{Methods using Power \emph{et al.}'s ROIs}
 
