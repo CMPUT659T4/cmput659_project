@@ -142,6 +142,7 @@ the comparison against itself) and this becomes the degree of the voxel.
 
 \subsection{Multi-site Comparisons}
 % Mario please add info on Chang
+Although, there were several prior work on the classification of schizophrenia patients using fMRI, most of them are based on data from a single site. However, in \cite{Cheng2015}, a multi site data set was analyzed. Here, the data comes from five different sites with different machines. They analyzed the data set using SVM and obtained accuracies in the range of $73.53- 80.92\%$. In this research we will try to obtain results with similar accuracies, but using probabilistic graphical methods.
 
 \subsection{Principal Component Analysis}
 
@@ -163,9 +164,9 @@ p(X) = (2\pi)^{-n/2} |C|^{1/2} \exp\left\{ -\frac{1}{2}(X - \mu)^t \Sigma^{-1} (
 \section{Methodology}
 
 \subsection{Data Set}
-Turn our slide into this section
-How do we have? Balance? 
-How we create the holdout set?
+Data used for this study were downloaded from the Function BIRN Data Repository (http://fbirnbdr.birncommunity.org:8080/BDR/). The original data contained nine sites and $235$ subjects. However, during the preprocessing steps some of the subjects were removed and we had $95$ subjects and five sites. Data were preprocessed by Dr. Mina Gheiratmand by using FSL software (http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/). Our data contained 46 schizophrenic subjects and 49 healthy subjects. Each subject had four runs so effectively our data set had $380$ subjects. Each run had $137$ time slices and each time slice had the signal amplitude of over $100,000$ voxels. The voxels were referred using the 3D coordinates and thus the dimensionality of a single run was $\mathcal R^{N_1\times N_2\times N_3 \times 137}$.
+
+We removed $80\%$ of subjects from each site as our holdout set and used the remaining set as our training set. Furthermore, we made sure that the holdout set is also balanced, so that the ratio between the patients and healthy subjects is same in the holdout and training sets for each site. Also we made sure that all the runs from the same subject either belonged to the holdout set or to the training set. The training set is used for finding the hyper parameters of the systems using five-hold cross validations. After finding the hyper parameters we used the full training set to train the system with the selected hyper parameter and obtained the accuracy on the hold out set. Furthermore, we repeated this procedure five times for different hold out sets to get an average accuracy. 
 
 
 \subsection{Your Approach? Mario}
@@ -212,7 +213,8 @@ Report your results
 
 \section{Conclusions}
 
-
+\section{Acknowledgements}
+We would like to thank Dr. Mina Gheiratmand for preprocessing the fMRI data and co-coaching our project. Also we used the feature extraction codes provided by Dr. Irina Rish.
 \bibliographystyle{plain}
 \bibliography{T4_Report}
 
