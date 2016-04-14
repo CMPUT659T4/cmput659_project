@@ -239,8 +239,7 @@ had four runs so effectively our data set had $380$ subjects. Each run had
 $137$ time slices and each time slice had the signal amplitude of over 
 $100,000$ voxels. The voxels were referred using the 3D coordinates and thus 
 the dimensionality of a single run was 
-$\mathcal R^{N_1\times N_2\times N_3 \times 137}$.
-
+$\mathcal R^{N_1\times N_2\times N_37 times 137}$, wh
 We removed $80\%$ of subjects from each site as our holdout set and used the 
 remaining set as our training set. Furthermore, we made sure that the holdout 
 set is also balanced, so that the ratio between the patients and healthy 
@@ -257,7 +256,7 @@ to get an average accuracy.
 \begin{figure}\label{fig:voxel_rank}
 \includegraphics[width=\textwidth]{Voxel_ranking.jpg}
 \caption{Voxel ranking methods to select best voxels, method 2 ranks the voxels 
-based on the absolute difference between the average degrees, method 3 ranks 
+based on the absolute difference between the class average degrees,  3 ranks 
 based on the difference between the patients average degreees and healthy 
 average degrees and method 4 ranks based on the difference between the healthy 
 and patients average differences.}
@@ -288,6 +287,9 @@ the selected voxels, we obtained the precision matrices for schizophrenic and
 healthy subjects. Similar to the value of $k$, the sparsity coefficient 
 $\lambda$ was also obtained through a hyperparameter search on our cross 
 validation set.
+
+\subsection{SGMRF with degrees from Dorsolateral Prefrontal Cortex area}
+connections in certain areas of the brain specifically dorsolateral prefrontal cortex (DLPFC) \cite{Potkin2008} and thalamocortical\cite{Cheng2015} circuitry. Thus, we extracted the degrees of voxels in these areas and used them to build the SGMRF model. Since we had only $4504$ voxels for each subject, we did not perform any voxel rankings in this approach. Similar to the previous approach using the smoothed log values of the degrees resulted in higher accuracy.
 
 \subsection{Methods using Power \emph{et al.}'s ROIs}
 
@@ -378,10 +380,12 @@ generated from the hold-out set.
 
 \subsection{Your Approach? Farhad}
 Describe your experiments
-
-\section{Results}
-
+                                
+\section{Results}                                 
+                                             
 \subsection{Your Approach? Mario}
+\subsection{SGMRF with degrees from DLPFC}
+
 With the Rish \emph{et al.} code we obtained a $69\%$ cross validation 
 accuracy on our cross validation sets and $75\%$ accuracy on the hold-out 
 set.
