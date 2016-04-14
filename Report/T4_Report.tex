@@ -71,7 +71,7 @@ diagnosing a patient.
 Functional Magnetic Resonance Imaging (fMRI) is a tool for recording 
 functional changes caused by neuron activity\cite{}. When a person is doing a 
 task, neuron activity fluctuates and in order to provide the energy 
-needed for this activity, the blood flow increases to feed the neurons with 
+needed for this activity, the blood flow increases to supply the neurons with 
 the needed glucose, which is not stored in the brain\cite{}. More blood flow also 
 brings more oxygen through blood vessels. This change in the level of 
 oxygenated blood known as oxyhemoglobin and deoxyhemoglobin (oxygenated or 
@@ -411,7 +411,7 @@ generated from the hold-out set.
 Describe your experiments
 
 
-\section{Results}
+\section{Results and Discussion}
 
 \begin{table*}[!htb]\footnotesize
 \begin{center}
@@ -426,12 +426,29 @@ Describe your experiments
 \end{center}
 \end{table*}
 
-\section{Discussion}
-% this needs to be a well thought out section
-% We do we get the results we do, explain this
+As Seen in Table~\ref{holdout_table} methods using a SGMRF classifier were
+able to obtain the best results, of which 74.17 was the highest average
+accuracy recorded. This seems to suggest that a SGMRF seems to be a more
+effective tool for this particular problem. Because the SGMRF is a generative
+tool whereas the SVM is discriminative, it may be the case that the SVM is
+simply unable to capture the differences in network structure between patients
+and controls and it is these network differences that define schizophrenia as
+a disease. When comparing the ROI approch with patient concatenation and the
+Rish approach using all voxels against the Rish approach that only considers
+the DLPFC regions we see the former two get much better results. This seems
+to indicate that the DLPFC region is not sufficient to capture the difference
+between patients and controls. Another noteworthy difference is that of the
+differences between the approach creating degree features from the region
+averages and the other better performing methods. This discrepancy may be due
+to (Not sure \elipses).
+
 
 \section{Conclusions and Future Work}
-% General conclusions and restatement of discussion
+In this work we studied the use of fMRI and machine learning to diagnose
+schizophrenia, given a set of healthy and schizophrenic subjects. We found
+that a region based approach using SGMRFs yielded the highest accuracy 
+($74.16\%$) when averaged over 5 hold-out sets where the hold-out set was
+composed of $20\%$ of each site used in the study.
 
 \section{Acknowledgements}
 We would like to thank Dr. Mina Gheiratmand for preprocessing the fMRI data 
