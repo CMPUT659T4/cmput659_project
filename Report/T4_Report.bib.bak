@@ -1,66 +1,235 @@
-@article{McGuire200891,
-title = "Functional neuroimaging in schizophrenia: diagnosis and drug discovery ",
-journal = "Trends in Pharmacological Sciences ",
-volume = "29",
-number = "2",
-pages = "91 - 98",
-year = "2008",
-note = "",
-issn = "0165-6147",
-doi = "http://dx.doi.org/10.1016/j.tips.2007.11.005",
-url = "http://www.sciencedirect.com/science/article/pii/S0165614707002866",
-author = "Philip McGuire and Oliver D Howes and James Stone and Paolo Fusar-Poli",
-abstract = "Functional neuroimaging provides a direct way of investigating the pathophysiology of schizophrenia in vivo. The function of neurotransmitters implicated in schizophrenia, such as dopamine and glutamate, can be assessed using molecular imaging techniques such as positron emission tomography (PET), single-photon emission tomography (SPET) and magnetic resonance spectroscopy (MRS). Regional brain activity, particularly that associated with the cognitive processes and symptoms associated with the disorder, can be studied using functional magnetic resonance imaging (fMRI). Here, we focus on the potential for the use of these techniques in the diagnosis of schizophrenia and in the development of new drugs for its treatment. "
+% This file was created with JabRef 2.10.
+% Encoding: Cp1252
+
+
+@Article{Burge2009,
+  Title                    = {Discrete Dynamic Bayesian Network Analysis of fMRI Data},
+  Author                   = {Burge, John and Lane, Terran and Link, Hamilton and Qiu, Shibin and Clark, Vincent P},
+  Journal                  = {Human brain mapping},
+  Year                     = {2009},
+
+  Month                    = jan,
+  Number                   = {1},
+  Pages                    = {122--137},
+  Volume                   = {30},
+
+  Comment                  = {17990301[pmid]
+17990301[pmid]},
+  ISSN                     = {1097-0193},
+  Url                      = {http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2888041/}
 }
 
-@article{Rish_2013,
-	doi = {10.1371/journal.pone.0050625},
-	url = {http://dx.doi.org/10.1371/journal.pone.0050625},
-	year = 2013,
-	month = {jan},
-	publisher = {Public Library of Science ({PLoS})},
-	volume = {8},
-	number = {1},
-	pages = {e50625},
-	author = {Irina Rish and Guillermo Cecchi and Benjamin Thyreau and Bertrand Thirion and Marion Plaze and Marie Laure Paillere-Martinot and Catherine Martelli and Jean-Luc Martinot and Jean-Baptiste Poline},
-	editor = {Mariano Sigman},
-	title = {Schizophrenia as a Network Disease: Disruption of Emergent Brain Function in Patients with Auditory Hallucinations},
-	journal = {{PLoS} {ONE}}
+@Article{burges1998tutorial,
+  Title                    = {A tutorial on support vector machines for pattern recognition},
+  Author                   = {Burges, Christopher JC},
+  Journal                  = {Data mining and knowledge discovery},
+  Year                     = {1998},
+  Number                   = {2},
+  Pages                    = {121--167},
+  Volume                   = {2},
+
+  Publisher                = {Springer}
 }
-@inproceedings{Rosa_2013,
-	doi = {10.1109/prni.2013.26},
-	url = {http://dx.doi.org/10.1109/prni.2013.26},
-	year = 2013,
-	month = {jun},
-	publisher = {Institute of Electrical {\&} Electronics Engineers ({IEEE})},
-	author = {Maria J. Rosa and Liana Portugal and John Shawe-Taylor and Janaina Mourao-Miranda},
-	title = {Sparse Network-Based Models for Patient Classification Using {fMRI}},
-	booktitle = {2013 International Workshop on Pattern Recognition in Neuroimaging}
+
+@Article{Cheng2015,
+  Title                    = {Voxel-based, brain-wide association study of aberrant functional connectivity in schizophrenia implicates thalamocortical circuitry},
+  Author                   = {Cheng, Wei and Palaniyappan, Lena and Li, Mingli and Kendrick, Keith M and Zhang, Jie and Luo, Qiang and Liu, Zening and Yu, Rongjun and Deng, Wei and Wang, Qiang and Ma, Xiaohong and Guo, Wanjun and Francis, Susan and Liddle, Peter and Mayer, Andrew R and Schumann, Gunter and Li, Tao and Feng, Jianfeng},
+  Journal                  = {Npj Schizophrenia},
+  Year                     = {2015},
+
+  Month                    = may,
+  Volume                   = {1},
+
+  Publisher                = {Schizophrenia International Research Group/Nature Publishing Group},
+  Url                      = {http://dx.doi.org/10.1038/npjschz.2015.16}
 }
-@article{Power_2011,
-	doi = {10.1016/j.neuron.2011.09.006},
-	url = {http://dx.doi.org/10.1016/j.neuron.2011.09.006},
-	year = 2011,
-	month = {nov},
-	publisher = {Elsevier {BV}},
-	volume = {72},
-	number = {4},
-	pages = {665--678},
-	author = {Jonathan~D. Power and Alexander~L. Cohen and Steven~M. Nelson and Gagan~S. Wig and Kelly~Anne Barnes and Jessica~A. Church and Alecia~C. Vogel and Timothy~O. Laumann and Fran~M. Miezin and Bradley~L. Schlaggar and Steven~E. Petersen},
-	title = {Functional Network Organization of the Human Brain},
-	journal = {Neuron}
+
+@Article{Du2012,
+  Title                    = {High Classification Accuracy for Schizophrenia with Rest and Task {fMRI} Data},
+  Author                   = {Du, Wei and Calhoun, Vince D and Li, Hualiang and Ma, Sai and Eichele, Tom and Kiehl, Kent A and Pearlson, Godfrey D and Adali, T\"{u}lay},
+  Journal                  = {Frontiers in Human Neuroscience},
+  Year                     = {2012},
+
+  Month                    = may,
+  Pages                    = {145--},
+  Volume                   = {6},
+
+  Abstract                 = {We present a novel method to extract classification features from functional magnetic resonance imaging (fMRI) data collected at rest or during the performance of a task. By combining a two-level feature identification scheme with kernel principal component analysis (KPCA) and Fisher’s linear discriminant analysis (FLD), we achieve high classification rates in discriminating healthy controls from patients with schizophrenia. Experimental results using leave-one-out cross-validation show that features extracted from the default mode network (DMN) lead to a classification accuracy of over 90% in both data sets. Moreover, using a majority vote method that uses multiple features, we achieve a classification accuracy of 98% in auditory oddball (AOD) task and 93% in rest data. Several components, including DMN, temporal, and medial visual regions, are consistently present in the set of features that yield high classification accuracy. The features we have extracted thus show promise to be used as biomarkers for schizophrenia. Results also suggest that there may be different advantages to using resting fMRI data or task fMRI data.},
+  Comment                  = {22675292[pmid]},
+  ISSN                     = {1662-5161},
+  Publisher                = {Frontiers Research Foundation},
+  Url                      = {http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3366580/}
 }
-@article{Rish_2013,
-	doi = {10.1371/journal.pone.0050625},
-	url = {http://dx.doi.org/10.1371/journal.pone.0050625},
-	year = 2013,
-	month = {jan},
-	publisher = {Public Library of Science ({PLoS})},
-	volume = {8},
-	number = {1},
-	pages = {e50625},
-	author = {Irina Rish and Guillermo Cecchi and Benjamin Thyreau and Bertrand Thirion and Marion Plaze and Marie Laure Paillere-Martinot and Catherine Martelli and Jean-Luc Martinot and Jean-Baptiste Poline},
-	editor = {Mariano Sigman},
-	title = {Schizophrenia as a Network Disease: Disruption of Emergent Brain Function in Patients with Auditory Hallucinations},
-	journal = {{PLoS} {ONE}}
+
+@Article{duhamel1990fast,
+  Title                    = {Fast Fourier transforms: a tutorial review and a state of the art},
+  Author                   = {Duhamel, Pierre and Vetterli, Martin},
+  Journal                  = {Signal processing},
+  Year                     = {1990},
+  Number                   = {4},
+  Pages                    = {259--299},
+  Volume                   = {19},
+
+  Publisher                = {Elsevier}
 }
+
+@Article{Friedman2008,
+  Title                    = {Sparse inverse covariance estimation with the graphical lasso},
+  Author                   = {Friedman, Jerome and Hastie, Trevor and Tibshirani, Robert},
+  Journal                  = {Biostatistics},
+  Year                     = {2008},
+  Number                   = {3},
+  Pages                    = {432-441},
+  Volume                   = {9},
+
+  Doi                      = {10.1093/biostatistics/kxm045},
+  Eprint                   = {http://biostatistics.oxfordjournals.org/content/9/3/432.full.pdf+html},
+  Url                      = {http://biostatistics.oxfordjournals.org/content/9/3/432.abstract}
+}
+
+@Article{heller2006cluster,
+  Title                    = {Cluster-based analysis of FMRI data},
+  Author                   = {Heller, Ruth and Stanley, Damian and Yekutieli, Daniel and Rubin, Nava and Benjamini, Yoav},
+  Journal                  = {NeuroImage},
+  Year                     = {2006},
+  Number                   = {2},
+  Pages                    = {599--608},
+  Volume                   = {33},
+
+  Publisher                = {Elsevier}
+}
+
+@Article{jablensky2010diagnostic,
+  Title                    = {The diagnostic concept of schizophrenia: its history, evolution, and future prospects},
+  Author                   = {Jablensky, Assen},
+  Journal                  = {Dialogues Clin Neurosci},
+  Year                     = {2010},
+  Number                   = {3},
+  Pages                    = {271--287},
+  Volume                   = {12}
+}
+
+@Article{Kenji_2010,
+  Title                    = {Pressure-induced performance decrement in verbal fluency task through prefrontal overactivation: A near-infrared spectroscopy study},
+  Author                   = {Nomura Kenji},
+  Journal                  = {Front. Neurosci.},
+  Year                     = {2010},
+  Volume                   = {4},
+
+  Doi                      = {10.3389/conf.fnins.2010.13.00142},
+  Publisher                = {Frontiers Media {SA}},
+  Url                      = {http://dx.doi.org/10.3389/conf.fnins.2010.13.00142}
+}
+
+@Article{McGuire200891,
+  Title                    = {Functional neuroimaging in schizophrenia: diagnosis and drug discovery },
+  Author                   = {Philip McGuire and Oliver D Howes and James Stone and Paolo Fusar-Poli},
+  Journal                  = {Trends in Pharmacological Sciences },
+  Year                     = {2008},
+  Number                   = {2},
+  Pages                    = {91 - 98},
+  Volume                   = {29},
+
+  Abstract                 = {Functional neuroimaging provides a direct way of investigating the pathophysiology of schizophrenia in vivo. The function of neurotransmitters implicated in schizophrenia, such as dopamine and glutamate, can be assessed using molecular imaging techniques such as positron emission tomography (PET), single-photon emission tomography (SPET) and magnetic resonance spectroscopy (MRS). Regional brain activity, particularly that associated with the cognitive processes and symptoms associated with the disorder, can be studied using functional magnetic resonance imaging (fMRI). Here, we focus on the potential for the use of these techniques in the diagnosis of schizophrenia and in the development of new drugs for its treatment. },
+  Doi                      = {http://dx.doi.org/10.1016/j.tips.2007.11.005},
+  ISSN                     = {0165-6147},
+  Url                      = {http://www.sciencedirect.com/science/article/pii/S0165614707002866}
+}
+
+@Article{Potkin2008,
+  Title                    = {Working memory and {DLPFC} inefficiency in schizophrenia: The FBIRN study},
+  Author                   = {Potkin, S G and Turner, J A and Brown, G G and McCarthy, G and Greve, D N and Glover, G H and Manoach, D S and Belger, A and Diaz, M and Wible, C G and Ford, J M and Mathalon, D H and Gollub, R and Lauriello, J and O'Leary, D and van Erp, T G M and Toga, A W and Preda, A and Lim, K O and FBIRN},
+  Journal                  = {Schizophrenia Bulletin},
+  Year                     = {2008},
+
+  Month                    = nov,
+  Number                   = {1},
+  Pages                    = {19--31},
+  Volume                   = {35},
+
+  Abstract                 = {Background: The Functional Imaging Biomedical Informatics Network is a consortium developing methods for multisite functional imaging studies. Both prefrontal hyper- or hypoactivity in chronic schizophrenia have been found in previous studies of working memory. Methods: In this functional magnetic resonance imaging (fMRI) study of working memory, 128 subjects with chronic schizophrenia and 128 age- and gender-matched controls were recruited from 10 universities around the United States. Subjects performed the Sternberg Item Recognition Paradigm, with memory loads of 1, 3, or 5 items. A region of interest analysis examined the mean BOLD signal change in an atlas-based demarcation of the dorsolateral prefrontal cortex (DLPFC), in both groups, during both the encoding and retrieval phases of the experiment over the various memory loads. Results: Subjects with schizophrenia performed slightly but significantly worse than the healthy volunteers and showed a greater decrease in accuracy and increase in reaction time with increasing memory load. The mean BOLD signal in the DLPFC was significantly greater in the schizophrenic group than the healthy group, particularly in the intermediate load condition. A secondary analysis matched subjects for mean accuracy and found the same BOLD signal hyperresponse in schizophrenics. Conclusions: The increase in BOLD signal change from minimal to moderate memory loads was greater in the schizophrenic subjects than in controls. This effect remained when age, gender, run, hemisphere, and performance were considered, consistent with inefficient DLPFC function during working memory. These findings from a large multisite sample support the concept not of hyper- or hypofrontality in schizophrenia, but rather DLPFC inefficiency that may be manifested in either direction depending on task demands. This redirects the focus of research from direction of difference to neural mechanisms of inefficiency.},
+  Comment                  = {19042912[pmid]
+19042912[pmid]},
+  ISSN                     = {1745-1701},
+  Publisher                = {Oxford University Press},
+  Url                      = {http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2643959/}
+}
+
+@Article{Power_2011,
+  Title                    = {Functional Network Organization of the Human Brain},
+  Author                   = {Jonathan~D. Power and Alexander~L. Cohen and Steven~M. Nelson and Gagan~S. Wig and Kelly~Anne Barnes and Jessica~A. Church and Alecia~C. Vogel and Timothy~O. Laumann and Fran~M. Miezin and Bradley~L. Schlaggar and Steven~E. Petersen},
+  Journal                  = {Neuron},
+  Year                     = {2011},
+
+  Month                    = {nov},
+  Number                   = {4},
+  Pages                    = {665--678},
+  Volume                   = {72},
+
+  Doi                      = {10.1016/j.neuron.2011.09.006},
+  Publisher                = {Elsevier {BV}},
+  Url                      = {http://dx.doi.org/10.1016/j.neuron.2011.09.006}
+}
+
+@Article{Rish_2013,
+  Title                    = {Schizophrenia as a Network Disease: Disruption of Emergent Brain Function in Patients with Auditory Hallucinations},
+  Author                   = {Irina Rish and Guillermo Cecchi and Benjamin Thyreau and Bertrand Thirion and Marion Plaze and Marie Laure Paillere-Martinot and Catherine Martelli and Jean-Luc Martinot and Jean-Baptiste Poline},
+  Journal                  = {{PLoS} {ONE}},
+  Year                     = {2013},
+
+  Month                    = {jan},
+  Number                   = {1},
+  Pages                    = {e50625},
+  Volume                   = {8},
+
+  Doi                      = {10.1371/journal.pone.0050625},
+  Editor                   = {Mariano Sigman},
+  Publisher                = {Public Library of Science ({PLoS})},
+  Url                      = {http://dx.doi.org/10.1371/journal.pone.0050625}
+}
+
+@Book{Rish2014Book,
+  Title                    = {Sparse Modeling: Theory, Algorithms, and Applications},
+  Author                   = {Rish, Irina and Grabarnik, Genady},
+  Publisher                = {CRC Press, Inc.},
+  Year                     = {2014},
+
+  Address                  = {Boca Raton, FL, USA},
+  Edition                  = {1st},
+
+  ISBN                     = {1439828695, 9781439828694}
+}
+
+@InProceedings{Rosa_2013,
+  Title                    = {Sparse Network-Based Models for Patient Classification Using {fMRI}},
+  Author                   = {Maria J. Rosa and Liana Portugal and John Shawe-Taylor and Janaina Mourao-Miranda},
+  Booktitle                = {2013 International Workshop on Pattern Recognition in Neuroimaging},
+  Year                     = {2013},
+  Month                    = {jun},
+  Publisher                = {Institute of Electrical {\&} Electronics Engineers ({IEEE})},
+
+  Doi                      = {10.1109/prni.2013.26},
+  Url                      = {http://dx.doi.org/10.1109/prni.2013.26}
+}
+
+@InCollection{shmilovici2005support,
+  Title                    = {Support vector machines},
+  Author                   = {Shmilovici, Armin},
+  Booktitle                = {Data Mining and Knowledge Discovery Handbook},
+  Publisher                = {Springer},
+  Year                     = {2005},
+  Pages                    = {257--276}
+}
+
+@Article{rvega,
+  Title                    = {Gender and age group classification using functional Magnetic Resonance Imaging and Gaussian Markov Random Fields},
+  Author                   = {Vega, Roberto and Khare Kriti and Sayem Mohammad Siam},
+  Journal                  = {Unpublished},
+  Year                     = {2015}
+}
+
+@Article{,
+  Owner                    = {Shashindra},
+  Timestamp                = {2016.04.08}
+}
+

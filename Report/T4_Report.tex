@@ -238,7 +238,7 @@ mask was used to select the voxels which had a non-zero BOLD signal value
 through the whole data set. This resulted in a $28719$ voxels per each subject. 
 However, using all the available voxels resulted in computation difficulties 
 and thus selecting the best voxels (based on the training data) to separate 
-the healthy and schizophrenic subjects was very important. 
+the healthy and schizophrenic subjects was required. 
 
 To select the best voxels out of the possible $28719$ voxels, we experimented multiple approaches. 
 These include \begin{enumerate}
@@ -249,13 +249,16 @@ These include \begin{enumerate}
 \end{enumerate}
 The last three voxel ranking methods are explained in Fig. \ref{fig:voxel_rank}. 
 Out of the above four approaches we obtained the highest accuracy on our cross 
-validation set by the third approach. Also the number of voxels $k$ to be used 
+validation set by the third approach on the smoothed log degrees of the data. In general, using the log degree values resulted in higher accuracies in all the above methods. Also, the number of voxels $k$ to be used 
 in the SGMRF model was decided by running the experiment for different $k$ 
-values and found the optimum value$20$ for our cross validation set. By using 
+values and found the optimum value $20$ for our cross validation set. By using 
 the selected voxels, we obtained the precision matrices for schizophrenic and 
 healthy subjects. Similar to the value of $k$, the sparsity coefficient 
 $\lambda$ was also obtained through a hyperparameter search on our cross 
 validation set.
+
+\subsection{SGMRF with degrees from Dorsolateral Prefrontal Cortex area}
+There have been several prior work which suggests that anomalies in the connections in certain areas of the brain specifically dorsolateral prefrontal cortex\cite{Potkin2008} and thalamocortical\cite{Cheng2015} circuitry. Thus, we extracted the degrees of voxels in these areas and used them to build the SGMRF model. Since we had only $4504$ voxels for each subject, we did not perform any voxel rankings in this approach. Similar to the previous approach using the smoothed log values of the degrees resulted in higher accuracy.
 
 \subsection{Methods using Power \emph{et al.}'s ROIs}
 
@@ -376,7 +379,9 @@ Report your results
 
 \section{Conclusions and Future Work}
 % General conclusions and restatement of discussion
+We have successfuly exended the work done by Rish et al. \cite{Rish_2013}, to a multi site non-homogenius data set. Furthermore, we have successfully used ROIs proposed in \cite{Power_2011} with SGMRF to classify the schizophrenia patients with an accuracy of XXX. The accuracies we obtained are comparable with the accuracies obtained in \cite{Cheng2015}. However, in our project the PGM based approaches outperformed the SVM and other machine learning approaches. This supports the hypothesis proposed in \cite{Rish_2013}, that the schizophrenia is a network disease.
 
+   
 \section{Acknowledgements}
 We would like to thank Dr. Mina Gheiratmand for preprocessing the fMRI data 
 and co-coaching our project. Also we used the feature extraction codes 
