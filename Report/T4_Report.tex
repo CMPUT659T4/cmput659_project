@@ -204,18 +204,18 @@ subjects and five sites. Data were preprocessed by Dr. Mina Gheiratmand by
 using FSL software (http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/). Our data 
 contained $46$ schizophrenic subjects and $49$ healthy subjects. Each subject 
 had four runs so effectively our data set had $380$ subjects. Each run had 
-$137$ time slices and each time slice had the signal amplitude of over 
+$137$ time slices and each time slice had the signal amplitudes of over 
 $100,000$ voxels. The voxels were referred using the 3D coordinates and thus 
 the dimensionality of a single run was 
-$\mathcal R^{N_1\times N_2\times N_3 \times 137}$.
+$\mathcal R^{53\times N64\times N37 \times 137}$, where $137$ corresponds to the number of time slices.
 
 We removed $80\%$ of subjects from each site as our holdout set and used the 
 remaining set as our training set. Furthermore, we made sure that the holdout 
 set is also balanced, so that the ratio between the patients and healthy 
-subjects is same in the holdout and training sets for each site. Also we made 
+subjects is same in the holdout and training sets for each site. Also, we made 
 sure that all the runs from the same subject either belonged to the holdout 
 set or to the training set. The training set is used for finding the 
-hyperparameters of the system using five-hold cross validations. After finding 
+hyper parameters of the system using five-hold cross validations. After finding 
 the hyper parameters we used the full training set to train the system with 
 the selected hyper parameter and obtained the accuracy on the hold out set. 
 Furthermore, we repeated this procedure five times for different hold out sets 
@@ -224,15 +224,11 @@ to get an average accuracy.
 \subsection{SGMRF with log degrees of ranked voxels}
 \begin{figure}\label{fig:voxel_rank}
 \includegraphics[width=\textwidth]{Voxel_ranking.jpg}
-\caption{Voxel ranking methods to select best voxels, method 2 ranks the voxels 
-based on the absolute difference between the average degrees, method 3 ranks 
-based on the difference between the patients average degreees and healthy 
-average degrees and method 4 ranks based on the difference between the healthy 
-and patients average differences.}
+\caption{Voxel ranking methods to select best voxels. In the second step the differences between the class averages of degrees between patients and healthy subjects are $2$,$-1$ and $-3$ respectively for three voxels.}
 \end{figure}
 First, we executed the approach proposed by Rish \emph{et al.}~\cite{Rish_2013} 
 on our data set. In the data set we used we had degrees of each voxels as well 
-as the smoothed log values of the voxels for each subject. Furthermore, as 
+as the smoothed log values (adding a small positive number to the degree of each voxel before getting the log value) of the voxels for each subject. Furthermore, as 
 some voxels of some subjects had zero values for the BOLD signal, an universal 
 mask was used to select the voxels which had a non-zero BOLD signal value 
 through the whole data set. This resulted in a $28719$ voxels per each subject. 
@@ -242,10 +238,10 @@ the healthy and schizophrenic subjects was required.
 
 To select the best voxels out of the possible $28719$ voxels, we experimented multiple approaches. 
 These include \begin{enumerate}
-  \item Selecting the voxels based on the t-test.
-  \item Selecting the voxels based on the absolute differences between the mean degrees of a voxel between schizophrenic and healthy subjects.
-  \item Selecting the voxels based on the differences between the mean degrees of a voxel between schizophrenic and healthy subjects.
-  \item Selecting the voxels based on the differences between the mean degrees of a voxel between healthy and schizophrenic subjects.
+  \item Selecting voxels based on two-tailed t-test.
+  \item Selecting voxels based on absolute differences between the mean degrees of a voxel between schizophrenic and healthy subjects.
+  \item Selecting voxels based on differences between the mean degrees of a voxel between schizophrenic and healthy subjects.
+  \item Selecting voxels based on differences between the mean degrees of a voxel between healthy and schizophrenic subjects.
 \end{enumerate}
 The last three voxel ranking methods are explained in Fig. \ref{fig:voxel_rank}. 
 Out of the above four approaches we obtained the highest accuracy on our cross 
@@ -258,7 +254,7 @@ $\lambda$ was also obtained through a hyperparameter search on our cross
 validation set.
 
 \subsection{SGMRF with degrees from Dorsolateral Prefrontal Cortex area}
-There have been several prior work which suggests that anomalies in the connections in certain areas of the brain specifically dorsolateral prefrontal cortex\cite{Potkin2008} and thalamocortical\cite{Cheng2015} circuitry. Thus, we extracted the degrees of voxels in these areas and used them to build the SGMRF model. Since we had only $4504$ voxels for each subject, we did not perform any voxel rankings in this approach. Similar to the previous approach using the smoothed log values of the degrees resulted in higher accuracy.
+There have been several prior work which suggests that anomalies in the connections in certain areas of the brain specifically dorsolateral prefrontal cortex (DLPFC) \cite{Potkin2008} and thalamocortical\cite{Cheng2015} circuitry. Thus, we extracted the degrees of voxels in these areas and used them to build the SGMRF model. Since we had only $4504$ voxels for each subject, we did not perform any voxel rankings in this approach. Similar to the previous approach using the smoothed log values of the degrees resulted in higher accuracy.
 
 \subsection{Methods using Power \emph{et al.}'s ROIs}
 
@@ -352,11 +348,12 @@ Describe your experiments
 
 \section{Results}
 
-\subsection{Your Approach? Mario}
-With the Rish \emph{et al.} code we obtained a $69\%$ cross validation 
-accuracy on our cross validation sets and $75\%$ accuracy on the hold-out 
+\subsection{SGMRF with degrees of voxels}
+With the Rish \emph{et al.} code we obtained a $69.82\%$ cross validation 
+accuracy on our cross validation sets and $72.32\%$ accuracy on the hold-out 
 set.
-
+\subsection{SGMRF with degrees from DLPFC}
+We obtained an accuracy of $63.52\%$ using the log degrees in the voxels of DLPFC.
 \subsection{Methods using Power \emph{et al.}'s ROIs}
 
 \subsubsection{ROI with Patient Concatenation}
@@ -376,6 +373,12 @@ Report your results
 \section{Discussion}
 % this needs to be a well thought out section
 % We do we get the results we do, explain this
+One of the interesting result we observed is that the method to select the best voxels had a significant impact on the accuracy. Use of the mean difference instead of t-test or the absolute mean difference proved to be more efficient in differentiating patients and healthy subjects. Specifically, use of the degree differences between the patients and the healthy subjects showed higher accuracy. This corresponds to the use of increased connectivities in the brain in schizophrenia patients for classification. The hyper-response in BOLD signal in schizophrenia patients is observed in \cite{Potkin2008}.
+
+Also use of degrees from DLPFC and thalamus areas of the brain resulted in $63.52\%$ accuracy. Although this value is significantly higher than the baseline accuracy of $52\%$, other methods resulted in higher classification accuracies. We can conclude that connectivities in DLFPC and thalamus areas are affected during schizophrenia, but those were not the only affected areas. Also, further research should be carried out to identify whether the selected best voxels for SGMRF with log degrees were the same for different cross validation sets and whether those voxels represented a specific region of the brain.
+
+
+
 
 \section{Conclusions and Future Work}
 % General conclusions and restatement of discussion
