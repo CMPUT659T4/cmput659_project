@@ -160,7 +160,7 @@ probabilistic graphical methods.
 In a 1995 paper by Vladimir Vapnik \emph{et al.} the concept of support 
 Vector Machines (SVMs) was introduced  as a statistical tool for 
 classification problems~\cite{shmilovici2005support}. In our work we
-use the simplest SVM, a linear SVM, because it does not use non-linear
+use the most simple SVM, a linear SVM, because it does not use non-linear
 kernels and therefore has no hyperparameters that need to be tuned
 with cross validation. Instead, a linear SVM learns the ``maximum-margin
 hyperplane'' classifier which is a linear combination of the input 
@@ -176,49 +176,67 @@ $x_i$ is the instance's features, $y_i$ is the instance label and $b$ is
 the bias term of the model. Unfortunately, this version of the SVM only
 works in the case where the data is linearly separable. To extend the SVM
 to linearly inseparable data, the addition of positive slack variables is
-required such that the constraints become $\forall i$ 
+required, such that the constraints become $\forall i$ 
 $y_i (x_i w + b) - 1 + \xi_i \ge 0 $ and $\xi_i \ge 0$, where $xi_i$ is 
 the slack variable for the instance $i$~\cite{burges1998tutorial}.
 
 
 \subsection{SGMRF}
-What is a SGMRF and how does it work
-
-One variation of Markov Random Field is Gaussian Random which is mostly being used for continuous space of variables and has well-defined mathematic properties that can be computed. Multivariate Gaussian density function over set of random variables X is defined as below: 
+One variation of Markov Random Field is Gaussian Random which is generally 
+used for continuous space of variables and has well-defined mathematic 
+properties that can be computed. Multivariate Gaussian density function 
+over a set of random variables X is defined as below: 
 
 \begin{equation}\label{gaussian1}
 p(X) = (2\pi)^{-n/2} |\Sigma|^{-1/2} \exp\left\{ -\frac{1}{2}(X - \mu)^t \Sigma^{-1} (X - \mu) \right\}.
 \end{equation}
-
  
-Where $ \mu $   is mean and $ \Sigma $ is the covariance matrix. We can set the $ \mu$ to zero and replace $\Sigma^{-1}$ with $C$ the equation \eqref{gaussian1} can be written as the following form. It also should be noted that $ C = \Sigma^{-1}$ and is known as the precision matrix in the literature.  
+In the equation $\mu$ is the mean and $\Sigma$ is the covariance matrix. 
+We can set $\mu$ to zero and replace $\Sigma^{-1}$ with $C$ the 
+equation \eqref{gaussian1} which can be written as the following form. 
+It also should be noted that $C = \Sigma^{-1}$ and is known as the 
+precision matrix in the literature.  
 
 \begin{equation}\label{gaussian2}
 p(X) = (2\pi)^{-n/2} |C|^{1/2} \exp\left\{ -\frac{1}{2}X^t C X \right\}.
 \end{equation}
 
-It has been shown by \cite{lauritzen1996graphical} that $ X_i$ and $ X_j$ are independent if and only if their corresponding entries in the precision matrix (C) are zero. It can be concluded that missing edge in the MRF will lead to zero entries in the precision matrix\cite{Rish2014Book}. The Problem of learning probabilistic graphical model for a given dataset is reduced to learning the precision matrix given this proof. \\
+It has been shown by \cite{lauritzen1996graphical} that $X_i$ and $X_j$ are 
+independent if and only if their corresponding entries in the precision 
+matrix (C) are zero. It can be concluded that missing edge in the MRF will 
+lead to zero entries in the precision matrix\cite{Rish2014Book}. The Problem 
+of learning probabilistic graphical model for a given dataset is reduced to 
+learning the precision matrix given this proof.
 
-Log-likelihood of the dataset assuming each row of the data is a p-dimensional vector and consisting n samples $D = \{X_1, X_2, ... , X_n\} $ can be written as follow. It should also be noted that we assume each sample is identically independent distributed(iid).
+The Log-likelihood of the dataset, assuming each row of the data is a
+p-dimensional vector and consisting n samples $D = \{X_1, X_2, ... , X_n\}$, 
+can be written as follow. It should also be noted that we assume each sample 
+is identically independent distributed(iid).
 
 \begin{equation}
 L(D) = \frac{n}{2} |C| - \frac{1}{2} \sum_{i=1}^{n} (X_i - \mu )^T C (X_i - \mu ) + const,
 \end{equation}  
 
-const is a constant which is not depend of $\mu$ and $C$. We also can center the data in a way that $\mu = 0$ so the second term reduces to the $ \frac{1}{2} \sum_{i=1}^{n} X_i ^T C X_i$ which is equal $\frac{n}{2}$ tr($AC$), where tr is trace of the matrix. The above formula will can be written as: 
+Here, const is a constant which is not dependant on $\mu$ or $C$. We also can 
+center the data in such a way that $\mu = 0$, so the second term reduces to 
+$\frac{1}{2} \sum_{i=1}^{n} X_i ^T C X_i$ which is equal to 
+$\frac{n}{2}$ tr($AC$), where $tr$ is trace of the matrix. The above 
+formula will can be written as: 
 
 \begin{equation}
 L(D) = \frac{n}{2} |C -  tr(AC)| + const, 
 \end{equation}
 
-Thus the log-likelihood maximization problem will become like following: 
+Thus the log-likelihood maximization problem will have the following form: 
 
 \begin{equation}
 \max_{C\succ0} |C| - tr(AC)
 \end{equation}
 
-Where $|...|$ represents determinant and A is the empirical covariance matrix calculated by $A =  \frac{n}{2} \sum_{i=1}^{n} X_i^T X_i$, or maximum likelihood estimation fo $\Sigma$. It should also be noted the $C\succ0$ constraint makes C positive definite. \\
-
+Where $|...|$ represents determinant and A is the empirical covariance 
+matrix calculated by $A = \frac{n}{2} \sum_{i=1}^{n} X_i^T X_i$, or 
+maximum likelihood estimation fo $\Sigma$. It should also be noted 
+the $C\succ0$ constraint makes C positive definite.
   
 One obvious way for learning the parameters for joint distribution probability 
 is using regularized likelihood maximization such as AIC and BIC. However, 
@@ -253,25 +271,26 @@ In the MRF classifier, first they split training data in two different group. Fo
 Data used for this study were downloaded from the Function BIRN Data 
 Repository (http://fbirnbdr.birncommunity.org:8080/BDR/). The original 
 data contained nine sites and $235$ subjects. However, during the 
-preprocessing steps some of the subjects were removed and we had $95$ 
+preprocessing steps some of the subjects were removed because they could
+not be preprocessed properly, resulting in a final set of $95$ 
 subjects and five sites. Data were preprocessed by Dr. Mina Gheiratmand by 
 using FSL software (http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/). Our data 
 contained $46$ schizophrenic subjects and $49$ healthy subjects. Each subject 
-had four runs so effectively our data set had $380$ subjects. Each run had 
+had four runs (repeated scans) so effectively our data set had $380$ subjects. Each run had 
 $137$ time slices and each time slice had the signal amplitude of over 
 $100,000$ voxels. The voxels were referred using the 3D coordinates and thus 
 the dimensionality of a single run was 
 $\mathcal R^{N_1\times N_2\times N_37 times 137}$, wh
 We removed $80\%$ of subjects from each site as our holdout set and used the 
 remaining set as our training set. Furthermore, we made sure that the holdout 
-set is also balanced, so that the ratio between the patients and healthy 
-subjects is same in the holdout and training sets for each site. Also we made 
+set was also balanced, so that the ratio between the patients and healthy 
+subjects was same in the holdout and training sets for each site. We made 
 sure that all the runs from the same subject either belonged to the holdout 
-set or to the training set. The training set is used for finding the 
+set or to the training set. The training set was used for finding the 
 hyperparameters of the system using five-hold cross validations. After finding 
 the hyper parameters we used the full training set to train the system with 
-the selected hyper parameter and obtained the accuracy on the hold out set. 
-Furthermore, we repeated this procedure five times for different hold out sets 
+the selected hyper parameter and obtained the accuracy of the hold out set. 
+We repeated this procedure five times for different hold out sets 
 to get an average accuracy. 
 
 \subsection{SGMRF with log degrees of ranked voxels}
@@ -284,18 +303,20 @@ average degrees and method 4 ranks based on the difference between the healthy
 and patients average differences.}
 \end{figure}
 First, we executed the approach proposed by Rish \emph{et al.}~\cite{Rish_2013} 
-on our data set. In the data set we used we had degrees of each voxels as well 
+on our data set. We used we had degrees of each voxels as well 
 as the smoothed log values of the voxels for each subject. Furthermore, as 
 some voxels of some subjects had zero values for the BOLD signal, an universal 
 mask was used to select the voxels which had a non-zero BOLD signal value 
 through the whole data set. This resulted in a $28719$ voxels per each subject. 
-However, using all the available voxels resulted in computation difficulties 
+However, using all the available voxels resulted in significantly increased 
+computation time
 and thus selecting the best voxels (based on the training data) to separate 
 the healthy and schizophrenic subjects was very important. 
 
-To select the best voxels out of the possible $28719$ voxels, we experimented multiple approaches. 
-These include \begin{enumerate}
-  \item Selecting the voxels based on the t-test.
+To select the best voxels out of the possible $28719$ voxels, we experimented
+with multiple approaches. 
+These included: \begin{enumerate}
+  \item Selecting the voxels based on t-tests.
   \item Selecting the voxels based on the absolute differences between the mean degrees of a voxel between schizophrenic and healthy subjects.
   \item Selecting the voxels based on the differences between the mean degrees of a voxel between schizophrenic and healthy subjects.
   \item Selecting the voxels based on the differences between the mean degrees of a voxel between healthy and schizophrenic subjects.
@@ -304,7 +325,7 @@ The last three voxel ranking methods are explained in Figure~\ref{fig:voxel_rank
 Out of the above four approaches we obtained the highest accuracy on our cross 
 validation set by the third approach. Also the number of voxels $k$ to be used 
 in the SGMRF model was decided by running the experiment for different $k$ 
-values and found the optimum value$20$ for our cross validation set. By using 
+values and finding that $k = 20$ performed well during cross validation. By using 
 the selected voxels, we obtained the precision matrices for schizophrenic and 
 healthy subjects. Similar to the value of $k$, the sparsity coefficient 
 $\lambda$ was also obtained through a hyperparameter search on our cross 
@@ -312,7 +333,13 @@ validation set.
 
 
 \subsection{SGMRF with degrees from Dorsolateral Prefrontal Cortex area}
-connections in certain areas of the brain specifically dorsolateral prefrontal cortex (DLPFC) \cite{Potkin2008} and thalamocortical\cite{Cheng2015} circuitry. Thus, we extracted the degrees of voxels in these areas and used them to build the SGMRF model. Since we had only $4504$ voxels for each subject, we did not perform any voxel rankings in this approach. Similar to the previous approach using the smoothed log values of the degrees resulted in higher accuracy.
+Connections in certain areas of the brain specifically dorsolateral 
+prefrontal cortex (DLPFC)~\cite{Potkin2008} and 
+thalamocortical~\cite{Cheng2015} circuitry. Thus, we extracted the degrees 
+of voxels in these areas and used them to build the SGMRF model. Since we 
+had only $4504$ voxels for each subject, we did not perform any voxel 
+rankings in this approach. Similar to the previous approach using the 
+smoothed log values of the degrees resulted in higher accuracy.
 
 \subsection{Methods using Power \emph{et al.}'s ROIs}
 
@@ -324,40 +351,40 @@ are characterized by region number with the associated MNI coordinates
 described in Power \emph{et al.} provided in parenthesis: 81 (-44, 12, -34), 
 82 (46, 16, -30), 128 (52, 7, -30), 184 (17, -80, -34), 247 (33, 12, -34), 
 248 (-31, -10, -36), 249 (49, -3, -38) and 250 (-50, -7, -39). We use the
-same approach as described by Vega \emph{et al.}~\cite{rvega} to summarize
+approach described by Vega \emph{et al.}~\cite{rvega} to summarize
 regions of interest by taking region averages for each of the $5mm$ radius
-spheres that define regions. Finally this results in a $137 \times 256$ matrix
+spheres that define regions. Finally this resulted in a $137 \times 256$ matrix
 for each subject where each row is a time point across all regions and each
 column is the average time series for a single region.
 
 
 \subsubsection{ROI with Subject Concatenation}
 
-For this approach we follow the method as described by Vega \emph{et al.}.
+For this approach we follow the method described by Vega \emph{et al.}.
 Training set subjects in each class are first concatenated so that two large 
 matrices are created, one with dimension $ns * 137 \times 256$ and the other 
 with dimension $nh * 137 \times 256$ where $ns$ is the number of schizophenic 
 subjects in the training set and $nh$ is the number of health subjects. To
-make learning the MRF structure easier, feature normalization is performed
-were for each class and each region in that class, the region mean is 
-subtracted from each time point and each time point is divided by the 
+make learning the SGMRF structure easier, feature normalization was performed
+where for each class and each region in that class, the region mean was 
+subtracted from each time point and each time point was divided by the 
 region standard deviation.
 
 \begin{equation}
 ClassRegion_i = \frac{ClassRegion_i - mean(ClassRegion_i)}{std(ClassRegion_i)}
 \end{equation}
 
-Next, with the use of Glasso, a SGMRF structure is learned for each class 
-which results in two sparse precision matrices that encode the independences
+Next, with the use of Glasso, a SGMRF structure was learned for each class 
+which resulted in two sparse precision matrices that encode the independences
 learned. 
 
 Finally, when presented with a new subject from the hold-out set, the equation
-below is used to determine the likelihood of the subject belonging to each
-class. The class with the highest likelihood then becomes the predicted label
+below was used to determine the likelihood of the subject belonging to each
+class. The class with the highest likelihood then became the predicted label
 for the subject.
 
 A modified version of this approach was also implemented and tested but has
-been omitted for brevity and due to it obtaining poor results. In this variant
+been omitted for brevity and due to it obtaining poor results. In this variant,
 a Fourier transform was used on each of the subject's time series data to 
 obtain Fourier coefficients. These Fourier coefficients were then used in 
 place of the original time series for learning a classifier.
@@ -370,15 +397,15 @@ insert here
 
 \subsubsection{Region Degrees and SVMs}
 
-Like the work described in Rish \emph{et al.} region degrees are also used in
-this approach but in this case, we only consider the degrees that result from
+Like the work described in Rish \emph{et al.}, region degrees are also used in
+this approach but in this case, we only considered the degrees that result from
 the $256$ ROIs. This process is illustrated in Figure!\ref{}. For each subject 
-we generate a correlation matrix that records the correlation between the 
-average time series in their $region_i$ and $region_j$. Because we are not 
+we generated a correlation matrix containing the pair-wise correlations between 
+all of average time series for each region. Because we were not 
 interested in the correlation between a region and itself (which is trivially 
-$1$) we subtract the diagonal of the correlation matrix from itself. Using a
-threshold of $0.7$ which was chosen based on work by Rish \emph{et al.}, we
-then proceed to create the binary matrix and sum the column values as 
+$1$) we subtracted the diagonal of the correlation matrix from itself. Using a
+threshold of $0.7$, which was chosen based on work by Rish \emph{et al.}, we
+then proceeded to create the binary matrix and sum the column values as 
 described previously.
 
 \begin{figure}[!htb]
@@ -391,23 +418,23 @@ described previously.
   \label{fig:degree_calc}
 \end{figure}
 
-Now that we have a vector of region degrees ($1 \times 256$) for each subject,
-a SGMRF is used to again to build a classifier. This follows similarly from
-the previous approach except that now the input to Glasso is a $ns \times 256$
+Now that we had a vector of region degrees ($1 \times 256$) for each subject,
+a SGMRF was used to again to build a classifier. This followed similarly from
+the previous approach except that now the input to Glasso was a $ns \times 256$
 matrix for schizophrenic patients and a $nh \times256$ matrix for healthy
-subjects. Again this results in two $256 \times 256$ precision matrices which
-we can use in likelihood calculations for subjects from the hold-out set.
+subjects. Again this resulted in two $256 \times 256$ precision matrices which
+we could use in likelihood calculations for subjects from the hold-out set.
 
 Additionally, we also used a linear SVM classifier trained directly on
 region degree data to compare its performance to the SGMRF classifier.
 
 \subsubsection{Individual MRF Structure Classification}
 This approach is similar to the region concatenation approach described 
-previously except that here we do not concatenate subjects and instead
-learn a precision matrix (sparse MRF structure) for each subject 
-individually. For example, if we have $ns_{total}$ schizophrenics in our 
+previously except that here we did not concatenate subjects and instead
+learned a precision matrix (SGMRF structure) for each subject 
+individually. For example, if we had $ns_{total}$ schizophrenics in our 
 dataset and $nh_{total}$ healthy subjects ($ns_{total} + nh_{total}$ 
-$137 \times 256$ matrices) then we will use Glasso to generate $ns + nh$ 
+$137 \times 256$ matrices) then we would use Glasso to generate $ns + nh$ 
 precision matrices.
 
 To build a classifier, a linear SVM is trained on the precision matrices 
@@ -447,7 +474,11 @@ to indicate that the DLPFC region is not sufficient to capture the difference
 between patients and controls. Another noteworthy difference is that of the
 differences between the approach creating degree features from the region
 averages and the other better performing methods. This discrepancy may be due
+<<<<<<< HEAD
 to (Not sure %\elipses).
+=======
+to (Not sure).
+>>>>>>> origin/master
 
 
 \section{Conclusions and Future Work}
