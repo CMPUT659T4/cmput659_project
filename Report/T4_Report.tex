@@ -20,10 +20,10 @@ Department of Computing Science\\
 University of Alberta\\
 \texttt{}
 \And 
-\\
-Department of Computing Science\\
+Shashindra Silva\\
+Department of Electrical and Computer Engineering\\
 University of Alberta\\
-\texttt{}  
+\texttt{jayamuni@ualberta.ca}  
 }
 \newcommand{\fix}{\marginpar{FIX}}
 \newcommand{\new}{\marginpar{NEW}}
@@ -321,14 +321,10 @@ to get an average accuracy.
 \subsection{SGMRF with log degrees of ranked voxels}
 \begin{figure}\label{fig:voxel_rank}
 \includegraphics[width=\textwidth]{diagrams/Voxel_ranking.jpg}
-\caption{Voxel ranking methods to select best voxels, method 2 ranks the voxels 
-based on the absolute difference between the class average degrees,  3 ranks 
-based on the difference between the patients average degreees and healthy 
-average degrees and method 4 ranks based on the difference between the healthy 
-and patients average differences.}
+\caption{Voxel ranking methods to select best voxels. In step 2, the differences of the average degrees between patients and healthy subjects are $2$, $-1$, and $-3$ respectively for the three voxels.}
 \end{figure}
 First, we executed the approach proposed by Rish \emph{et al.}~\cite{Rish_2013} 
-on our data set. We used we had degrees of each voxels as well 
+on our data set. We had degrees of each voxels as well 
 as the smoothed log values of the voxels for each subject. Furthermore, as 
 some voxels of some subjects had zero values for the BOLD signal, an universal 
 mask was used to select the voxels which had a non-zero BOLD signal value 
@@ -341,19 +337,17 @@ the healthy and schizophrenic subjects was very important.
 To select the best voxels out of the possible $28719$ voxels, we experimented
 with multiple approaches. 
 These included: \begin{enumerate}
-  \item Selecting the voxels based on t-tests.
-  \item Selecting the voxels based on the absolute differences between the mean degrees of a voxel between schizophrenic and healthy subjects.
-  \item Selecting the voxels based on the differences between the mean degrees of a voxel between schizophrenic and healthy subjects.
-  \item Selecting the voxels based on the differences between the mean degrees of a voxel between healthy and schizophrenic subjects.
+  \item Selecting voxels based on t-tests.
+  \item Selecting voxels based on absolute differences of mean degrees of a voxel between schizophrenic and healthy subjects.
+  \item Selecting voxels based on differences of mean degrees of a voxel between schizophrenic and healthy subjects.
+  \item Selecting voxels based on differences of mean degrees of a voxel between healthy and schizophrenic subjects.
 \end{enumerate}
 The last three voxel ranking methods are explained in Figure~\ref{fig:voxel_rank}. 
 Out of the above four approaches we obtained the highest accuracy on our cross 
 validation set by the third approach. Also the number of voxels $k$ to be used 
 in the SGMRF model was decided by running the experiment for different $k$ 
-values and finding that $k = 20$ performed well during cross validation. By using 
-the selected voxels, we obtained the precision matrices for schizophrenic and 
-healthy subjects. Similar to the value of $k$, the sparsity coefficient 
-$\lambda$ was also obtained through a hyperparameter search on our cross 
+values and finding that $k = 20$ performed well during cross validation. By using the selected voxels, we obtained the precision matrices for schizophrenic and healthy subjects. Similar to the value of $k$, the sparsity coefficient 
+$\lambda$ was also obtained through a hyper parameter search on our cross 
 validation set.
 
 
