@@ -240,7 +240,13 @@ approach are among them. For further reading on these methods readers can
 refer to \cite{Rish2014Book}. In this study we are using Varsel and Glasso as 
 the preferred method for obtaining the precision matrix and subsequently MRF.   
 
-   
+\subsection{Rish  \emph{et al.}}
+In this work several approaches have been experimented. The most successful ones are SVM and MRF classifiers. For the MRF classifier they have used the same methods that has been mentioned in the \textit{SGMRF} section. The error rate for SVM was 7\% using pairwise correlation features, and 14\% for the MRF using degree 100 most significant voxels in the degree feature set. Here we focus on their approach for MRF classifier.\\
+\begin{figure}\label{voxel}
+\includegraphics[width=\textwidth]{diagrams/voxel.jpg}
+\end{figure} 
+
+In the MRF classifier, first they split training data in two different group. For each group they compute the precision matrix(assuming the data is centered unless $\mu$ needs to be computed as well). 
 \section{Methodology}
 
 \subsection{Data Set}
@@ -303,6 +309,7 @@ the selected voxels, we obtained the precision matrices for schizophrenic and
 healthy subjects. Similar to the value of $k$, the sparsity coefficient 
 $\lambda$ was also obtained through a hyperparameter search on our cross 
 validation set.
+
 
 \subsection{SGMRF with degrees from Dorsolateral Prefrontal Cortex area}
 connections in certain areas of the brain specifically dorsolateral prefrontal cortex (DLPFC) \cite{Potkin2008} and thalamocortical\cite{Cheng2015} circuitry. Thus, we extracted the degrees of voxels in these areas and used them to build the SGMRF model. Since we had only $4504$ voxels for each subject, we did not perform any voxel rankings in this approach. Similar to the previous approach using the smoothed log values of the degrees resulted in higher accuracy.
@@ -440,7 +447,7 @@ to indicate that the DLPFC region is not sufficient to capture the difference
 between patients and controls. Another noteworthy difference is that of the
 differences between the approach creating degree features from the region
 averages and the other better performing methods. This discrepancy may be due
-to (Not sure \elipses).
+to (Not sure %\elipses).
 
 
 \section{Conclusions and Future Work}
