@@ -185,14 +185,46 @@ the slack variable for the instance $i$~\cite{burges1998tutorial}.
 What is a SGMRF and how does it work
 
 One variation of Markov Random Field is Gaussian Random which is mostly being used for continuous space of variables and has well-defined mathematic properties that can be computed. Multivariate Gaussian density function over set of random variables X is defined as below: 
+
 \begin{equation}\label{gaussian1}
 p(X) = (2\pi)^{-n/2} |\Sigma|^{-1/2} \exp\left\{ -\frac{1}{2}(X - \mu)^t \Sigma^{-1} (X - \mu) \right\}.
 \end{equation}
+
  
-Where $ \mu $   is mean and $ \Sigma $ is the covariance matrix. We can set the $ \mu$ to zero and replace $\Sigma^{-1}$ with $C$ the equation \eqref{gaussian1} can be written as the following form.
+Where $ \mu $   is mean and $ \Sigma $ is the covariance matrix. We can set the $ \mu$ to zero and replace $\Sigma^{-1}$ with $C$ the equation \eqref{gaussian1} can be written as the following form. It also should be noted that $ C = \Sigma^{-1}$ and is known as the precision matrix in the literature.  
+
 \begin{equation}\label{gaussian2}
-p(X) = (2\pi)^{-n/2} |C|^{1/2} \exp\left\{ -\frac{1}{2}(X - \mu)^t \Sigma^{-1} (X - \mu) \right\}.
+p(X) = (2\pi)^{-n/2} |C|^{1/2} \exp\left\{ -\frac{1}{2}X^t C X \right\}.
 \end{equation}
+
+It has been shown by \cite{lauritzen1996graphical} that $ X_i$ and $ X_j$ are independent if and only if their corresponding entries in the precision matrix (C) are zero. It can be concluded that missing edge in the MRF will lead to zero entries in the precision matrix\cite{Rish2014Book}. The Problem of learning probabilistic graphical model for a given dataset is reduced to learning the precision matrix given this proof. \\
+
+Log-likelihood of the dataset assuming each row of the data is a p-dimensional vector and consisting n samples $D = \{X_1, X_2, ... , X_n\} $ can be written as follow. It should also be noted that we assume each sample is identically independent distributed(iid).
+
+\begin{equation}
+L(D) = \frac{n}{2} |C| - \frac{1}{2} \sum_{i=1}^{n} (X_i - \mu )^T C (X_i - \mu ) + const,
+\end{equation}  
+
+const is a constant which is not depend of $\mu$ and $C$. We also can center the data in a way that $\mu = 0$ so the second term reduces to the $ \frac{1}{2} \sum_{i=1}^{n} X_i ^T C X_i$ which is equal $\frac{n}{2}$ tr($AC$), where tr is trace of the matrix. The above formula will can be written as: 
+
+\begin{equation}
+L(D) = \frac{n}{2} |C -  tr(AC)| + const, 
+\end{equation}
+
+Thus the log-likelihood maximization problem will become like following: 
+
+\begin{equation}
+\max_{C\succ0} |C| - tr(AC)
+\end{equation}
+
+Where $|...|$ represents determinant and A is the empirical covariance matrix calculated by $A =  \frac{n}{2} \sum_{i=1}^{n} X_i^T X_i$, or maximum likelihood estimation fo $\Sigma$. It should also be noted the $C\succ0$ constraint makes C positive definite. \\
+
+  
+One obvious way for learning the parameters for joint distribution probability is using regularized likelihood maximization such as AIC and BIC. However, finding the simplest model which fits the data is a NP-hard problem using this approach. There are also few limitations that make using this approach less desirable. First Empirical covariance matrix may not even exist, specially when the number of features in the dataset is more than the number of samples. Which is the case in fMRI studies. fMRI datasets usually have fraction of samples to features. Second problem using this approach is not having zero elements in the inverse of empirical covariance matrix. Hence, to construct the MRF using this matrix one should include explicit sparsity constraint.\cite{Rish2014Book} \\
+
+These two major problems cause us to search for other solution to build the precision matrix given the dataset. Fortunately one can use the alternative approximation approach for the above problem. Recently there have been some successes for getting the approximate precision matrix given the dataset. Glasso, block-coordinate descend(BCD) known as COVSEL and projected gradient approach are among them. for further reading on these methods readers can refer to \cite{Rish2014Book}. In this study we are using Varsel and glasso as the preferred method for obtaining the precision matrix and subsequently MRF.   
+
+   
 \section{Methodology}
 
 \subsection{Data Set}
