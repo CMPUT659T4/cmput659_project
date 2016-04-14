@@ -254,7 +254,7 @@ to get an average accuracy.
 
 \subsection{SGMRF with log degrees of ranked voxels}
 \begin{figure}\label{fig:voxel_rank}
-\includegraphics[width=\textwidth]{Voxel_ranking.jpg}
+\includegraphics[width=\textwidth]{diagrams/Voxel_ranking.jpg}
 \caption{Voxel ranking methods to select best voxels, method 2 ranks the voxels 
 based on the absolute difference between the class average degrees,  3 ranks 
 based on the difference between the patients average degreees and healthy 
@@ -278,7 +278,7 @@ These include \begin{enumerate}
   \item Selecting the voxels based on the differences between the mean degrees of a voxel between schizophrenic and healthy subjects.
   \item Selecting the voxels based on the differences between the mean degrees of a voxel between healthy and schizophrenic subjects.
 \end{enumerate}
-The last three voxel ranking methods are explained in Fig. \ref{fig:voxel_rank}. 
+The last three voxel ranking methods are explained in Figure~\ref{fig:voxel_rank}. 
 Out of the above four approaches we obtained the highest accuracy on our cross 
 validation set by the third approach. Also the number of voxels $k$ to be used 
 in the SGMRF model was decided by running the experiment for different $k$ 
@@ -307,7 +307,9 @@ spheres that define regions. Finally this results in a $137 \times 256$ matrix
 for each subject where each row is a time point across all regions and each
 column is the average time series for a single region.
 
+
 \subsubsection{ROI with Subject Concatenation}
+
 For this approach we follow the method as described by Vega \emph{et al.}.
 Training set subjects in each class are first concatenated so that two large 
 matrices are created, one with dimension $ns * 137 \times 256$ and the other 
@@ -344,6 +346,7 @@ insert here
 %\subsubsection{ROI with Fouier Coefficients}
 
 \subsubsection{Region Degrees and SVMs}
+
 Like the work described in Rish \emph{et al.} region degrees are also used in
 this approach but in this case, we only consider the degrees that result from
 the $256$ ROIs. This process is illustrated in Figure!\ref{}. For each subject 
@@ -354,6 +357,16 @@ $1$) we subtract the diagonal of the correlation matrix from itself. Using a
 threshold of $0.7$ which was chosen based on work by Rish \emph{et al.}, we
 then proceed to create the binary matrix and sum the column values as 
 described previously.
+
+\begin{figure}[!htb]
+  \centering
+  \includegraphics[width=\textwidth, height=5.5cm]{diagrams/ROI_deg_img.pdf}
+  \caption{Pair-wise comparisons are made between region time series data to
+  produce a correlation matrix. The diagonal is removed and a threshold is
+  applied to binarize the matrix. Sums are collected for each region to
+  produce the ``degree'' of that region.}
+  \label{fig:degree_calc}
+\end{figure}
 
 Now that we have a vector of region degrees ($1 \times 256$) for each subject,
 a SGMRF is used to again to build a classifier. This follows similarly from
@@ -380,31 +393,22 @@ generated from the hold-out set.
 
 \subsection{Your Approach? Farhad}
 Describe your experiments
-                                
-\section{Results}                                 
-                                             
-\subsection{Your Approach? Mario}
-\subsection{SGMRF with degrees from DLPFC}
 
-With the Rish \emph{et al.} code we obtained a $69\%$ cross validation 
-accuracy on our cross validation sets and $75\%$ accuracy on the hold-out 
-set.
 
-\subsection{Methods using Power \emph{et al.}'s ROIs}
+\section{Results}
 
-\subsubsection{ROI with Patient Concatenation}
-Average of 5 hold-out sets is 74.17\%
-
-%\subsubsection{ROI with Fouier Coefficients}
-
-\subsubsection{Region Degrees and SVMs}
-Average of 5 hold-out sets is 60.65\% for SVM
-
-\subsubsection{Individual MRF Structure Classification}
-Average of 5 hold-out sets is 69.44\% for SVM
-
-\subsection{Your Approach? Farhad}
-Report your results
+\begin{table*}[!htb]\footnotesize
+\begin{center}
+    \begin{tabular}{| l | r | r | r | r | r | r |}
+    \hline
+                & Rish (Full) & Rish (DLPFC) & ROI + Concatenation & Region Degrees & MRF structure & PCA \\ \hline
+    Classifier  & SGMRF       & SGMRF        & SGMRF               & SVM            & SVM           &1    \\ \hline
+    Accuracy    & 72.32\%     & 63.52\%      & 74.17               & 60.65          & 69.44         &1    \\ \hline
+    \end{tabular}
+    \caption{Accuracy on 5 Striated Hold-out Sets}
+     \label{fig:holdout_table}
+\end{center}
+\end{table*}
 
 \section{Discussion}
 % this needs to be a well thought out section
