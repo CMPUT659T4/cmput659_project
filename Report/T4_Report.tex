@@ -280,7 +280,7 @@ had four runs (repeated scans) so effectively our data set had $380$ subjects. E
 $137$ time slices and each time slice had the signal amplitude of over 
 $100,000$ voxels. The voxels were referred using the 3D coordinates and thus 
 the dimensionality of a single run was 
-$\mathcal R^{N_1\times N_2\times N_37 times 137}$, wh
+$\mathcal R^{N_1 \times N_2 \times N_37 \times 137}$, wh
 We removed $80\%$ of subjects from each site as our holdout set and used the 
 remaining set as our training set. Furthermore, we made sure that the holdout 
 set was also balanced, so that the ratio between the patients and healthy 
@@ -399,7 +399,7 @@ insert here
 
 Like the work described in Rish \emph{et al.}, region degrees are also used in
 this approach but in this case, we only considered the degrees that result from
-the $256$ ROIs. This process is illustrated in Figure!\ref{}. For each subject 
+the $256$ ROIs. This process is illustrated in Figure~\ref{fig:degree_calc}. For each subject 
 we generated a correlation matrix containing the pair-wise correlations between 
 all of average time series for each region. Because we were not 
 interested in the correlation between a region and itself (which is trivially 
@@ -460,7 +460,7 @@ Describe your experiments
 \end{center}
 \end{table*}
 
-As Seen in Table~\ref{holdout_table} methods using a SGMRF classifier were
+As Seen in Table~\ref{fig:holdout_table} methods using a SGMRF classifier were
 able to obtain the best results, of which 74.17 was the highest average
 accuracy recorded. This seems to suggest that a SGMRF seems to be a more
 effective tool for this particular problem. Because the SGMRF is a generative
@@ -489,8 +489,10 @@ composed of $20\%$ of each site used in the study.
 
 \section{Acknowledgements}
 We would like to thank Dr. Mina Gheiratmand for preprocessing the fMRI data 
-and co-coaching our project. Also we used the feature extraction codes 
-provided by Dr. Irina Rish.
+and co-coaching our project, Sugai Liang for her advice and Roberto Vega for
+all his advice and help. Finally, we would also like to thank Dr. Irina Rish
+for the feature extraction code she provided and Dr. Greiner for his
+supervision of this project.
 
 \bibliographystyle{plain}
 \bibliography{T4_Report}
