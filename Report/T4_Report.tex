@@ -148,8 +148,8 @@ voxels in the degree map feature set. We use the SGMRF approach described by
 Rish \emph{et al.}~\cite{Rish_2013}. In the MRF classifier, first they split 
 training data in two different groups. For each group they compute the 
 precision matrix (assuming the data is centered unless $\mu$ needs to be 
-computed as well). See the \textit{Inference} section of the Appendix for how 
-they classify each new subject based parameters obtained from training stage.
+computed as well). (See the \textit{Inference} section of the Appendix for how 
+they classify each new subject based parameters obtained from training stage.)
 
 %\begin{figure}
 %  \begin{center}
@@ -325,23 +325,25 @@ L(D) = \frac{n}{2} [ln|C| -  |tr(AC)|] - \lambda||C||_{1},
 
 \subsubsection{Method for obtaining precision matrix}  
 One obvious way for learning the parameters for joint distribution probability 
-is using regularized likelihood maximization such as Akaike information criterion (AIC) and Bayesian information criterion (BIC). However, 
-finding the simplest model which fits the data is a NP-hard problem using this 
-approach. There are also few limitations that make using this approach less 
-desirable. First Empirical covariance matrix may not even exist, specially when 
-the number of features in the dataset is more than the number of samples. Which 
-is the case in fMRI studies. fMRI datasets usually have fraction of samples to 
-features. Second problem using this approach is not having zero elements in the 
-inverse of empirical covariance matrix. Hence, to construct the MRF using this 
+is using regularized likelihood maximization such as Akaike information criterion 
+(AIC) and Bayesian information criterion (BIC). However, 
+finding the most simple model which fits the data is a NP-hard problem using this 
+approach. There are also several limitations that make using this approach less 
+desirable. First the empirical covariance matrix may not even exist, especially when 
+the number of features in the dataset is more than the number of samples, which 
+is the case in fMRI studies. fMRI datasets usually have a fraction of samples to 
+features. The second problem using this approach is not having zero elements in the 
+inverse of the empirical covariance matrix. Hence, to construct the MRF using this 
 matrix one should include explicit sparsity constraint \cite{Rish2014Book}. \\
 
-These two major problems cause us to search for other solution to build the 
-precision matrix given the dataset. Fortunately one can use the alternative 
-approximation approach for the above problem. Recently there have been some 
-successes for getting the approximate precision matrix given the dataset. 
-Glasso\cite{glasso}, block-coordinate descend (BCD) known as COVSEL \cite{Banerjee:2008:MST:1390681.1390696}, Varsel \cite{honorio2009sparse} and projected gradient \cite{lin2009learning} 
-approach are among them. For further reading on these methods readers can 
-refer to \cite{Rish2014Book}. In this study we are using Varsel and glasso as 
+These two major problems caused us to search for other solutions to building the 
+precision matrix, given the dataset. Fortunately one can use the alternative 
+approximation approach is viable for the above problem. There have been some 
+recent successes for getting the approximate precision matrix given the dataset. 
+These include Glasso~\cite{glasso}, block-coordinate descend (BCD) known as 
+COVSEL~\cite{Banerjee:2008:MST:1390681.1390696}, Varsel \cite{honorio2009sparse} 
+and projected gradient \cite{lin2009learning}. 
+In this study we are using Varsel and Glasso as 
 the preferred method for obtaining the precision matrix and subsequently MRF.   
 
 
@@ -350,22 +352,22 @@ the preferred method for obtaining the precision matrix and subsequently MRF.
 \subsection{Data Set}
 Data used for this study were downloaded from the Function BIRN Data 
 Repository (http://fbirnbdr.birncommunity.org:8080/BDR/).\ The original 
-data contained nine sites and $235$ subjects.\ However, during the 
+data included nine sites and $235$ subjects.\ However, during the 
 preprocessing steps some of the subjects were removed because they could
 not be preprocessed properly, resulting in a final set of $95$ 
 subjects and five sites.\ Data were preprocessed by Dr.\ Mina Gheiratmand by 
 using FSL software (http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/). Our data 
 contained $46$ schizophrenic subjects and $49$ healthy subjects. Each subject 
-had four runs (repeated scans) so effectively our data set consists of $380$ subjects. Each run had 
+had four runs (repeated scans) so effectively resulting in $380$ subjects. Each run had 
 $137$ time slices and each time slice had the signal amplitude of over 
 $100,000$ voxels. The voxels were referred using the 3D coordinates and thus 
 the dimensionality of a single run was 
 $\mathcal R^{ 53 \times 64 \times \times 37 \times 137}$.
 We removed $80\%$ of subjects from each site as our holdout set and used the 
-remaining set as our training set. Furthermore, we made sure that the holdout 
-set was also balanced, so that the ratio between the patients and healthy 
-subjects was same in the holdout and training sets for each site. We made 
-sure that all the runs from the same subject either belonged to the holdout 
+remaining set as our training set. We ensured that the holdout 
+set was balanced, so that the ratio between the patients and healthy 
+subjects was same in the holdout and training sets for each site. We ensured 
+that all the runs from the same subject either belonged to the holdout 
 set or to the training set. The training set was used for finding the 
 hyper-parameters of the system using five-fold cross validations. After finding 
 the hyper parameters we used the full training set to train the system with 
@@ -382,19 +384,19 @@ to get an average accuracy.
 First, we executed the approach proposed by Rish \emph{et al.}~\cite{Rish_2013} 
 on our data set. We had degrees of each voxels as well 
 as the smoothed log values of the voxels for each subject. Furthermore, as 
-some voxels of some subjects had zero values for the BOLD signal, an universal 
+some voxels of some subjects had zero values for the BOLD signal, a universal 
 mask was used to select the voxels which had a non-zero BOLD signal value 
 through the whole data set. This resulted in a $28719$ voxels per each subject. 
 However, using all the available voxels resulted in significantly increased 
 computation time
 and thus selecting the best voxels (based on the training data) to separate 
-the healthy and schizophrenic subjects was very important. 
+the healthy and schizophrenic subjects was important. 
 
 To select the best voxels out of the possible $28719$ voxels, we experimented
 with multiple approaches. These included selecting voxels based on t-tests (method 1), 
-based on absolute differences of mean voxel degrees (method 2),
-based on differences of mean voxel degrees (method 3) ($schizophrenic - healthy$) and
-based on differences of mean voxel degrees (method 4) ($healthy - schizophrenic$).
+absolute differences of mean voxel degrees (method 2),
+differences of mean voxel degrees (method 3) ($schizophrenic - healthy$) and
+differences of mean voxel degrees (method 4) ($healthy - schizophrenic$).
 
 %These included: \begin{enumerate}
 %  \item Selecting voxels based on t-tests.
@@ -425,8 +427,8 @@ smoothed log values of the degrees resulted in higher accuracy.
 The following three methods used in this subsection all involve the $264$  
 regions of interest that are described in work by Power \emph{et al.}~\cite{Power_2011}.
 Due to missing data resulting from incomplete scans of subjects, $8$
-regions were removed from analysis leaving $256$ ROIs. See appendix for
-list of omitted region coordinates. We use the
+regions were removed from analysis leaving $256$ ROIs. (See Appendix for
+list of omitted region coordinates.) We use the
 approach described by Vega \emph{et al.}~\cite{rvega} to summarize
 regions of interest by taking region averages for each of the $5mm$ radius
 spheres that define regions. Finally this resulted in a $137 \times 256$ matrix
