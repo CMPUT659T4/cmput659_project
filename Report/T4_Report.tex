@@ -611,5 +611,20 @@ So for a given dataset we can learn the model $ P(Z=z|Y=y)P(Y=y)$ for each
 class label, and then given a test dataset assign the most likely class 
 label using the equation\eqref{argmax} \cite{Rish2014Book}  
 
-	
+\subsection{Description of the features }
+\begin{enumerate}
+
+
+\item Correlation: All pair-wise correlations between super-voxels in the (spatially) down-sampled data. The original data is 53x64x37 voxels. The number of all pair-wise correlations is extremely large for the original data. Data have been down sampled to 13x16x12. Then all of the pair-wise correlations computed, which is $(731x731-731)/2$. $731$ is the number of nonzero elements in the subjects universal brain mask (intersection of all subjects brains) in the down sampled data.
+
+\item Eigenvalues: (Nonzero) eigenvalues of the correlation matrix
+
+\item Log-disconnection: instead of thresholding for correlation coefficient $r > 0.7$ and finding the degrees, It has been thresholded for $r <0.4$ to have a measure of dis-connectivity of a voxel. In contrast, with the degree features. 
+
+\item Log-disconnection regions: as the log-disconnection feature, but with only difference of being limited to three regions: superior frontal gyrus, middle frontal gyrus and Thalamus.  
+
+\item MBI stat: statistics of the average brain intensity signal (for each subject) as the feature. These were mean, standard deviation, skewness and Kurtosis.
+
+\item Degree: as described in the report.
+\end{enumerate}
 \end{document}
