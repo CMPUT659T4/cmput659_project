@@ -120,6 +120,7 @@ JD Power argues in his video abstract that these regions are currently the
 best representation of functional networks in the brain that are
 available~\cite{Power_2011}.
 
+
 \subsubsection{Calculating Voxel Degrees}
 Introduced as a ``degree map'' in Rish 
 \emph{et al.}~\cite{rish2009discriminative}, voxel degrees are the constituent
@@ -134,6 +135,36 @@ matrix. If a correlation value is greater than the threshold there said to be
 an edge between those two voxels. Finally, for each voxels all of the edges
 it participates in are summed and the total number of edges becomes the 
 degree of that voxel.
+
+\subsection{Rish \emph{et al.}}
+Rish \emph{et al.}~\cite{Rish_2013} was able to achieve very high accuracies 
+when diagnosing patients as schizophrenic using fMRI data from a 
+single location and employing several approaches. The most successful of these
+approaches include the use of support vector machines (SVM)l and sparse 
+gaussian markov random field (SGMRF) classifiers, described later in the 
+background. The error rate for SVM was 7\% using pairwise correlation features, 
+and 14\% for the SGMRF using degree $100$ most significant voxels in the 
+degree map feature set. As part of our work we use the SGMRF approach
+detailed in their paper. In the MRF classifier, first they split training data 
+in two different group. For each group they compute the precision matrix 
+(assuming the data is centered unless $\mu$ needs to be computed as well). 
+Then as described later in \textit{Inference} section they classify each new 
+subject based parameters obtained from training stage.
+
+\begin{figure}
+  \begin{center}
+  \includegraphics[width=0.5\textwidth, height=3.0cm]{diagrams/voxel.jpg}
+  \caption{Graphical models of voxel interactions Rish \emph{et al.}}
+  \label{voxel}
+  \end{center}
+\end{figure} 
+
+Figure \ref{voxel}.a shows interaction between voxels BOLD signal and a 
+stimulus, and Figure \ref{voxel}.b shows a Bayesian network of brain voxel 
+being affected by both stimulus and unobserved brain processes that can 
+change BOLD signal too. Given this figure one can see MRF approach invests 
+on the different network on of interaction for healthy versus schizophrenic 
+subject in response to a stimulus to differentiate them. 
 
 %\subsection{Fourier Transform}
 %A Fourier transform allows for the translation of any signal from the time
@@ -337,21 +368,7 @@ approach are among them. For further reading on these methods readers can
 refer to \cite{Rish2014Book}. In this study we are using Varsel and Glasso as 
 the preferred method for obtaining the precision matrix and subsequently MRF.   
 
-\subsection{Rish \emph{et al.}}
-In this work several approaches have been experimented. The most successful ones are SVM and MRF classifiers. For the MRF classifier they have used the same methods that has been mentioned in the \textit{SGMRF} section. The error rate for SVM was 7\% using pairwise correlation features, and 14\% for the MRF using degree 100 most significant voxels in the degree feature set. Here we focus on their approach for MRF classifier.\\
 
-In the MRF classifier, first they split training data in two different group. For each group they compute the precision matrix(assuming the data is centered unless $\mu$ needs to be computed as well). Then as described in \textit{Inference} section they classify each new subject based parameters obtained from training stage.  \\
-
-\begin{figure}
-
-\begin{center}
-\includegraphics[width=0.5\textwidth, height=3.0cm]{diagrams/voxel.jpg}
-\caption{Graphical models of voxel interactions Rish \emph{et al.}}
-\label{voxel}
-\end{center}
-\end{figure} 
-Figure \ref{voxel}.a shows interaction between voxels BOLD signal and a stimulus, and Figure \ref{voxel}.b shows a Bayesian network of brain voxel being affected by both stimulus and unobserved brain processes that can change BOLD signal too. Given this figure one can see MRF approach invests on the different network on of interaction for healthy versus schizophrenic subject in response to a stimulus to differentiate them. 
-    
 \section{Methodology}
 
 \subsection{Data Set}
