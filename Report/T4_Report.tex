@@ -36,26 +36,25 @@ University of Alberta\\
 	\maketitle
 
 \begin{abstract}
-Diagnosis of schizophrenia is a challenging task for which diagnostic tests
-have yet to be developed~\cite{McGuire200891}. Although Functional Magnetic 
-Resonance Imaging (fMRI) methods have become more common in the diagnosis of 
-mental disorders have become more popular, for schizophrenia diagnosis fMRI 
-methods need to be more robust and reliable. Similar 
-studies~\cite{Rish_2013}\cite{Rosa_2013} have shown that fMRI can be used in 
-conjunction with Sparse Gaussian Markov Random Field (SGMRF) to produce high 
-accuracy in diagnosis of illness.
-However having a dataset with homogeneous distribution of illness makes this 
-result less reliable and creates the need for more evidence using 
-heterogeneous dataset in terms of illness. 
-In this work we pursue two paths to tackle this problem. First, we evaluate 
-performance of Sparse Gaussian Markov Random Field (SGMRF) on fMRI data 
-brain scans, and second we study on Regions of Interest (ROI) as defined by
-Power \emph{et al.}~\cite{Power_2011}. 
-We used 5 fold cross validation for hyper parameter tuning and $20\%$ hold-out 
-set for test. Accuracies that We have obtained the following accuracies using 
-this method: —— for whole brain features and —- for ROI features. While these 
-result are slightly less than the results obtained by Rish \emph{et al.}, 
-they are on par with Rosa \emph{et al.} results.  
+Diagnosing schizophrenia is a challenging task for which diagnostic tests
+have yet to be developed, but where data is becoming increasingly more 
+available due to the use of Functional Magnetic Resonance Imaging (fMRI).
+Studies have shown that fMRI can be used in conjunction with Sparse 
+Gaussian Markov Random Field (SGMRF) to achieve high accuracy when diagnosing
+schizophrenia, however, these studies are limited by fairly small dataset 
+that origninate from single locations. In this work we focus on obtaining
+high diagnostic accuracies for data that has been combined from multiple
+locations. We evaluated the performance of two main approaches. First 
+we consider the use SGMRF on voxel degrees extracted from fMRI data and 
+second we use Regions of Interest (ROI) as defined by Power \emph{et al.} 
+extracted from the data as the feature set provided to classifiers. 
+After averaging the accuracies obtained from 5 different $20\%$ balanced 
+hold-out sets where each set was sample from each site with the same 
+proportion, we found that an ROI approach used in conjunction with
+a SGMRF classifier gave us the best accuracy of $74.16\%$ on our multi-site 
+data. While these accuracies are low in comparison to those obtain from
+single site analysis, we show that reasonable accuracies can be obtain
+when combining multiple schizophrenia datasets.
 \end{abstract}
 
 
@@ -66,8 +65,8 @@ affected can experience hallucinations, delusions and diminished mental
 capacities to varying extents~\cite{jablensky2010diagnostic}. While several
 features of schizophrenia have proven useful for its diagnosis there are
 current no set of features that have sufficient sensitivity or specificity
-to be used in diagnostic tests~\cite{jablensky2010diagnostic}. This 
-effectively means that subjectivity plays a role when a physician is 
+to be used in diagnostic tests~\cite{jablensky2010diagnostic, McGuire200891}. 
+This effectively means that subjectivity plays a role when a physician is 
 diagnosing a patient. 
 
 Functional Magnetic Resonance Imaging (fMRI) is a tool for recording 
