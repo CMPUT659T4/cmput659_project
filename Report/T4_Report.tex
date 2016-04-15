@@ -190,24 +190,23 @@ effects resulted from the use of different machines and environments. At the
 same time, multi-site analysis can easily be generalized for a new data set 
 from a totally different source. Cheng et al. \cite{Cheng2015} analyzes a 
 multi site data set which is obtained from five different sites with different 
-machines. They used SVM for classify schizophrenia patients and healthy 
-controls and obtained accuracies in the range of $73.53- 80.92\%$. In this 
-research we will try to obtain results with similar accuracies, but using 
-probabilistic graphical methods.
+machines. They used SVM to classify schizophrenia patients and healthy 
+controls, and obtained accuracies are in the range of $73.53- 80.92\%$. In this 
+research we will try to obtain results with similar accuracies, but using PGM.
 
 
 \subsection{Principal Component Analysis}
 Principal Component Analysis or as it called PCA is a technique which uses 
-complicated mathematic techniques to transform the data from original space 
+complicated mathematical techniques to transform the data from original space 
 to a new dimensionality called principal components, which usually has 
 smaller dimension than the original space. In general PCA uses vector 
 space transformation to increase the dimensionality of large datasets. For 
-doing so PCA uses mathematical projection. \cite{richardson2009principal}
+doing so PCA uses mathematical projection \cite{richardson2009principal}.
 
 The way PCA does this projection is by maximizing the variance of projected 
-data. As it been shown in the \cite{bishop2006pattern} if we project the 
-data on the eigenvector of the data variance will be maximum. So if we want 
-to project our $N$-dimensional data to the space $M$-dimension where $M<N$, 
+data. As Bishop \cite{bishop2006pattern} shows, if we project the 
+data on the eigenvector(s) of the data variance will be maximum. Hence, if we want 
+to project our $N$-dimensional data to the $M$-dimensional space where $M<N$, 
 \textit{"the optimal linear projection for which the variance of the 
 projected data is maximized is now defined by the $M$ eigenvectors 
 $u_{1}, ... , u_{M}$ of the data covariance matrix $S$ corresponding to the
@@ -244,14 +243,14 @@ $x_i$ is the instance's features, $y_i$ is the instance label and $b$ is
 the bias term of the model. Unfortunately, this version of the SVM only
 works in the case where the data is linearly separable. To extend the SVM
 to linearly inseparable data, the addition of positive slack variables is
-required, such that the constraints become $\forall i$ 
-$y_i (x_i w + b) - 1 + \xi_i \ge 0 $ and $\xi_i \ge 0$, where $xi_i$ is 
+required, such that the constraints become $\forall i$
+$y_i (x_i w + b) - 1 + \xi_i \ge 0 $ and $\xi_i \ge 0$, where $\xi_i$ is 
 the slack variable for the instance $i$~\cite{burges1998tutorial}.
 
 
-\subsection{SGMRF}
-One variation of Markov Random Field is Gaussian Random which is generally 
-used for continuous space of variables and has well-defined mathematic 
+\subsection{Sparse Gaussian Markove Random Field (SGMRF)}
+One variation of Markov Random Field (MRF) is Gaussian MRF which is generally 
+used for continuous space of variables and has well-defined mathematical 
 properties that can be computed. Multivariate Gaussian density function 
 over a set of random variables X is defined as below: 
 
@@ -262,34 +261,34 @@ p(X) = (2\pi)^{-n/2} |\Sigma|^{-1/2} \exp\left\{ -\frac{1}{2}(X - \mu)^t \Sigma^
 In the equation $\mu$ is the mean and $\Sigma$ is the covariance matrix. 
 We can set $\mu$ to zero and replace $\Sigma^{-1}$ with $C$ the 
 equation \eqref{gaussian1} which can be written as the following form. 
-It also should be noted that $C = \Sigma^{-1}$ and is known as the 
+It should also be noted that $C = \Sigma^{-1}$ and is known as the 
 precision matrix in the literature.  
 
 \begin{equation}\label{gaussian2}
 p(X) = (2\pi)^{-n/2} |C|^{1/2} \exp\left\{ -\frac{1}{2}X^t C X \right\}.
 \end{equation}
 
-It has been shown by \cite{lauritzen1996graphical} that $X_i$ and $X_j$ are 
+It has been shown by Lauritzen \cite{lauritzen1996graphical} that $X_i$ and $X_j$ are 
 independent if and only if their corresponding entries in the precision 
 matrix (C) are zero. It can be concluded that missing edge in the MRF will 
-lead to zero entries in the precision matrix\cite{Rish2014Book}. The Problem 
-of learning probabilistic graphical model for a given dataset is reduced to 
+lead to zero entries in the precision matrix \cite{Rish2014Book}. The problem 
+of learning pgm for a given dataset is reduced to 
 learning the precision matrix given this proof.
 
-The Log-likelihood of the dataset, assuming each row of the data is a
+The log-likelihood of the dataset, assuming each row of the data is a
 p-dimensional vector and consisting n samples $D = \{X_1, X_2, ... , X_n\}$, 
 can be written as follow. It should also be noted that we assume each sample 
-is identically independent distributed(iid).
+is identically independent distributed (iid).
 
 \begin{equation}
 L(D) = \frac{n}{2} |C| - \frac{1}{2} \sum_{i=1}^{n} (X_i - \mu )^T C (X_i - \mu ) + const,
 \end{equation}  
 
-Here, const is a constant which is not dependant on $\mu$ or $C$. We also can 
+Here, \textit{const} is a constant which is not dependent on $\mu$ or $C$. We can also 
 center the data in such a way that $\mu = 0$, so the second term reduces to 
 $\frac{1}{2} \sum_{i=1}^{n} X_i ^T C X_i$ which is equal to 
 $\frac{n}{2}$ tr($AC$), where $tr$ is trace of the matrix. The above 
-formula will can be written as shown in equation~\eqref{likelihood} where the
+formula can be written as shown in equation~\eqref{likelihood} where the
 log-likelihood maximization problem is shown in 
 equation~\eqref{maxlikelihood}. 
 
@@ -327,7 +326,7 @@ L(D) = \frac{n}{2} [ln|C| -  |tr(AC)|] - \lambda||C||_{1},
 
 \subsubsection{Method for obtaining precision matrix}  
 One obvious way for learning the parameters for joint distribution probability 
-is using regularized likelihood maximization such as AIC and BIC. However, 
+is using regularized likelihood maximization such as Akaike information criterion (AIC) and Bayesian information criterion (BIC). However, 
 finding the simplest model which fits the data is a NP-hard problem using this 
 approach. There are also few limitations that make using this approach less 
 desirable. First Empirical covariance matrix may not even exist, specially when 
@@ -335,15 +334,15 @@ the number of features in the dataset is more than the number of samples. Which
 is the case in fMRI studies. fMRI datasets usually have fraction of samples to 
 features. Second problem using this approach is not having zero elements in the 
 inverse of empirical covariance matrix. Hence, to construct the MRF using this 
-matrix one should include explicit sparsity constraint.\cite{Rish2014Book} \\
+matrix one should include explicit sparsity constraint \cite{Rish2014Book}. \\
 
 These two major problems cause us to search for other solution to build the 
 precision matrix given the dataset. Fortunately one can use the alternative 
 approximation approach for the above problem. Recently there have been some 
 successes for getting the approximate precision matrix given the dataset. 
-Glasso\cite{glasso}, block-coordinate descend(BCD) known as COVSEL and projected gradient 
+Glasso\cite{glasso}, block-coordinate descend (BCD) known as COVSEL, Varsel \cite{honorio2009sparse} and projected gradient 
 approach are among them. For further reading on these methods readers can 
-refer to \cite{Rish2014Book}. In this study we are using Varsel and Glasso as 
+refer to \cite{Rish2014Book}. In this study we are using Varsel and glasso as 
 the preferred method for obtaining the precision matrix and subsequently MRF.   
 
 
