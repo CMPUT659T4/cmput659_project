@@ -554,7 +554,16 @@ In this work we studied the use of fMRI and machine learning to diagnose
 schizophrenia, given a set of healthy and schizophrenic subjects. We found
 that a region based approach using SGMRFs yielded the highest accuracy 
 ($74.16\%$) when averaged over 5 hold-out sets where the hold-out set was
-composed of $20\%$ of each site used in the study. In this study we did not select the number of principal components based on the variance captured by the components, one can try this method too to see if this could improve the performance of PCA, which is highly doubted. 
+composed of $20\%$ of each site used in the study. We conclude from this
+that ROIs are more effective in the diagnosis of schizophrenia then whole
+brain analysis because extranious noise is being removed from the data. 
+
+In this study we did not select the number of principal components based 
+on the variance captured by the components, future work could be done
+to explore this method and determine if it could improve classification
+accuracy. Other future work involves the use of ensemble methods. We have
+found that several methods perform well individually, so an attempt at
+combining them together seems like a natural next step.
 
 \section{Acknowledgements}
 We would like to thank Dr. Mina Gheiratmand for preprocessing the fMRI data 
