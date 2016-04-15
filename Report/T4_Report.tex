@@ -196,12 +196,12 @@ research we will try to obtain results with similar accuracies, but using PGM.
 
 
 \subsection{Principal Component Analysis}
-Principal Component Analysis or as it called PCA is a technique which uses 
-complicated mathematical techniques to transform the data from original space 
-to a new dimensionality called principal components, which usually has 
-smaller dimension than the original space. In general PCA uses vector 
+Principal Component Analysis (PCA) is a technique which uses 
+mathematical techniques to transform data from an original space 
+to a new dimensionality called principal components, which usually have 
+smaller dimension than the original space. PCA uses vector 
 space transformation to increase the dimensionality of large datasets. For 
-doing so PCA uses mathematical projection \cite{richardson2009principal}.
+doing so PCA uses mathematical projection~\cite{richardson2009principal}.
 
 The way PCA does this projection is by maximizing the variance of projected 
 data. As Bishop \cite{bishop2006pattern} shows, if we project the 
@@ -224,9 +224,9 @@ S = \frac{1}{N} \sum_{n=1}^{N}(X_{n}-\mu)(X_{n}-\mu)^T
 
 
 \subsection{Support Vector Machines}
-In a 1995 paper by Vladimir Vapnik \emph{et al.} the concept of support 
-Vector Machines (SVMs) was introduced  as a statistical tool for 
-classification problems~\cite{shmilovici2005support}. In our work we
+Vapnik \emph{et al.} introduced the concept of support 
+Vector Machines (SVMs) as a statistical tool for 
+classification problems~\cite{shmilovici2005support}. We
 use the most simple SVM, a linear SVM, because it does not use non-linear
 kernels and therefore has no hyperparameters that need to be tuned
 with cross validation. Instead, a linear SVM learns the ``maximum-margin
@@ -236,12 +236,12 @@ features and partitions the data space into separate classes. The term
 separation between classes and the hyperplane, therefore creating the 
 largest ``margin''~\cite{shmilovici2005support}. We can be guaranteed of
 the optimality of the result as the SVM problem is known to be 
-convex~\cite{burges1998tutorial}. The simplest form of a linear SVM 
+convex~\cite{burges1998tutorial}. The most simple form of a linear SVM 
 minimizes $\frac{1}{2}||w||^2$ subject to the constraint 
 $y_i (x_i w + b) - 1 \ge 0 $, $\forall i$ where $w$ is the weight vector,
 $x_i$ is the instance's features, $y_i$ is the instance label and $b$ is
 the bias term of the model. Unfortunately, this version of the SVM only
-works in the case where the data is linearly separable. To extend the SVM
+works in cases where the data is linearly separable. To extend the SVM
 to linearly inseparable data, the addition of positive slack variables is
 required, such that the constraints become $\forall i$
 $y_i (x_i w + b) - 1 + \xi_i \ge 0 $ and $\xi_i \ge 0$, where $\xi_i$ is 
@@ -249,7 +249,7 @@ the slack variable for the instance $i$~\cite{burges1998tutorial}.
 
 
 \subsection{Sparse Gaussian Markove Random Field (SGMRF)}
-One variation of Markov Random Field (MRF) is Gaussian MRF which is generally 
+One variation of Markov Random Field (MRF) is Gaussian MRF which is 
 used for continuous space of variables and has well-defined mathematical 
 properties that can be computed. Multivariate Gaussian density function 
 over a set of random variables X is defined as below: 
@@ -321,7 +321,6 @@ L(D) = \frac{n}{2} [ln|C| -  |tr(AC)|] - \lambda||C||_{1},
 \max_{C\succ0} ln|C| - tr(AC) - \rho||C||_{1},
 \end{equation}
 \end{multicols}
-
 
 
 \subsubsection{Method for obtaining precision matrix}  
