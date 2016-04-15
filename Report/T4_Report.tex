@@ -10,16 +10,16 @@
 
 
 \title{(T4-fMRI) Using fMRI to Diagnose Schizophrenia}
-\author{%add name 
-	\\
-	Department of Computing Science\\
-	University of Alberta\\
-	\texttt{} 
-\And 
- \\
+\author{
+Farhad Haqiqat\\
 Department of Computing Science\\
 University of Alberta\\
-\texttt{}
+\texttt{haqiqath@ualberta.ca} 
+\And 
+Neil Borle\\
+Department of Computing Science\\
+University of Alberta\\
+\texttt{nborle@ualberta.ca}
 \And 
 Shashindra Silva\\
 Department of Electrical and Computer Engineering\\
@@ -534,18 +534,35 @@ Another approach that we have used for feature selection was using PCA for trans
 As Seen in Table~\ref{fig:holdout_table} methods using a SGMRF classifier were
 able to obtain the best results, of which $74.17\%$ was the highest average
 accuracy recorded. This seems to suggest that a SGMRF seems to be a more
-effective tool for this particular problem. Because the SGMRF is a generative
-tool whereas the SVM is discriminative, it may be the case that the SVM is
-simply unable to capture the differences in network structure between patients
-and controls and it is these network differences that define schizophrenia as
-a disease. When comparing the ROI approach with patient concatenation and the
-Rish approach using all voxels against the Rish approach that only considers
-the DLPFC regions we see the former two get much better results. This seems
-to indicate that the DLPFC region is not sufficient to capture the difference
-between patients and controls. Another noteworthy difference is that of the
-differences between the approach creating degree features from the region
-averages and the other better performing methods. This discrepancy may be due
-to (Not sure %\elipses).
+effective tool for this particular problem. A possible explanation for the
+success of the SGMRF approach when using ROI and concatenating patient
+data might be the results of reduced feature set size and increased input data
+size for training. When comparing Rish (Full/DLPFC) in Table~\ref{holdout_table} 
+to the ROI $+$ Concatenation approach, the Rish approaches use voxels as their
+features whereas ROI $+$ Concatenation only uses $256$ regions of interest as 
+features. Given that our dataset only consists of $380$ examples, there is a 
+much larger gap ($28719$ features for Full and $4504$ features for DLPFC) in 
+number of features compared to number of training examples for these Rish 
+approaches. Further, because each time point in the ROI $+$ Concatenation 
+approach is considered as a sample from the region of interest, this approach
+has $137$ times as much input data when training as compared to all other
+methods used and it could be this that is boosting classification accuracy.
+Between the two Rish methods we can see that DLPFC performs significantly
+more poorly as compared to the other method which seems to suggest that the
+DLPFC region is not sufficient for capturing the differences between controls
+and schizophrenic patients. The region degrees approach also performed poorly.
+While it is not clear why it performed so poorly, it might be the case that
+voxel degree approaches need the full set of voxels to be effective. This would
+explain the decreasing accuracies as we reduce the number of features used where
+$28719$, $4504$ and $256$ features correspond to Rish (Full), Rish (DLPFC) and 
+Region degrees, the voxel degree approaches tested. The approach classifying
+subjects by the SGMRF structures learned performed surprisingly well which
+suggests that a graphical models structure could potentially be useful, in 
+addition to maximum likelihood when diagnosing schizophrenia. Finally, while
+we considered many other features in our other features section, few performed
+well. The best of these was closely related to the Rish (Full) approach which
+indicated that voxel degree was the most useful feature that we were able to
+obtain from the data.
 
 
 \section{Conclusions and Future Work}
