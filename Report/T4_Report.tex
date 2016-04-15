@@ -167,16 +167,14 @@ new subject based parameters obtained from training stage.
 
 \subsection{Rosa \emph{et al.}}
 Rosa \emph{et al.}~\cite{Rosa_2013} work is on detecting patients with major 
-depressive disorder(MDD). Their study was done using fMRI datasets and 
+depressive disorder (MDD). Their study was done using fMRI datasets and 
 applying SGMRF method for obtaining the precision matrix. Then they go and 
 use SVM on the obtained precision matrix for doing the classification task. 
 They obtained 85\% accuracy on their first dataset and 78.95\% on their 
-second dataset using this method. Both dataset was obtained using a single 
-machine in one place. Their first dataset was consisting of nineteen patients 
-and nineteen controls, and their second dataset was consisting of thirty 
-patients and thirty controls. They also used SVM on the correlation feature 
-obtained using Pearson correlation to show effectiveness of their approach. 
-Which in the case of correlation results were not better than chance. Their 
+second dataset using this method. Both datasets were obtained using a single 
+machine in one place. The first dataset was consisting of $19$ patients 
+and $19$ controls, and the second dataset was consisting of $30$ 
+patients and $30$ controls. They also used SVM on the correlation feature, partial correlation and non sparse precision matrix to show effectiveness of their approach. Obtained accuracies were 68\% 53\% and 45\% respectively, which are all worse than sparse precision matrix. Their 
 approach can be compared to our approach in the \textit{Individual MRF 
 structure classification section}.       
 
