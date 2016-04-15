@@ -474,8 +474,8 @@ illustrated in Figure~\ref{fig:degree_calc}. The only difference in the
 process described previously is that we explicitly remove the self 
 correlations in the correlation matrix (the diagonal), and we conceptually
 represent the process as binarizing a matrix and summing over its rows.
-We also chose to use a threshold value of $0.7$ as was done in Rish 
-\emph{et al.}~\cite{rish2009discriminative}.
+Like Rish \emph{et al.}~\cite{rish2009discriminative} we chose to use a 
+threshold value of $0.7$. 
 
 \begin{figure}[!htb]
   \centering
@@ -500,7 +500,7 @@ region degree data to compare its performance to the SGMRF classifier.
 \subsubsection{Individual MRF Structure Classification}
 
 This approach is similar to the region concatenation approach described 
-previously except that here we did not concatenate subjects and instead
+previously except that here we did not concatenate subjects but instead
 learned a precision matrix (SGMRF structure) for each subject 
 individually. For example, if we had $ns_{total}$ schizophrenics in our 
 dataset and $nh_{total}$ healthy subjects ($ns_{total} + nh_{total}$ 
