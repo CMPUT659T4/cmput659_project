@@ -116,7 +116,8 @@ putative function regions of interest derived from resting state fMRI, where
 no specific task being performed during data collection~\cite{Power_2011}. 
 JD Power argues in his video abstract that these regions are currently the
 best representation of functional networks in the brain that are
-available~\cite{Power_2011}.
+available~\cite{Power_2011}. Several of the approaches used in this study
+directly build on top of these regions.
 
 
 \subsubsection{Calculating Voxel Degrees}
@@ -132,7 +133,8 @@ create a correlation matrix. Second, a threshold is applied to the correlation
 matrix. If a correlation value is greater than the threshold there said to be
 an edge between those two voxels. Finally, for each voxels all of the edges
 it participates in are summed and the total number of edges becomes the 
-degree of that voxel.
+degree of that voxel. Voxel degrees are relevant to our study because they
+are used in several of our approaches.
 
 \subsection{Rish \emph{et al.}}
 Rish \emph{et al.}~\cite{Rish_2013} was able to achieve very high accuracies 
@@ -146,8 +148,8 @@ degree map feature set. As part of our work we use the SGMRF approach
 detailed in their paper. In the MRF classifier, first they split training data 
 in two different group. For each group they compute the precision matrix 
 (assuming the data is centered unless $\mu$ needs to be computed as well). 
-Then as described later in \textit{Inference} section they classify each new 
-subject based parameters obtained from training stage.
+See the appendix for the \textit{Inference} section for how they classify each 
+new subject based parameters obtained from training stage.
 
 \begin{figure}
   \begin{center}
@@ -164,18 +166,20 @@ change BOLD signal too. Given this figure one can see MRF approach invests
 on the different network on of interaction for healthy versus schizophrenic 
 subject in response to a stimulus to differentiate them. 
 
-%\subsection{Fourier Transform}
-%A Fourier transform allows for the translation of any signal from the time
-%domain to the frequency domain. More specifically, it takes a signal and
-%decomposes it into a series constituent $\sin$ and $\cos$ componets. When 
-%taking the Fast Fourier Transform or FFT of real data the resulting peaks in 
-%the frequency domain are conjugate symmetric~\cite{duhamel1990fast}, meaning 
-%that methods that only require the real component of the data need only work 
-%with half of the resulting component coefficients in the transform. These 
-%Fourier coefficients can be used in place of the original signal as features
-%provided to a machine learning classifier.
 \subsection{Rosa \emph{et al.}}
-Rosa \emph{et al.} \cite{Rosa_2013} work is on detecting patients with major depressive disorder(MDD). Their study was done using fMRI datasets and applying SGMRF method for obtaining the precision matrix. Then they go and use SVM on the obtained precision matrix for doing the classification task. They obtained 85\% accuracy on their first dataset and 78.95\% on their second dataset using this method. Both dataset was obtained using a single machine in one place. Their first dataset was consisting of nineteen patients and nineteen controls, and their second dataset was consisting of thirty patients and thirty controls. They also used SVM on the correlation feature obtained using Pearson correlation to show effectiveness of their approach. Which in the case of correlation results were not better than chance. Their approach can be compared to our approach in the \textit{Individual MRF structure classification section}.       
+Rosa \emph{et al.}~\cite{Rosa_2013} work is on detecting patients with major 
+depressive disorder(MDD). Their study was done using fMRI datasets and 
+applying SGMRF method for obtaining the precision matrix. Then they go and 
+use SVM on the obtained precision matrix for doing the classification task. 
+They obtained 85\% accuracy on their first dataset and 78.95\% on their 
+second dataset using this method. Both dataset was obtained using a single 
+machine in one place. Their first dataset was consisting of nineteen patients 
+and nineteen controls, and their second dataset was consisting of thirty 
+patients and thirty controls. They also used SVM on the correlation feature 
+obtained using Pearson correlation to show effectiveness of their approach. 
+Which in the case of correlation results were not better than chance. Their 
+approach can be compared to our approach in the \textit{Individual MRF 
+structure classification section}.       
 
 \subsection{Multi-site Comparisons}
 Although, there were several prior work on the classification of schizophrenia 
@@ -297,18 +301,17 @@ L(D) = \frac{n}{2} [|C| -  |tr(AC)|] + const
 \end{equation}
 \end{multicols}
 
-Where $|...|$ represents determinant and A is the empirical covariance 
+Here $|...|$ represents determinant and A is the empirical covariance 
 matrix calculated by $A = \frac{n}{2} \sum_{i=1}^{n} X_i^T X_i$, or 
 maximum likelihood estimation fo $\Sigma$. It should also be noted 
 the $C\succ0$ constraint makes C positive definite.\\
 
-
-\subsubsection{Sparsity}
-To achieve sparsity formulation for Gaussian Markov Random Field we can use 
+To achieve sparse formulation for Gaussian Markov Random Field we can use 
 the Laplace prior. If we impose the Laplace prior on the precision matrix 
 $p(C_{ij}) = \frac{\lambda_{ij}}{2} e^{-\lambda_{ij}|C_{ij}|} $ we can 
 achieve sparsity. This will change the equations \eqref{likelihood} and 
-\eqref{maxlikelihood} to the following form:
+\eqref{maxlikelihood} to the following forms below where the $l_{1}$-norm 
+of $C$ is $||C||_{1}= \sum_{ij}C_{ij}$, and $\rho=\frac{n}{2}\lambda$.
 
 \begin{multicols}{2}
 \begin{equation}\label{loglikelihood}
@@ -319,33 +322,7 @@ L(D) = \frac{n}{2} [ln|C| -  |tr(AC)|] - \lambda||C||_{1},
 \end{equation}
 \end{multicols}
 
-where $l_{1}$-norm of $C$ is: $||C||_{1}= \sum_{ij}C_{ij}$, and $\rho=\frac{n}{2}\lambda $. \\
 
-
-\subsubsection{Inference}
-Once we have constructed probabilistic graphical model through precision 
-matrix we can use that to do probabilistic inference for variables of 
-interest. To make it more clear let assume $X$ is our dataset and 
-$Z \subset X$ is the subset of our dataset which is observed with 
-assigned values of $z$, and let $Y \subseteq X - Z$ be the set of unobserved 
-variables. Now we can use inference to compute posterior probability of 
-$P(Y|Z=z)$. In this task Y is a binary variable, and classification task is 
-to find the assignment for y which makes the $P(Y|Z=z)$ maximum. 
-$y^* = argmax_{y} P(Y=y|Z=z)$. Bayes rule give us: 
-
-\begin{equation}
-P(Y=y|Z=z) = \frac{P(Z=z|Y=y)P(Y=y)}{P(Z=z)}
-\end{equation}  
-
-And since denominator is fixed for each assignment Y=y. We compute the $argmax$ only using the numerator. 
-
-\begin{equation}\label{argmax}
-y^* = \argmax_{y} P(Z=z|Y=y)P(Y=y) 
-\end{equation} 
-
-So for a given dataset we can learn the model $ P(Z=z|Y=y)P(Y=y)$ for each 
-class label, and then given a test dataset assign the most likely class 
-label using the equation\eqref{argmax} \cite{Rish2014Book}  
 
 \subsubsection{Method for obtaining precision matrix}  
 One obvious way for learning the parameters for joint distribution probability 
@@ -398,9 +375,10 @@ We repeated this procedure five times for different hold out sets
 to get an average accuracy. 
 
 \subsection{SGMRF with log degrees of ranked voxels}
-\begin{figure}\label{fig:voxel_rank}
-\includegraphics[width=\textwidth]{diagrams/Voxel_ranking.jpg}
+\begin{figure}
+\includegraphics[width=\textwidth, height=4.5cm]{diagrams/Voxel_ranking.jpg}
 \caption{Voxel ranking methods to select best voxels. In step 2, the differences of the average degrees between patients and healthy subjects are $2$, $-1$, and $-3$ respectively for the three voxels.}
+\label{fig:voxel_rank_img}
 \end{figure}
 First, we executed the approach proposed by Rish \emph{et al.}~\cite{Rish_2013} 
 on our data set. We had degrees of each voxels as well 
@@ -414,14 +392,18 @@ and thus selecting the best voxels (based on the training data) to separate
 the healthy and schizophrenic subjects was very important. 
 
 To select the best voxels out of the possible $28719$ voxels, we experimented
-with multiple approaches. 
-These included: \begin{enumerate}
-  \item Selecting voxels based on t-tests.
-  \item Selecting voxels based on absolute differences of mean degrees of a voxel between schizophrenic and healthy subjects.
-  \item Selecting voxels based on differences of mean degrees of a voxel between schizophrenic and healthy subjects.
-  \item Selecting voxels based on differences of mean degrees of a voxel between healthy and schizophrenic subjects.
-\end{enumerate}
-The last three voxel ranking methods are explained in Figure~\ref{fig:voxel_rank}. 
+with multiple approaches. These included selecting voxels based on t-tests, 
+based on absolute differences of mean voxel degrees,
+based on differences of mean voxel degrees ($schizophrenic - healthy$) and
+based on differences of mean voxel degrees ($healthy - schizophrenic$).
+
+%These included: \begin{enumerate}
+%  \item Selecting voxels based on t-tests.
+%  \item Selecting voxels based on absolute differences of mean degrees of a voxel between schizophrenic and healthy subjects.
+%  \item Selecting voxels based on differences of mean degrees of a voxel between schizophrenic and healthy subjects.
+%  \item Selecting voxels based on differences of mean degrees of a voxel between healthy and schizophrenic subjects.
+%\end{enumerate}
+The last three voxel ranking methods are explained in Figure~\ref{fig:voxel_rank_img}. 
 Out of the above four approaches we obtained the highest accuracy on our cross 
 validation set by the third approach. Also the number of voxels $k$ to be used 
 in the SGMRF model was decided by running the experiment for different $k$ 
@@ -444,16 +426,15 @@ smoothed log values of the degrees resulted in higher accuracy.
 The following three methods used in this subsection all involve the $264$  
 regions of interest that are described in work by Power \emph{et al.}.
 Due to missing data resulting from incomplete scans of subjects, $8$
-regions were removed from analysis leaving $256$ ROIs. The regions removed
-are characterized by region number with the associated MNI coordinates 
-described in Power \emph{et al.} provided in parenthesis: 81 (-44, 12, -34), 
-82 (46, 16, -30), 128 (52, 7, -30), 184 (17, -80, -34), 247 (33, 12, -34), 
-248 (-31, -10, -36), 249 (49, -3, -38) and 250 (-50, -7, -39). We use the
+regions were removed from analysis leaving $256$ ROIs. See appendix for
+list of omitted region coordinates. We use the
 approach described by Vega \emph{et al.}~\cite{rvega} to summarize
 regions of interest by taking region averages for each of the $5mm$ radius
 spheres that define regions. Finally this resulted in a $137 \times 256$ matrix
 for each subject where each row is a time point across all regions and each
-column is the average time series for a single region.
+column is the average time series for a single region. The permitted SGMRF 
+hyperparameter $\lambda$ values were $0.7$, $0.1$, $0.07$, $0.01$ and 
+$0.007$ for this section.
 
 
 \subsubsection{ROI with Subject Concatenation}
@@ -465,7 +446,7 @@ with dimension $nh * 137 \times 256$ where $ns$ is the number of schizophenic
 subjects in the training set and $nh$ is the number of health subjects. To
 make learning the SGMRF structure faster we also used the same feature 
 normalization as was described by Vega \emph{et al.}~\cite{rvega},
-where for each class and each region in that class, the region mean was 
+where for each class and each region in that class the region mean was 
 subtracted from each time point and each time point was divided by the 
 region standard deviation. Next, with the use of Glasso, a SGMRF structure was 
 learned for each class which resulted in two sparse precision matrices that 
@@ -476,7 +457,8 @@ belonging to each class followed by which class the new subject should be
 assigned.
 
 A modified version of this approach was also implemented and tested but has
-been omitted for brevity and due to it obtaining poor results. In this variant,
+been omitted for brevity and due to it obtaining poor results.See appendix
+for background information. In this variant,
 a Fourier transform was used on each of the subject's time series data to 
 obtain Fourier coefficients. These Fourier coefficients were then used in 
 place of the original time series for learning a classifier.
@@ -541,9 +523,9 @@ Another approach that we have used for feature selection was using PCA for trans
 \begin{center}
     \begin{tabular}{| l | r | r | r | r | r | r |}
     \hline
-                & Rish (Full) & Rish (DLPFC) & ROI + Concatenation & Region Degrees & MRF structure & PCA     \\ \hline
-    Classifier  & SGMRF       & SGMRF        & SGMRF               & SVM            & SVM           & SGMRF   \\ \hline
-    Accuracy    & 72.32\%     & 63.52\%      & 74.17\%             & 60.65\%        & 69.44\%       & 65.55\% \\ \hline
+                & Rish (Full) & Rish (DLPFC) & ROI + Concatenation & Region Degrees & MRF structure & Other Features \\ \hline
+    Classifier  & SGMRF       & SGMRF        & SGMRF               & SVM            & SVM           & SGMRF          \\ \hline
+    Accuracy    & 72.32\%     & 63.52\%      & 74.17\%             & 60.65\%        & 69.44\%       & 65.55\%        \\ \hline
     \end{tabular}
     \caption{Accuracy on 5 Striated Hold-out Sets}
      \label{fig:holdout_table}
@@ -583,6 +565,51 @@ supervision of this project.
 
 \bibliographystyle{plain}
 \bibliography{T4_Report}
+
+\section{Appendix}
+
+\subsection{Fourier Transform}
+A Fourier transform allows for the translation of any signal from the time
+domain to the frequency domain. More specifically, it takes a signal and
+decomposes it into a series constituent $\sin$ and $\cos$ componets. When 
+taking the Fast Fourier Transform or FFT of real data the resulting peaks in 
+the frequency domain are conjugate symmetric~\cite{duhamel1990fast}, meaning 
+that methods that only require the real component of the data need only work 
+with half of the resulting component coefficients in the transform. These 
+Fourier coefficients can be used in place of the original signal as features
+provided to a machine learning classifier.
+
+\subsection{Omitted ROI coordinates}
+The regions removed
+are characterized by region number with the associated MNI coordinates 
+described in Power \emph{et al.} provided in parenthesis: 81 (-44, 12, -34), 
+82 (46, 16, -30), 128 (52, 7, -30), 184 (17, -80, -34), 247 (33, 12, -34), 
+248 (-31, -10, -36), 249 (49, -3, -38) and 250 (-50, -7, -39).
+
+\subsection{Inference}
+Once we have constructed probabilistic graphical model through precision 
+matrix we can use that to do probabilistic inference for variables of 
+interest. To make it more clear let assume $X$ is our dataset and 
+$Z \subset X$ is the subset of our dataset which is observed with 
+assigned values of $z$, and let $Y \subseteq X - Z$ be the set of unobserved 
+variables. Now we can use inference to compute posterior probability of 
+$P(Y|Z=z)$. In this task Y is a binary variable, and classification task is 
+to find the assignment for y which makes the $P(Y|Z=z)$ maximum. 
+$y^* = argmax_{y} P(Y=y|Z=z)$. Bayes rule give us: 
+
+\begin{equation}
+P(Y=y|Z=z) = \frac{P(Z=z|Y=y)P(Y=y)}{P(Z=z)}
+\end{equation}  
+
+And since denominator is fixed for each assignment Y=y. We compute the $argmax$ only using the numerator. 
+
+\begin{equation}\label{argmax}
+y^* = \argmax_{y} P(Z=z|Y=y)P(Y=y) 
+\end{equation} 
+
+So for a given dataset we can learn the model $ P(Z=z|Y=y)P(Y=y)$ for each 
+class label, and then given a test dataset assign the most likely class 
+label using the equation\eqref{argmax} \cite{Rish2014Book}  
 
 	
 \end{document}
