@@ -8,7 +8,7 @@
 \DeclareMathOperator*{\argmax}{\arg\!\max}
 \usepackage{multicol}
 \usepackage{adjustbox}
-
+\setlength{\multicolsep}{0.1pt plus 0.1pt minus 1.5pt}
 
 \title{(T4-fMRI) Using fMRI to Diagnose Schizophrenia}
 \author{
@@ -214,6 +214,7 @@ $M$ largest eigenvalues $\lambda_{1}, ... ,\lambda_{M}$."}~\cite{bishop2006patte
 $S$ and $\mu$ (the sample set mean) are defined as:
 
 \begin{multicols}{2}
+\noindent
 \begin{equation}
 S = \frac{1}{N} \sum_{n=1}^{N}(X_{n}-\mu)(X_{n}-\mu)^T
 \end{equation}\break
@@ -221,8 +222,6 @@ S = \frac{1}{N} \sum_{n=1}^{N}(X_{n}-\mu)(X_{n}-\mu)^T
 \mu = \frac{1}{N} \sum_{n=1}^{N}X_{n}
 \end{equation}
 \end{multicols}
-
-
 \subsection{Support Vector Machines}
 Vapnik \emph{et al.} introduced the concept of support 
 Vector Machines (SVMs) as a statistical tool for 
@@ -293,6 +292,7 @@ log-likelihood maximization problem is shown in
 equation~\eqref{maxlikelihood}. 
 
 \begin{multicols}{2}
+\noindent
 \begin{equation}\label{likelihood}
 L(D) = \frac{n}{2} [|C| -  |tr(AC)|] + const
 \end{equation}\break
@@ -591,10 +591,10 @@ and co-coaching our project, Sugai Liang for her advice and Roberto Vega for
 all his advice and help. Finally, we would also like to thank Dr. Irina Rish
 for the feature extraction code she provided and Dr. Greiner for his
 supervision of this project.
-
+{\small
 \bibliographystyle{plain}
 \bibliography{T4_Report}
-
+}
 \section{Appendix}
 
 \subsection{Fourier Transform}
