@@ -391,10 +391,10 @@ and thus selecting the best voxels (based on the training data) to separate
 the healthy and schizophrenic subjects was very important. 
 
 To select the best voxels out of the possible $28719$ voxels, we experimented
-with multiple approaches. These included selecting voxels based on t-tests, 
-based on absolute differences of mean voxel degrees,
-based on differences of mean voxel degrees ($schizophrenic - healthy$) and
-based on differences of mean voxel degrees ($healthy - schizophrenic$).
+with multiple approaches. These included selecting voxels based on t-tests (method 1), 
+based on absolute differences of mean voxel degrees (method 2),
+based on differences of mean voxel degrees (method 3) ($schizophrenic - healthy$) and
+based on differences of mean voxel degrees (method 4) ($healthy - schizophrenic$).
 
 %These included: \begin{enumerate}
 %  \item Selecting voxels based on t-tests.
@@ -412,9 +412,9 @@ validation set.
 
 
 \subsection{SGMRF with degrees from Dorsolateral Prefrontal Cortex area}
-Connections in certain areas of the brain specifically dorsolateral 
+Different studies have shown that connections in certain areas of the brain specifically dorsolateral 
 prefrontal cortex (DLPFC)~\cite{Potkin2008} and 
-thalamocortical~\cite{Cheng2015} circuitry. Thus, we extracted the degrees 
+thalamocortical~\cite{Cheng2015} circuitry changes for schizophrenic patients. Thus, we extracted the degrees 
 of voxels in these areas and used them to build the SGMRF model. Since we 
 had only $4504$ voxels for each subject, we did not perform any voxel 
 rankings in this approach. Similar to the previous approach using the 
@@ -423,7 +423,7 @@ smoothed log values of the degrees resulted in higher accuracy.
 \subsection{Methods using Power \emph{et al.}'s ROIs}
 
 The following three methods used in this subsection all involve the $264$  
-regions of interest that are described in work by Power \emph{et al.}.
+regions of interest that are described in work by Power \emph{et al.}~\cite{Power_2011}.
 Due to missing data resulting from incomplete scans of subjects, $8$
 regions were removed from analysis leaving $256$ ROIs. See appendix for
 list of omitted region coordinates. We use the
@@ -442,7 +442,7 @@ For this approach we follow the method described by Vega \emph{et al.}~\cite{rve
 Training set subjects in each class are first concatenated so that two large 
 matrices are created, one with dimension $ns * 137 \times 256$ and the other 
 with dimension $nh * 137 \times 256$ where $ns$ is the number of schizophenic 
-subjects in the training set and $nh$ is the number of health subjects. To
+subjects in the training set and $nh$ is the number of healthy subjects. To
 make learning the SGMRF structure faster we also used the same feature 
 normalization as was described by Vega \emph{et al.}~\cite{rvega},
 where for each class and each region in that class the region mean was 
@@ -456,7 +456,7 @@ belonging to each class followed by which class the new subject should be
 assigned.
 
 A modified version of this approach was also implemented and tested but has
-been omitted for brevity and due to it obtaining poor results.See appendix
+been omitted for brevity and due to it obtaining poor results. See appendix
 for background information. In this variant,
 a Fourier transform was used on each of the subject's time series data to 
 obtain Fourier coefficients. These Fourier coefficients were then used in 
@@ -511,7 +511,7 @@ generated from the hold-out set.
 
 \subsection{Other Features Including PCA}
 We have tried different features using the approach proposed by Rish \emph{et al.}. Features that are used for this approach are as following: [ Correlation , Log-Disconnection, Log-Disconnection Regions, Eignevalues, MBI stat, Degree].
-This features were provided to us with the dataset. So we wanted to see how good results would be implementing the exact same approach as suggested by Rish \emph{et al.}. In this experiment we first selected the hyper parameters; number of features and $\lambda$; using $5$-fold cross validation and then test those parameters on the hold-out set. The hold-out set has been selected randomly from different site with criteria of being balanced with regards to healthy and schizophrenic, and according to the ratio of each group's subjects in each site. Result that we achieved had accuracy of less than 50\% for all features except than degrees and disconnection which achieved 65.55\% and 63.33\% accuracy respectively. 
+This features were provided to us with the preprocessed dataset. So we wanted to see how good results would be implementing the exact same approach as suggested by Rish \emph{et al.}~\cite{Rish_2013}. In this experiment we first selected the hyper parameters; number of features and $\lambda$; using $5$-fold cross validation and then test those parameters on the hold-out set. The hold-out set has been selected randomly from different site with criteria of being balanced with regards to healthy and schizophrenic, and according to the ratio of each group's subjects in each site. Result that we achieved had accuracy of less than 50\% for all features except than degrees and disconnection which achieved 65.55\% and 63.33\% accuracy respectively. 
 
 Another approach that we have used for feature selection was using PCA for transforming the dataset to lower dimension. We hoped this could magnify distinguishing features in the dataset while reducing it size. Unfortunately results were not as we hoped and were mostly near the chance level. It should be mentioned that we chose three different sizes for the number of principal components that we used :3, 35 and 70.   
 
@@ -571,7 +571,7 @@ schizophrenia, given a set of healthy and schizophrenic subjects. We found
 that a region based approach using SGMRFs yielded the highest accuracy 
 ($74.16\%$) when averaged over 5 hold-out sets where the hold-out set was
 composed of $20\%$ of each site used in the study. We conclude from this
-that ROIs are more effective in the diagnosis of schizophrenia then whole
+that ROIs are more effective in the diagnosis of schizophrenia than whole
 brain analysis because extraneous noise is being removed from the data and
 further, that representing your data in such a way to maximize the number
 of training examples seen is beneficial to this problem.
