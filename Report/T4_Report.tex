@@ -120,19 +120,20 @@ JD Power argues in his video abstract that these regions are currently the
 best representation of functional networks in the brain that are
 available~\cite{Power_2011}.
 
-\subsubsection{Calculating Degrees}
-% Double check with Rish paper, this needs work.
-When analyzing fMRI data, features such as voxel degrees can be extracted for
-use with a machine learner. Voxel degrees represent the connectedness of
-voxels in the brain with the other voxels and are described as ``the number
-of voxel neighbours in a network''~\cite{Rish_2013}. Degrees are calculated 
-by performing
-multiple Pearson correlation comparisons between the $i^{th}$ voxel and every
-other voxel. Once correlation values have been determined, a threshold is
-applied to the correlation matrix. This results in binary matrix where 1 
-represents a correlation value above the threshold and 0 represents a value 
-below. Finally, for each voxel the number of 1 entries are summed (excluding 
-the comparison against itself) and this becomes the degree of the voxel.
+\subsubsection{Calculating Voxel Degrees}
+Introduced as a ``degree map'' in Rish 
+\emph{et al.}~\cite{rish2009discriminative}, voxel degrees are the constituent
+components of degree maps and is a feature of fMRI data that has previously
+been successfully used as part of schizophrenia diagnosis~\cite{Rish_2013}.
+Voxel degrees represent the connectedness of voxels in the brain with the 
+other voxels and are described as ``the number of voxel neighbours in a 
+network''~\cite{Rish_2013}. Degrees are calculated in the following steps:
+First, multiple pair-wise Pearson correlation comparisons between all voxels to 
+create a correlation matrix. Second, a threshold is applied to the correlation
+matrix. If a correlation value is greater than the threshold there said to be
+an edge between those two voxels. Finally, for each voxels all of the edges
+it participates in are summed and the total number of edges becomes the 
+degree of that voxel.
 
 %\subsection{Fourier Transform}
 %A Fourier transform allows for the translation of any signal from the time
@@ -533,7 +534,7 @@ Describe your experiments
     \hline
                 & Rish (Full) & Rish (DLPFC) & ROI + Concatenation & Region Degrees & MRF structure & PCA \\ \hline
     Classifier  & SGMRF       & SGMRF        & SGMRF               & SVM            & SVM           &1    \\ \hline
-    Accuracy    & 72.32\%     & 63.52\%      & 74.17               & 60.65          & 69.44         &1    \\ \hline
+    Accuracy    & 72.32\%     & 63.52\%      & 74.17\%             & 60.65\%        & 69.44\%       &1    \\ \hline
     \end{tabular}
     \caption{Accuracy on 5 Striated Hold-out Sets}
      \label{fig:holdout_table}
@@ -541,7 +542,7 @@ Describe your experiments
 \end{table*}
 
 As Seen in Table~\ref{fig:holdout_table} methods using a SGMRF classifier were
-able to obtain the best results, of which 74.17 was the highest average
+able to obtain the best results, of which $74.17\%$ was the highest average
 accuracy recorded. This seems to suggest that a SGMRF seems to be a more
 effective tool for this particular problem. Because the SGMRF is a generative
 tool whereas the SVM is discriminative, it may be the case that the SVM is
