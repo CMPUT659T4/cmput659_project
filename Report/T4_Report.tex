@@ -534,8 +534,11 @@ To build a classifier, a linear SVM is trained on the precision matrices
 generated from the training set and then tested on the precision matrices 
 generated from the hold-out set.
 
-\subsection{Your Approach? Farhad}
-Describe your experiments
+\subsection{PCA and some other features}
+We have tried different features using the approach proposed by Rish \emph{et al.}. Features that are used for this approach are as following: [ Correlation , Log-Disconnection, Log-Disconnection Regions, Eignevalues, MBI stat, Degree].
+This features were provided to us with the dataset. So we wanted to see how good results would be implementing the exact same approach as suggested by Rish \emph{et al.}. In this experiment we first selected the hyper parameters; number of features and $\lambda$; using $5$-fold cross validation and then test those parameters on the hold-out set. The hold-out set has been selected randomly from different site with criteria of being balanced with regards to healthy and schizophrenic, and according to the ratio of each group's subjects in each site. Result that we achieved had accuracy of less than 50\% for all features except than degrees and disconnection which achieved 65.55\% and 63.33\% accuracy respectively. 
+
+Another approach that we have used for feature selection was using PCA for transforming the dataset to lower dimension. We hoped this could magnify distinguishing features in the dataset while reducing it size. Unfortunately results were not as we hoped and were mostly near the chance level. It should be mentioned that we chose three different sizes for the number of principal components that we used :3, 35 and 70.   
 
 
 \section{Results and Discussion}
@@ -575,7 +578,7 @@ In this work we studied the use of fMRI and machine learning to diagnose
 schizophrenia, given a set of healthy and schizophrenic subjects. We found
 that a region based approach using SGMRFs yielded the highest accuracy 
 ($74.16\%$) when averaged over 5 hold-out sets where the hold-out set was
-composed of $20\%$ of each site used in the study.
+composed of $20\%$ of each site used in the study. In this study we did not select the number of principal components based on the variance captured by the components, one can try this method too to see if this could improve the performance of PCA, which is highly doubted. 
 
 \section{Acknowledgements}
 We would like to thank Dr. Mina Gheiratmand for preprocessing the fMRI data 
