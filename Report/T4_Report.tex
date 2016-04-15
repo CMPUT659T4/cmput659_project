@@ -280,10 +280,10 @@ achieve sparsity. This will change the equations \eqref{likelihood} and
 \eqref{maxlikelihood} to the following form:
 
 \begin{multicols}{2}
-\begin{equation}
+\begin{equation}\label{loglikelihood}
 L(D) = \frac{n}{2} [ln|C| -  |tr(AC)|] - \lambda||C||_{1}, 
 \end{equation}\break
-\begin{equation}
+\begin{equation}\label{logmaxlikelihood}
 \max_{C\succ0} ln|C| - tr(AC) - \rho||C||_{1},
 \end{equation}
 \end{multicols}
@@ -459,10 +459,10 @@ Next, with the use of Glasso, a SGMRF structure was learned for each class
 which resulted in two sparse precision matrices that encode the independences
 learned. 
 
-Finally, when presented with a new subject from the hold-out set, the equation
-below was used to determine the likelihood of the subject belonging to each
-class. The class with the highest likelihood then became the predicted label
-for the subject.
+Finally, when presented with a new subject from the hold-out set, equations
+\eqref{loglikelihood} and \eqref{logmaxlikelihood} were used to determine the 
+likelihood of the subject belonging to each class followed by which class
+the new subject should be assigned to.
 
 A modified version of this approach was also implemented and tested but has
 been omitted for brevity and due to it obtaining poor results. In this variant,
@@ -470,24 +470,18 @@ a Fourier transform was used on each of the subject's time series data to
 obtain Fourier coefficients. These Fourier coefficients were then used in 
 place of the original time series for learning a classifier.
 
-\begin{equation}
-insert here
-\end{equation}
 
-%\subsubsection{ROI with Fouier Coefficients}
+\subsubsection{Region Degrees}
 
-\subsubsection{Region Degrees and SVMs}
-
-Like the work described in Rish \emph{et al.}, region degrees are also used in
-this approach but in this case, we only considered the degrees that result from
-the $256$ ROIs. This process is illustrated in Figure~\ref{fig:degree_calc}. For each subject 
-we generated a correlation matrix containing the pair-wise correlations between 
-all of average time series for each region. Because we were not 
-interested in the correlation between a region and itself (which is trivially 
-$1$) we subtracted the diagonal of the correlation matrix from itself. Using a
-threshold of $0.7$, which was chosen based on work by Rish \emph{et al.}, we
-then proceeded to create the binary matrix and sum the column values as 
-described previously.
+Like the work described in Rish \emph{et al.}~\cite{rish2009discriminative}, 
+region degrees are also used in this approach but in this case, we only 
+considered the degrees that result from the $256$ ROIs. This process is 
+illustrated in Figure~\ref{fig:degree_calc}. The only difference in the
+process described previously is that we explicitly remove the self 
+correlations in the correlation matrix (the diagonal), and we conceptually
+represent the process as binarizing a matrix and summing over its rows.
+We also chose to use a threshold value of $0.7$ as was done in Rish 
+\emph{et al.}~\cite{rish2009discriminative}.
 
 \begin{figure}[!htb]
   \centering
@@ -505,11 +499,12 @@ the previous approach except that now the input to Glasso was a $ns \times 256$
 matrix for schizophrenic patients and a $nh \times256$ matrix for healthy
 subjects. Again this resulted in two $256 \times 256$ precision matrices which
 we could use in likelihood calculations for subjects from the hold-out set.
-
 Additionally, we also used a linear SVM classifier trained directly on
 region degree data to compare its performance to the SGMRF classifier.
 
+
 \subsubsection{Individual MRF Structure Classification}
+
 This approach is similar to the region concatenation approach described 
 previously except that here we did not concatenate subjects and instead
 learned a precision matrix (SGMRF structure) for each subject 
@@ -532,9 +527,9 @@ Describe your experiments
 \begin{center}
     \begin{tabular}{| l | r | r | r | r | r | r |}
     \hline
-                & Rish (Full) & Rish (DLPFC) & ROI + Concatenation & Region Degrees & MRF structure & PCA \\ \hline
-    Classifier  & SGMRF       & SGMRF        & SGMRF               & SVM            & SVM           &1    \\ \hline
-    Accuracy    & 72.32\%     & 63.52\%      & 74.17\%             & 60.65\%        & 69.44\%       &1    \\ \hline
+                & Rish (Full) & Rish (DLPFC) & ROI + Concatenation & Region Degrees & MRF structure & PCA     \\ \hline
+    Classifier  & SGMRF       & SGMRF        & SGMRF               & SVM            & SVM           & SGMRF   \\ \hline
+    Accuracy    & 72.32\%     & 63.52\%      & 74.17\%             & 60.65\%        & 69.44\%       & 65.55\% \\ \hline
     \end{tabular}
     \caption{Accuracy on 5 Striated Hold-out Sets}
      \label{fig:holdout_table}
