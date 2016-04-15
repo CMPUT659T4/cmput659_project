@@ -500,20 +500,20 @@ region degree data to compare its performance to the SGMRF classifier.
 \subsubsection{Individual MRF Structure Classification}
 
 This approach is similar to the region concatenation approach described 
-previously except that here we did not concatenate subjects but instead
+previously except that we did not concatenate subjects but instead
 learned a precision matrix (SGMRF structure) for each subject 
 individually. For example, if we had $ns_{total}$ schizophrenics in our 
 dataset and $nh_{total}$ healthy subjects ($ns_{total} + nh_{total}$ 
-$137 \times 256$ matrices) then we would use Glasso to generate $ns + nh$ 
+$137 \times 256$ matrices) then we used Glasso to generate $ns + nh$ 
 precision matrices.
 
-To build a classifier, a linear SVM is trained on the precision matrices 
+To build a classifier, a linear SVM was trained on the precision matrices 
 generated from the training set and then tested on the precision matrices 
 generated from the hold-out set.
 
 \subsection{Other Features Including PCA}
 We have tried different features using the approach proposed by Rish \emph{et al.}. Features that are used for this approach are as following: [ Correlation , Log-Disconnection, Log-Disconnection Regions, Eignevalues, MBI stat, Degree].
-This features were provided to us with the preprocessed dataset. So we wanted to see how good results would be implementing the exact same approach as suggested by Rish \emph{et al.}~\cite{Rish_2013}. In this experiment we first selected the hyper parameters; number of features and $\lambda$; using $5$-fold cross validation and then test those parameters on the hold-out set. The hold-out set has been selected randomly from different site with criteria of being balanced with regards to healthy and schizophrenic, and according to the ratio of each group's subjects in each site. Result that we achieved had accuracy of less than 50\% for all features except than degrees and disconnection which achieved 65.55\% and 63.33\% accuracy respectively. 
+This features were provided to us with the preprocessed dataset. To test the strength of the results we implemented the exact same approach as suggested by Rish \emph{et al.}~\cite{Rish_2013}. In this experiment we first selected the hyper parameters; number of features and $\lambda$; using $5$-fold cross validation and then test those parameters on the hold-out set. The hold-out set has been selected randomly from different site with criteria of being balanced with regards to healthy and schizophrenic, and according to the ratio of each group's subjects in each site. Result that we achieved had accuracy of less than 50\% for all features except than degrees and disconnection which achieved 65.55\% and 63.33\% accuracy respectively. 
 
 Another approach that we have used for feature selection was using PCA for transforming the dataset to lower dimension. We hoped this could magnify distinguishing features in the dataset while reducing it size. Unfortunately results were not as we hoped and were mostly near the chance level. It should be mentioned that we chose three different sizes for the number of principal components that we used :3, 35 and 70.   
 
@@ -533,9 +533,9 @@ Another approach that we have used for feature selection was using PCA for trans
 \end{center}
 \end{table*}
 
-As Seen in Table~\ref{fig:holdout_table} methods using a SGMRF classifier were
+As seen in Table~\ref{fig:holdout_table} methods using a SGMRF classifier were
 able to obtain the best results, of which $74.17\%$ was the highest average
-accuracy recorded. This seems to suggest that a SGMRF seems to be a more
+accuracy recorded. This suggest that a SGMRF seems to be a more
 effective tool for this particular problem. A possible explanation for the
 success of the SGMRF approach when using ROI and concatenating patient
 data might be the results of reduced feature set size and increased input data
@@ -550,7 +550,7 @@ approach is considered as a sample from the region of interest, this approach
 has $137$ times as much input data when training as compared to all other
 methods used and it could be this that is boosting classification accuracy.
 Between the two Rish methods we can see that DLPFC performs significantly
-more poorly as compared to the other method which seems to suggest that the
+more poorly as compared to the other method which suggests that the
 DLPFC region is not sufficient for capturing the differences between controls
 and schizophrenic patients. The region degrees approach also performed poorly.
 While it is not clear why it performed so poorly, it might be the case that
@@ -583,7 +583,7 @@ on the variance captured by the components, future work could be done
 to explore this method and determine if it could improve classification
 accuracy. Other future work involves the use of ensemble methods. We have
 found that several methods perform well individually, so an attempt at
-combining them together seems like a natural next step.
+combining them together is a natural next step.
 
 \section{Acknowledgements}
 We would like to thank Dr. Mina Gheiratmand for preprocessing the fMRI data 
