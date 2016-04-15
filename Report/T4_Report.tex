@@ -7,6 +7,7 @@
 \usepackage{graphicx}
 \DeclareMathOperator*{\argmax}{\arg\!\max}
 \usepackage{multicol}
+\usepackage{adjustbox}
 
 
 \title{(T4-fMRI) Using fMRI to Diagnose Schizophrenia}
@@ -509,7 +510,7 @@ To build a classifier, a linear SVM is trained on the precision matrices
 generated from the training set and then tested on the precision matrices 
 generated from the hold-out set.
 
-\subsection{PCA and some other features}
+\subsection{Other Features Including PCA}
 We have tried different features using the approach proposed by Rish \emph{et al.}. Features that are used for this approach are as following: [ Correlation , Log-Disconnection, Log-Disconnection Regions, Eignevalues, MBI stat, Degree].
 This features were provided to us with the dataset. So we wanted to see how good results would be implementing the exact same approach as suggested by Rish \emph{et al.}. In this experiment we first selected the hyper parameters; number of features and $\lambda$; using $5$-fold cross validation and then test those parameters on the hold-out set. The hold-out set has been selected randomly from different site with criteria of being balanced with regards to healthy and schizophrenic, and according to the ratio of each group's subjects in each site. Result that we achieved had accuracy of less than 50\% for all features except than degrees and disconnection which achieved 65.55\% and 63.33\% accuracy respectively. 
 
@@ -518,7 +519,7 @@ Another approach that we have used for feature selection was using PCA for trans
 
 \section{Results and Discussion}
 
-\begin{table*}[!htb]\footnotesize
+\begin{table*}[hpt]\footnotesize
 \begin{center}
     \begin{tabular}{| l | r | r | r | r | r | r |}
     \hline
@@ -537,7 +538,7 @@ accuracy recorded. This seems to suggest that a SGMRF seems to be a more
 effective tool for this particular problem. A possible explanation for the
 success of the SGMRF approach when using ROI and concatenating patient
 data might be the results of reduced feature set size and increased input data
-size for training. When comparing Rish (Full/DLPFC) in Table~\ref{holdout_table} 
+size for training. When comparing Rish (Full/DLPFC) in Table~\ref{fig:holdout_table} 
 to the ROI $+$ Concatenation approach, the Rish approaches use voxels as their
 features whereas ROI $+$ Concatenation only uses $256$ regions of interest as 
 features. Given that our dataset only consists of $380$ examples, there is a 
@@ -559,10 +560,10 @@ Region degrees, the voxel degree approaches tested. The approach classifying
 subjects by the SGMRF structures learned performed surprisingly well which
 suggests that a graphical models structure could potentially be useful, in 
 addition to maximum likelihood when diagnosing schizophrenia. Finally, while
-we considered many other features in our other features section, few performed
+we considered many other features including PCA in our Other Features section, few performed
 well. The best of these was closely related to the Rish (Full) approach which
-indicated that voxel degree was the most useful feature that we were able to
-obtain from the data.
+indicated that voxel degrees have more discriminative power for this task as
+compared to many other features.
 
 
 \section{Conclusions and Future Work}
@@ -572,7 +573,9 @@ that a region based approach using SGMRFs yielded the highest accuracy
 ($74.16\%$) when averaged over 5 hold-out sets where the hold-out set was
 composed of $20\%$ of each site used in the study. We conclude from this
 that ROIs are more effective in the diagnosis of schizophrenia then whole
-brain analysis because extranious noise is being removed from the data. 
+brain analysis because extraneous noise is being removed from the data and
+further, that representing your data in such a way to maximize the number
+of training examples seen is beneficial to this problem.
 
 In this study we did not select the number of principal components based 
 on the variance captured by the components, future work could be done
