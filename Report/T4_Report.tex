@@ -118,7 +118,8 @@ putative function regions of interest derived from resting state fMRI, where
 no specific task being performed during data collection~\cite{Power_2011}. 
 JD Power argues in his video abstract that these regions are currently the
 best representation of functional networks in the brain that are
-available~\cite{Power_2011}.
+available~\cite{Power_2011}. Several of the approaches used in this study
+directly build on top of these regions.
 
 
 \subsubsection{Calculating Voxel Degrees}
@@ -134,7 +135,8 @@ create a correlation matrix. Second, a threshold is applied to the correlation
 matrix. If a correlation value is greater than the threshold there said to be
 an edge between those two voxels. Finally, for each voxels all of the edges
 it participates in are summed and the total number of edges becomes the 
-degree of that voxel.
+degree of that voxel. Voxel degrees are relevant to our study because they
+are used in several of our approaches.
 
 \subsection{Rish \emph{et al.}}
 Rish \emph{et al.}~\cite{Rish_2013} was able to achieve very high accuracies 
@@ -148,8 +150,8 @@ degree map feature set. As part of our work we use the SGMRF approach
 detailed in their paper. In the MRF classifier, first they split training data 
 in two different group. For each group they compute the precision matrix 
 (assuming the data is centered unless $\mu$ needs to be computed as well). 
-Then as described later in \textit{Inference} section they classify each new 
-subject based parameters obtained from training stage.
+See the appendix for the \textit{Inference} section for how they classify each 
+new subject based parameters obtained from training stage.
 
 \begin{figure}
   \begin{center}
@@ -324,31 +326,6 @@ L(D) = \frac{n}{2} [ln|C| -  |tr(AC)|] - \lambda||C||_{1},
 where $l_{1}$-norm of $C$ is: $||C||_{1}= \sum_{ij}C_{ij}$, and $\rho=\frac{n}{2}\lambda $. \\
 
 
-\subsubsection{Inference}
-Once we have constructed probabilistic graphical model through precision 
-matrix we can use that to do probabilistic inference for variables of 
-interest. To make it more clear let assume $X$ is our dataset and 
-$Z \subset X$ is the subset of our dataset which is observed with 
-assigned values of $z$, and let $Y \subseteq X - Z$ be the set of unobserved 
-variables. Now we can use inference to compute posterior probability of 
-$P(Y|Z=z)$. In this task Y is a binary variable, and classification task is 
-to find the assignment for y which makes the $P(Y|Z=z)$ maximum. 
-$y^* = argmax_{y} P(Y=y|Z=z)$. Bayes rule give us: 
-
-\begin{equation}
-P(Y=y|Z=z) = \frac{P(Z=z|Y=y)P(Y=y)}{P(Z=z)}
-\end{equation}  
-
-And since denominator is fixed for each assignment Y=y. We compute the $argmax$ only using the numerator. 
-
-\begin{equation}\label{argmax}
-y^* = \argmax_{y} P(Z=z|Y=y)P(Y=y) 
-\end{equation} 
-
-So for a given dataset we can learn the model $ P(Z=z|Y=y)P(Y=y)$ for each 
-class label, and then given a test dataset assign the most likely class 
-label using the equation\eqref{argmax} \cite{Rish2014Book}  
-
 \subsubsection{Method for obtaining precision matrix}  
 One obvious way for learning the parameters for joint distribution probability 
 is using regularized likelihood maximization such as AIC and BIC. However, 
@@ -467,7 +444,7 @@ with dimension $nh * 137 \times 256$ where $ns$ is the number of schizophenic
 subjects in the training set and $nh$ is the number of health subjects. To
 make learning the SGMRF structure faster we also used the same feature 
 normalization as was described by Vega \emph{et al.}~\cite{rvega},
-where for each class and each region in that class, the region mean was 
+where for each class and each region in that class the region mean was 
 subtracted from each time point and each time point was divided by the 
 region standard deviation. Next, with the use of Glasso, a SGMRF structure was 
 learned for each class which resulted in two sparse precision matrices that 
@@ -585,6 +562,33 @@ supervision of this project.
 
 \bibliographystyle{plain}
 \bibliography{T4_Report}
+
+\section{Appendix}
+
+\subsection{Inference}
+Once we have constructed probabilistic graphical model through precision 
+matrix we can use that to do probabilistic inference for variables of 
+interest. To make it more clear let assume $X$ is our dataset and 
+$Z \subset X$ is the subset of our dataset which is observed with 
+assigned values of $z$, and let $Y \subseteq X - Z$ be the set of unobserved 
+variables. Now we can use inference to compute posterior probability of 
+$P(Y|Z=z)$. In this task Y is a binary variable, and classification task is 
+to find the assignment for y which makes the $P(Y|Z=z)$ maximum. 
+$y^* = argmax_{y} P(Y=y|Z=z)$. Bayes rule give us: 
+
+\begin{equation}
+P(Y=y|Z=z) = \frac{P(Z=z|Y=y)P(Y=y)}{P(Z=z)}
+\end{equation}  
+
+And since denominator is fixed for each assignment Y=y. We compute the $argmax$ only using the numerator. 
+
+\begin{equation}\label{argmax}
+y^* = \argmax_{y} P(Z=z|Y=y)P(Y=y) 
+\end{equation} 
+
+So for a given dataset we can learn the model $ P(Z=z|Y=y)P(Y=y)$ for each 
+class label, and then given a test dataset assign the most likely class 
+label using the equation\eqref{argmax} \cite{Rish2014Book}  
 
 	
 \end{document}
