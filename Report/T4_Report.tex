@@ -9,7 +9,7 @@
 \usepackage{multicol}
 
 
-\title{(T4-fMRI)Using fMRI to Diagnose Schizophrenia}
+\title{(T4-fMRI) Using fMRI to Diagnose Schizophrenia}
 \author{%add name 
 	\\
 	Department of Computing Science\\
@@ -37,21 +37,21 @@ University of Alberta\\
 
 \begin{abstract}
 Diagnosing schizophrenia is a challenging task for which diagnostic tests
-have yet to be developed, but where data is becoming increasingly more 
-available due to the use of Functional Magnetic Resonance Imaging (fMRI).
-Studies have shown that fMRI can be used in conjunction with Sparse 
+have yet to be developed, but where Functional Magnetic Resonance Imaging 
+(fMRI) generated data is becoming increasingly available.
+fMRI has been used in conjunction with Sparse 
 Gaussian Markov Random Field (SGMRF) to achieve high accuracy when diagnosing
-schizophrenia, however, these studies are limited by fairly small dataset 
-that origninate from single locations. In this work we focus on obtaining
+schizophrenia, however, these studies were limited by fairly small datasets
+that originated from single locations. In this work we focus on obtaining
 high diagnostic accuracies for data that has been combined from multiple
-locations. We evaluated the performance of two main approaches. First 
-we consider the use of SGMRF on voxel degrees extracted from fMRI data, and 
-second we use Regions of Interest (ROI) as defined by Power \emph{et al.} 
-extracted from the data, and used a the feature set for the classifiers. 
+locations. We evaluated the performance of two main approaches. First, we 
+used SGMRF classifiers on voxel degrees extracted from fMRI data. Second, we 
+used Regions of Interest (ROI) defined by Power \emph{et al.} to extract a 
+feature set from the data for learning and classification. 
 After averaging the accuracies obtained from 5 different $20\%$ balanced 
 hold-out sets, where each set was sampled from each site with the same 
 proportion. We found that an ROI approach used in conjunction with
-a SGMRF classifier gave us the best accuracy of $74.16\%$ on our multi-site 
+a SGMRF classifier, provided the best accuracy of $74.16\%$ on our multi-site 
 data. While these accuracies are low in comparison to those obtain from
 single site analysis, we show that reasonable accuracies can be obtain
 when combining multiple schizophrenia datasets.
