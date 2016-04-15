@@ -458,28 +458,22 @@ column is the average time series for a single region.
 
 \subsubsection{ROI with Subject Concatenation}
 
-For this approach we follow the method described by Vega \emph{et al.}.
+For this approach we follow the method described by Vega \emph{et al.}~\cite{rvega}.
 Training set subjects in each class are first concatenated so that two large 
 matrices are created, one with dimension $ns * 137 \times 256$ and the other 
 with dimension $nh * 137 \times 256$ where $ns$ is the number of schizophenic 
 subjects in the training set and $nh$ is the number of health subjects. To
-make learning the SGMRF structure easier, feature normalization was performed
+make learning the SGMRF structure faster we also used the same feature 
+normalization as was described by Vega \emph{et al.}~\cite{rvega},
 where for each class and each region in that class, the region mean was 
 subtracted from each time point and each time point was divided by the 
-region standard deviation.
-
-\begin{equation}
-ClassRegion_i = \frac{ClassRegion_i - mean(ClassRegion_i)}{std(ClassRegion_i)}
-\end{equation}
-
-Next, with the use of Glasso, a SGMRF structure was learned for each class 
-which resulted in two sparse precision matrices that encode the independences
-learned. 
-
-Finally, when presented with a new subject from the hold-out set, equations
-\eqref{loglikelihood} and \eqref{logmaxlikelihood} were used to determine the 
-likelihood of the subject belonging to each class followed by which class
-the new subject should be assigned to.
+region standard deviation. Next, with the use of Glasso, a SGMRF structure was 
+learned for each class which resulted in two sparse precision matrices that 
+encode the independences learned. Finally, when presented with a new subject 
+from the hold-out set, equations \eqref{loglikelihood} and 
+\eqref{logmaxlikelihood} were used to determine the likelihood of the subject 
+belonging to each class followed by which class the new subject should be 
+assigned.
 
 A modified version of this approach was also implemented and tested but has
 been omitted for brevity and due to it obtaining poor results. In this variant,
@@ -563,7 +557,7 @@ effective tool for this particular problem. Because the SGMRF is a generative
 tool whereas the SVM is discriminative, it may be the case that the SVM is
 simply unable to capture the differences in network structure between patients
 and controls and it is these network differences that define schizophrenia as
-a disease. When comparing the ROI approch with patient concatenation and the
+a disease. When comparing the ROI approach with patient concatenation and the
 Rish approach using all voxels against the Rish approach that only considers
 the DLPFC regions we see the former two get much better results. This seems
 to indicate that the DLPFC region is not sufficient to capture the difference
