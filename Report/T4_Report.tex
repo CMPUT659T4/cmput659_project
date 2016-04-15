@@ -6,6 +6,8 @@
 \usepackage{amsmath}
 \usepackage{graphicx}
 \DeclareMathOperator*{\argmax}{\arg\!\max}
+\usepackage{multicol}
+
 
 \title{Using fMRI to Diagnose Schizophrenia}
 \author{%add name 
@@ -221,31 +223,38 @@ Here, const is a constant which is not dependant on $\mu$ or $C$. We also can
 center the data in such a way that $\mu = 0$, so the second term reduces to 
 $\frac{1}{2} \sum_{i=1}^{n} X_i ^T C X_i$ which is equal to 
 $\frac{n}{2}$ tr($AC$), where $tr$ is trace of the matrix. The above 
-formula will can be written as: 
+formula will can be written as shown in equation~\eqref{likelihood} where the
+log-likelihood maximization problem is shown in 
+equation~\eqref{maxlikelihood}. 
 
+\begin{multicols}{2}
 \begin{equation}\label{likelihood}
-L(D) = \frac{n}{2} [|C| -  |tr(AC)|] + const, 
-\end{equation}
-
-Thus the log-likelihood maximization problem will have the following form: 
-
+L(D) = \frac{n}{2} [|C| -  |tr(AC)|] + const
+\end{equation}\break
 \begin{equation}\label{maxlikelihood}
 \max_{C\succ0} |C| - tr(AC)
 \end{equation}
+\end{multicols}
 
 Where $|...|$ represents determinant and A is the empirical covariance 
 matrix calculated by $A = \frac{n}{2} \sum_{i=1}^{n} X_i^T X_i$, or 
 maximum likelihood estimation fo $\Sigma$. It should also be noted 
 the $C\succ0$ constraint makes C positive definite.\\
 
+
 \subsubsection{Sparsity}
 To achieve sparsity formulation for Gaussian Markov Random Field we  ca use the Laplace prior. If we impose the Laplace prior on the precision matrix $p(C_{ij}) = \frac{\lambda_{ij}}{2} e^{-\lambda_{ij}|C_{ij}|} $ we can achieve sparsity. This will change the equations \eqref{likelihood} and \eqref{maxlikelihood} to the following form:
+
+
+\begin{multicols}{2}
+
 \begin{equation}
 L(D) = \frac{n}{2} [ln|C| -  |tr(AC)|] - \lambda||C||_{1}, 
-\end{equation}
+\end{equation}\break
 \begin{equation}
 \max_{C\succ0} ln|C| - tr(AC) - \rho||C||_{1},
 \end{equation}
+\end{multicols}
 
 where $l_{1}$-norm of $C$ is: $||C||_{1}= \sum_{ij}C_{ij}$, and $\rho=\frac{n}{2}\lambda $. \\
 \subsubsection{Inference}
@@ -287,8 +296,10 @@ the preferred method for obtaining the precision matrix and subsequently MRF.
 \subsection{Rish \emph{et al.}}
 In this work several approaches have been experimented. The most successful ones are SVM and MRF classifiers. For the MRF classifier they have used the same methods that has been mentioned in the \textit{SGMRF} section. The error rate for SVM was 7\% using pairwise correlation features, and 14\% for the MRF using degree 100 most significant voxels in the degree feature set. Here we focus on their approach for MRF classifier.\\
 \begin{figure}\label{voxel}
-\includegraphics[width=\textwidth]{diagrams/voxel.jpg}
+\begin{center}
+\includegraphics[width=0.5\textwidth, height=3.0cm]{diagrams/voxel.jpg}
 \caption{Graphical models of voxel interactions Rish \emph{et al.}}
+\end{center}
 \end{figure} 
 
 In the MRF classifier, first they split training data in two different group. For each group they compute the precision matrix(assuming the data is centered unless $\mu$ needs to be computed as well).  
@@ -437,7 +448,7 @@ described previously.
 
 \begin{figure}[!htb]
   \centering
-  \includegraphics[width=\textwidth, height=5.5cm]{diagrams/ROI_deg_img.pdf}
+  \includegraphics[width=0.7\textwidth, height=4.0cm]{diagrams/ROI_deg_img.pdf}
   \caption{Pair-wise comparisons are made between region time series data to
   produce a correlation matrix. The diagonal is removed and a threshold is
   applied to binarize the matrix. Sums are collected for each region to
