@@ -96,10 +96,12 @@ diagnosis have been able to yeild accuracies of $93\%$ for data that
 originates from a single location~\cite{Rish_2013} and up to approximately 
 $80\%$ for data that originates from multiple locations~\cite{Cheng2015}.
 
-In this work we consider
-
-The rest of the paper is organized as follows.
-
+In this work we consider probablistic graphical models (PGMs) as a means
+of capturing differences in the interconnections between the brains of
+healthy patients and the brains of schizophrenics. We compare several 
+different methods including those that use voxel degrees, regions of 
+interest, markov network structure and PCA as approaches to feature
+extraction.
 
 \section{Background and Prior Work}
 
@@ -155,6 +157,8 @@ machines. They used SVM for classify schizophrenia patients and healthy
 controls and obtained accuracies in the range of $73.53- 80.92\%$. In this 
 research we will try to obtain results with similar accuracies, but using 
 probabilistic graphical methods.
+
+
 \subsection{Principal Component Analysis}
 Principal Component Analysis or as it called PCA is a technique which uses 
 complicated mathematic techniques to transform the data from original space 
@@ -268,10 +272,13 @@ the $C\succ0$ constraint makes C positive definite.\\
 
 
 \subsubsection{Sparsity}
-To achieve sparsity formulation for Gaussian Markov Random Field we  ca use the Laplace prior. If we impose the Laplace prior on the precision matrix $p(C_{ij}) = \frac{\lambda_{ij}}{2} e^{-\lambda_{ij}|C_{ij}|} $ we can achieve sparsity. This will change the equations \eqref{likelihood} and \eqref{maxlikelihood} to the following form:
+To achieve sparsity formulation for Gaussian Markov Random Field we can use 
+the Laplace prior. If we impose the Laplace prior on the precision matrix 
+$p(C_{ij}) = \frac{\lambda_{ij}}{2} e^{-\lambda_{ij}|C_{ij}|} $ we can 
+achieve sparsity. This will change the equations \eqref{likelihood} and 
+\eqref{maxlikelihood} to the following form:
 
 \begin{multicols}{2}
-
 \begin{equation}
 L(D) = \frac{n}{2} [ln|C| -  |tr(AC)|] - \lambda||C||_{1}, 
 \end{equation}\break
@@ -281,8 +288,18 @@ L(D) = \frac{n}{2} [ln|C| -  |tr(AC)|] - \lambda||C||_{1},
 \end{multicols}
 
 where $l_{1}$-norm of $C$ is: $||C||_{1}= \sum_{ij}C_{ij}$, and $\rho=\frac{n}{2}\lambda $. \\
+
+
 \subsubsection{Inference}
-Once we have constructed probabilistic graphical model through precision matrix we can use that to do probabilistic inference for variables of interest. To make it more clear let assume $X$ is our dataset and $Z \subset X$ is the subset of our dataset which is observed with assigned values of $z$, and let $Y \subseteq X - Z$ be the set of unobserved variables. Now we can use inference to compute posterior probability of $P(Y|Z=z)$. In this task Y is a binary variable, and classification task is to find the assignment for y which makes the $P(Y|Z=z)$ maximum. $y^* = argmax_{y} P(Y=y|Z=z)$. Bayes rule give us: 
+Once we have constructed probabilistic graphical model through precision 
+matrix we can use that to do probabilistic inference for variables of 
+interest. To make it more clear let assume $X$ is our dataset and 
+$Z \subset X$ is the subset of our dataset which is observed with 
+assigned values of $z$, and let $Y \subseteq X - Z$ be the set of unobserved 
+variables. Now we can use inference to compute posterior probability of 
+$P(Y|Z=z)$. In this task Y is a binary variable, and classification task is 
+to find the assignment for y which makes the $P(Y|Z=z)$ maximum. 
+$y^* = argmax_{y} P(Y=y|Z=z)$. Bayes rule give us: 
 
 \begin{equation}
 P(Y=y|Z=z) = \frac{P(Z=z|Y=y)P(Y=y)}{P(Z=z)}
@@ -294,7 +311,9 @@ And since denominator is fixed for each assignment Y=y. We compute the $argmax$ 
 y^* = \argmax_{y} P(Z=z|Y=y)P(Y=y) 
 \end{equation} 
 
-So for a given dataset we can learn the model $ P(Z=z|Y=y)P(Y=y)$ for each class label, and then given a test dataset assign the most likely class label using the equation\eqref{argmax} \cite{Rish2014Book}  
+So for a given dataset we can learn the model $ P(Z=z|Y=y)P(Y=y)$ for each 
+class label, and then given a test dataset assign the most likely class 
+label using the equation\eqref{argmax} \cite{Rish2014Book}  
 
 \subsubsection{Method for obtaining precision matrix}  
 One obvious way for learning the parameters for joint distribution probability 
@@ -535,10 +554,7 @@ to indicate that the DLPFC region is not sufficient to capture the difference
 between patients and controls. Another noteworthy difference is that of the
 differences between the approach creating degree features from the region
 averages and the other better performing methods. This discrepancy may be due
-
 to (Not sure %\elipses).
-
-
 
 
 \section{Conclusions and Future Work}
