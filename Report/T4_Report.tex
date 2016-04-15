@@ -49,10 +49,10 @@ locations. We evaluated the performance of two main approaches. First, we
 used SGMRF classifiers on voxel degrees extracted from fMRI data. Second, we 
 used Regions of Interest (ROI) defined by Power \emph{et al.} to extract a 
 feature set from the data for learning and classification. 
-After averaging the accuracies obtained from 5 different $20\%$ balanced 
-hold-out sets, where each set was sampled from each site with the same 
-proportion. We found that an ROI approach used in conjunction with
-a SGMRF classifier, provided the best accuracy of $74.16\%$ on our multi-site 
+After 5 repetitions of creating and evaluating on a balanced hold-out set where 
+each location was represented equally, we found that an ROI approach used in 
+conjunction with a SGMRF classifier provided the highest average accuracy 
+($74.16\%$) on our multi-site 
 data. While these accuracies are low in comparison to those obtain from
 single site analysis, we show that reasonable accuracies can be obtain
 when combining multiple schizophrenia datasets.
@@ -84,7 +84,7 @@ medical diagnosis is that it is non-invasive. This means that unlike some
 other imaging methods, no instruments or dyes are placed in the patient’s body.\cite{fmriMatthews}\cite{Grinvald_2000}. 
 
 One of the approaches that has been used for studying schizophrenia is 
-Sparse Gaussian Markov Random Field(SGMRF)~\cite{Rish_2013}\cite{Rosa_2013}. 
+Sparse Gaussian Markov Random Field (SGMRF)~\cite{Rish_2013}\cite{Rosa_2013}. 
 The primary advantage of using this method is that the functional network of 
 the brain can be captured using the precision matrix~\cite{Rish_2013}.
 By using the resulting network, healthy subjects can be differentiated from 
@@ -98,8 +98,7 @@ In this work we consider probablistic graphical models (PGMs) as a means
 of capturing differences in the interconnections between the brains of
 healthy patients and the brains of schizophrenics. We compare several 
 different methods including those that use voxel degrees, regions of 
-interest, markov network structure and PCA as approaches to feature
-extraction.
+interest, markov network structure and several other features. 
 
 \section{Background and Prior Work}
 
@@ -131,7 +130,7 @@ network''~\cite{Rish_2013}. Degrees are calculated in the following steps:
 First, multiple pair-wise Pearson correlation comparisons between all voxels to 
 create a correlation matrix. Second, a threshold is applied to the correlation
 matrix. If a correlation value is greater than the threshold there said to be
-an edge between those two voxels. Finally, for each voxels all of the edges
+an edge between those two voxels. Finally, for each voxel all of the edges
 it participates in are summed and the total number of edges becomes the 
 degree of that voxel. Voxel degrees are relevant to our study because they
 are used in several of our approaches.
@@ -140,10 +139,10 @@ are used in several of our approaches.
 Rish \emph{et al.}~\cite{Rish_2013} was able to achieve very high accuracies 
 when diagnosing patients as schizophrenic using fMRI data from a 
 single location and employing several approaches. The most successful of these
-approaches include the use of support vector machines (SVM)l and sparse 
+approaches include the use of support vector machines (SVM) and sparse 
 gaussian markov random field (SGMRF) classifiers, described later in the 
 background. The error rate for SVM was 7\% using pairwise correlation features, 
-and 14\% for the SGMRF using degree $100$ most significant voxels in the 
+and 14\% for the SGMRF using the $100$ most significant voxels in the 
 degree map feature set. As part of our work we use the SGMRF approach
 detailed in their paper. In the MRF classifier, first they split training data 
 in two different group. For each group they compute the precision matrix 
