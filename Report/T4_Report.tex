@@ -156,18 +156,33 @@ controls and obtained accuracies in the range of $73.53- 80.92\%$. In this
 research we will try to obtain results with similar accuracies, but using 
 probabilistic graphical methods.
 \subsection{Principal Component Analysis}
-Principal Component Analysis or as it called PCA is a technique which uses complicated mathematic techniques to transform the data from original space to a new dimensionality called principal components, which usually has smaller dimension than the original space. In general PCA uses vector space transformation to increase the dimensionality of large datasets. For doing so PCA uses mathematical projection. \cite{richardson2009principal}
-The way PCA does this projection is by maximizing the variance of projected data. As it been shown in the \cite{bishop2006pattern} if we project the data on the eigenvector of the data variance will be maximum. So if we want to project our $N$-dimensional data to the space $M$-dimension where $M<N$, \textit{"the optimal linear projection
-for which the variance of the projected data is maximized is now defined by
-the $M$ eigenvectors $ u_{1}, ... , u_{M}$ of the data covariance matrix $S$ corresponding to the
-$M$ largest eigenvalues $\lambda_{1}, ... ,\lambda_{M}$. Where S is defined as"}\cite{bishop2006pattern}: 
+Principal Component Analysis or as it called PCA is a technique which uses 
+complicated mathematic techniques to transform the data from original space 
+to a new dimensionality called principal components, which usually has 
+smaller dimension than the original space. In general PCA uses vector 
+space transformation to increase the dimensionality of large datasets. For 
+doing so PCA uses mathematical projection. \cite{richardson2009principal}
+
+The way PCA does this projection is by maximizing the variance of projected 
+data. As it been shown in the \cite{bishop2006pattern} if we project the 
+data on the eigenvector of the data variance will be maximum. So if we want 
+to project our $N$-dimensional data to the space $M$-dimension where $M<N$, 
+\textit{"the optimal linear projection for which the variance of the 
+projected data is maximized is now defined by the $M$ eigenvectors 
+$u_{1}, ... , u_{M}$ of the data covariance matrix $S$ corresponding to the
+$M$ largest eigenvalues $\lambda_{1}, ... ,\lambda_{M}$."}~\cite{bishop2006pattern}: 
+$S$ and $\mu$ (the sample set mean) are defined as:
+
+\begin{multicols}{2}
 \begin{equation}
 S = \frac{1}{N} \sum_{n=1}^{N}(X_{n}-\mu)(X_{n}-\mu)^T
-\end{equation}
-And $\mu$ is the sample set mean given by :
+\end{equation}\break
 \begin{equation}
 \mu = \frac{1}{N} \sum_{n=1}^{N}X_{n}
 \end{equation}
+\end{multicols}
+
+
 \subsection{Support Vector Machines}
 In a 1995 paper by Vladimir Vapnik \emph{et al.} the concept of support 
 Vector Machines (SVMs) was introduced  as a statistical tool for 
