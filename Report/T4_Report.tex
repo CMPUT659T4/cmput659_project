@@ -5,6 +5,7 @@
 \usepackage{verbatim}
 \usepackage{amsmath}
 \usepackage{graphicx}
+\DeclareMathOperator*{\argmax}{\arg\!\max}
 \usepackage{multicol}
 
 
@@ -156,7 +157,18 @@ controls and obtained accuracies in the range of $73.53- 80.92\%$. In this
 research we will try to obtain results with similar accuracies, but using 
 probabilistic graphical methods.
 \subsection{Principal Component Analysis}
-
+Principal Component Analysis or as it called PCA is a technique which uses complicated mathematic techniques to transform the data from original space to a new dimensionality called principal components, which usually has smaller dimension than the original space. In general PCA uses vector space transformation to increase the dimensionality of large datasets. For doing so PCA uses mathematical projection. \cite{richardson2009principal}
+The way PCA does this projection is by maximizing the variance of projected data. As it been shown in the \cite{bishop2006pattern} if we project the data on the eigenvector of the data variance will be maximum. So if we want to project our $N$-dimensional data to the space $M$-dimension where $M<N$, \textit{"the optimal linear projection
+for which the variance of the projected data is maximized is now defined by
+the $M$ eigenvectors $ u_{1}, ... , u_{M}$ of the data covariance matrix $S$ corresponding to the
+$M$ largest eigenvalues $\lambda_{1}, ... ,\lambda_{M}$. Where S is defined as"}\cite{bishop2006pattern}: 
+\begin{equation}
+S = \frac{1}{N} \sum_{n=1}^{N}(X_{n}-\mu)(X_{n}-\mu)^T
+\end{equation}
+And $\mu$ is the sample set mean given by :
+\begin{equation}
+\mu = \frac{1}{N} \sum_{n=1}^{N}X_{n}
+\end{equation}
 \subsection{Support Vector Machines}
 In a 1995 paper by Vladimir Vapnik \emph{et al.} the concept of support 
 Vector Machines (SVMs) was introduced  as a statistical tool for 
@@ -241,14 +253,11 @@ maximum likelihood estimation fo $\Sigma$. It should also be noted
 the $C\succ0$ constraint makes C positive definite.\\
 
 
-\textit{sparsity formulation for Gaussian Markov Random Field }
-
-If we impose the Laplace prior on the precision matrix 
-$p(C_{ij}) = \frac{\lambda_{ij}}{2} e^{-\lambda_{ij}|C_{ij}|}$ we can achieve 
-sparsity. This will change the equations \eqref{likelihood} and 
-\eqref{maxlikelihood} to the following form:
+\subsubsection{Sparsity}
+To achieve sparsity formulation for Gaussian Markov Random Field we  ca use the Laplace prior. If we impose the Laplace prior on the precision matrix $p(C_{ij}) = \frac{\lambda_{ij}}{2} e^{-\lambda_{ij}|C_{ij}|} $ we can achieve sparsity. This will change the equations \eqref{likelihood} and \eqref{maxlikelihood} to the following form:
 
 \begin{multicols}{2}
+
 \begin{equation}
 L(D) = \frac{n}{2} [ln|C| -  |tr(AC)|] - \lambda||C||_{1}, 
 \end{equation}\break
@@ -258,8 +267,22 @@ L(D) = \frac{n}{2} [ln|C| -  |tr(AC)|] - \lambda||C||_{1},
 \end{multicols}
 
 where $l_{1}$-norm of $C$ is: $||C||_{1}= \sum_{ij}C_{ij}$, and $\rho=\frac{n}{2}\lambda $. \\
+\subsubsection{Inference}
+Once we have constructed probabilistic graphical model through precision matrix we can use that to do probabilistic inference for variables of interest. To make it more clear let assume $X$ is our dataset and $Z \subset X$ is the subset of our dataset which is observed with assigned values of $z$, and let $Y \subseteq X - Z$ be the set of unobserved variables. Now we can use inference to compute posterior probability of $P(Y|Z=z)$. In this task Y is a binary variable, and classification task is to find the assignment for y which makes the $P(Y|Z=z)$ maximum. $y^* = argmax_{y} P(Y=y|Z=z)$. Bayes rule give us: 
 
-  
+\begin{equation}
+P(Y=y|Z=z) = \frac{P(Z=z|Y=y)P(Y=y)}{P(Z=z)}
+\end{equation}  
+
+And since denominator is fixed for each assignment Y=y. We compute the $argmax$ only using the numerator. 
+
+\begin{equation}\label{argmax}
+y^* = \argmax_{y} P(Z=z|Y=y)P(Y=y) 
+\end{equation} 
+
+So for a given dataset we can learn the model $ P(Z=z|Y=y)P(Y=y)$ for each class label, and then given a test dataset assign the most likely class label using the equation\eqref{argmax} \cite{Rish2014Book}  
+
+\subsubsection{Method for obtaining precision matrix}  
 One obvious way for learning the parameters for joint distribution probability 
 is using regularized likelihood maximization such as AIC and BIC. However, 
 finding the simplest model which fits the data is a NP-hard problem using this 
@@ -282,14 +305,19 @@ the preferred method for obtaining the precision matrix and subsequently MRF.
 
 \subsection{Rish \emph{et al.}}
 In this work several approaches have been experimented. The most successful ones are SVM and MRF classifiers. For the MRF classifier they have used the same methods that has been mentioned in the \textit{SGMRF} section. The error rate for SVM was 7\% using pairwise correlation features, and 14\% for the MRF using degree 100 most significant voxels in the degree feature set. Here we focus on their approach for MRF classifier.\\
-\begin{figure}\label{voxel}
+
+In the MRF classifier, first they split training data in two different group. For each group they compute the precision matrix(assuming the data is centered unless $\mu$ needs to be computed as well). Then as described in \textit{Inference} section they classify each new subject based parameters obtained from training stage.  \\
+
+\begin{figure}
+
 \begin{center}
 \includegraphics[width=0.5\textwidth, height=3.0cm]{diagrams/voxel.jpg}
 \caption{Graphical models of voxel interactions Rish \emph{et al.}}
+\label{voxel}
 \end{center}
 \end{figure} 
-
-In the MRF classifier, first they split training data in two different group. For each group they compute the precision matrix(assuming the data is centered unless $\mu$ needs to be computed as well).  
+Figure \ref{voxel}.a shows interaction between voxels BOLD signal and a stimulus, and Figure \ref{voxel}.b shows a Bayesian network of brain voxel being affected by both stimulus and unobserved brain processes that can change BOLD signal too. Given this figure one can see MRF approach invests on the different network on of interaction for healthy versus schizophrenic subject in response to a stimulus to differentiate them. 
+    
 \section{Methodology}
 
 \subsection{Data Set}
