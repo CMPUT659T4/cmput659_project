@@ -245,7 +245,6 @@ the $C\succ0$ constraint makes C positive definite.\\
 \subsubsection{Sparsity}
 To achieve sparsity formulation for Gaussian Markov Random Field we  ca use the Laplace prior. If we impose the Laplace prior on the precision matrix $p(C_{ij}) = \frac{\lambda_{ij}}{2} e^{-\lambda_{ij}|C_{ij}|} $ we can achieve sparsity. This will change the equations \eqref{likelihood} and \eqref{maxlikelihood} to the following form:
 
-
 \begin{multicols}{2}
 
 \begin{equation}
@@ -295,14 +294,19 @@ the preferred method for obtaining the precision matrix and subsequently MRF.
 
 \subsection{Rish \emph{et al.}}
 In this work several approaches have been experimented. The most successful ones are SVM and MRF classifiers. For the MRF classifier they have used the same methods that has been mentioned in the \textit{SGMRF} section. The error rate for SVM was 7\% using pairwise correlation features, and 14\% for the MRF using degree 100 most significant voxels in the degree feature set. Here we focus on their approach for MRF classifier.\\
-\begin{figure}\label{voxel}
+
+In the MRF classifier, first they split training data in two different group. For each group they compute the precision matrix(assuming the data is centered unless $\mu$ needs to be computed as well). Then as described in \textit{Inference} section they classify each new subject based parameters obtained from training stage.  \\
+
+\begin{figure}
+
 \begin{center}
 \includegraphics[width=0.5\textwidth, height=3.0cm]{diagrams/voxel.jpg}
 \caption{Graphical models of voxel interactions Rish \emph{et al.}}
+\label{voxel}
 \end{center}
 \end{figure} 
-
-In the MRF classifier, first they split training data in two different group. For each group they compute the precision matrix(assuming the data is centered unless $\mu$ needs to be computed as well).  
+Figure \ref{voxel}.a shows interaction between voxels BOLD signal and a stimulus, and Figure \ref{voxel}.b shows a Bayesian network of brain voxel being affected by both stimulus and unobserved brain processes that can change BOLD signal too. Given this figure one can see MRF approach invests on the different network on of interaction for healthy versus schizophrenic subject in response to a stimulus to differentiate them. 
+    
 \section{Methodology}
 
 \subsection{Data Set}
