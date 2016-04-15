@@ -70,35 +70,38 @@ to be used in diagnostic tests~\cite{jablensky2010diagnostic, McGuire200891}.
 This effectively means that subjectivity plays a role when a physician is 
 diagnosing a patient. 
 
-Functional Magnetic Resonance Imaging (fMRI) is a tool for mapping of the functioning human brain caused by underlying brain electrical activity\cite{fmriMatthews}. When a person is doing a 
-task, neuron activity fluctuates and in order to provide the energy 
-needed for this activity, the blood flow increases to supply the neurons with 
-the needed glucose and oxygen\cite{fmriMatthews}. More blood flow also 
-brings more oxygen through blood vessels. This change in the level of 
-oxygenated blood known as oxyhemoglobin and deoxyhemoglobin (oxygenated or 
-deoxygenated blood) changes the magnetic susceptibility of blood (BOLD signal) 
-which is detectable through fMRI~\cite{fmriMatthews}.
+Functional Magnetic Resonance Imaging (fMRI) is a tool for mapping of the 
+functioning human brain caused by underlying brain electrical 
+activity~\cite{fmriMatthews}. When a person is doing a task, neuron activity 
+triggers increased blood flow to supply the neurons with 
+the required glucose and oxygen\cite{fmriMatthews}. Increased blood flow also 
+brings more oxygen through blood vessels. The change in the level of 
+oxyhemoglobin and deoxyhemoglobin (oxygenated or deoxygenated blood) changes 
+the magnetic susceptibility of blood (BOLD signal) which is detectable through 
+fMRI~\cite{fmriMatthews}.
 
-fMRI plays an important role in modern psychiatry research, as it provides the needed tool to determine dissimilarities in brain system that is a root for psychiatric illness\cite{Zhan_2015}. An advantage of fMRI in
-medical diagnosis is that it is non-invasive. This means that unlike some 
-other imaging methods, no instruments or dyes are placed in the patient’s body.\cite{fmriMatthews}\cite{Grinvald_2000}. 
+fMRI plays an important role in modern psychiatry research, as it provides the 
+needed tool to determine dissimilarities in brain system that is a root for 
+psychiatric illness\cite{Zhan_2015}. An advantage of fMRI is that it is 
+non-invasive meaning that unlike some other imaging methods, no instruments or 
+dyes are placed in the patient’s body~\cite{fmriMatthews, Grinvald_2000}. 
 
-One of the approaches that has been used for studying schizophrenia is 
+One of the tools used for studying schizophrenia is the
 Sparse Gaussian Markov Random Field (SGMRF)~\cite{Rish_2013}\cite{Rosa_2013}. 
-The primary advantage of using this method is that the functional network of 
-the brain can be captured using the precision matrix~\cite{Rish_2013}.
-By using the resulting network, healthy subjects can be differentiated from 
-schizophrenic ones, by observing differences in the functional connectivity 
-of the brain. Currently automated approaches to schizophrenia
-diagnosis have been able to yield accuracies of $93\%$ for data that 
+The primary advantage of using a SGMRF is that it has the ability to capture
+inter-voxel relationships that other methods cannot~\cite{Rish_2013}.
+The resulting relationships can be used to observe differences in functional 
+connectivity in the brain, allowing healthy subjects to be differentiated from 
+schizophrenic subjects. Automated approaches to schizophrenia
+diagnosis have yielded accuracies of $93\%$ for data that 
 originates from a single location~\cite{Rish_2013} and up to approximately 
 $80\%$ for data that originates from multiple locations~\cite{Cheng2015}.
 
-In this work we consider probablistic graphical models (PGMs) as a means
+In this work we consider probabilistic graphical models (PGMs) as a means
 of capturing differences in the interconnections between the brains of
 healthy patients and the brains of schizophrenics. We compare several 
 different methods including those that use voxel degrees, regions of 
-interest, markov network structure and several other features. 
+interest, Markov network structure and several other features. 
 
 \section{Background and Prior Work}
 
@@ -112,43 +115,41 @@ ratios of individual voxels, whereas a region based approach is only
 effective if the selected regions capture all relevant information in an fMRI 
 task~\cite{heller2006cluster}. In 2011, Power \emph{et al.} identified 264 
 putative function regions of interest derived from resting state fMRI, where 
-no specific task being performed during data collection~\cite{Power_2011}. 
-JD Power argues in his video abstract that these regions are currently the
-best representation of functional networks in the brain that are
-available~\cite{Power_2011}. Several of the approaches used in this study
-directly build on top of these regions.
+no specific task is performed during data collection~\cite{Power_2011}. 
+JD Power argues that these regions are currently the best available 
+representation of the functional networks in the brain~\cite{Power_2011}. 
+Several of the approaches used in this study directly build upon these regions.
 
 
 \subsubsection{Calculating Voxel Degrees}
 Introduced as a ``degree map'' in Rish 
 \emph{et al.}~\cite{rish2009discriminative}, voxel degrees are the constituent
-components of degree maps and is a feature of fMRI data that has previously
-been successfully used as part of schizophrenia diagnosis~\cite{Rish_2013}.
+components of degree maps and are a feature of fMRI data that has
+been successfully used in schizophrenia diagnosis~\cite{Rish_2013}.
 Voxel degrees represent the connectedness of voxels in the brain with the 
 other voxels and are described as ``the number of voxel neighbours in a 
 network''~\cite{Rish_2013}. Degrees are calculated in the following steps:
 First, multiple pair-wise Pearson correlation comparisons between all voxels to 
 create a correlation matrix. Second, a threshold is applied to the correlation
 matrix. If a correlation value is greater than the threshold there said to be
-an edge between those two voxels. Finally, for each voxel all of the edges
-it participates in are summed and the total number of edges becomes the 
-degree of that voxel. Voxel degrees are relevant to our study because they
-are used in several of our approaches.
+an edge between those two voxels. Finally, all of the edges in which a voxel
+participates are summed and the total number of edges becomes the 
+degree of that voxel. Voxel degrees are used in several of our study's 
+approaches.
 
 \subsection{Rish \emph{et al.}}
 Rish \emph{et al.}~\cite{Rish_2013} was able to achieve very high accuracies 
-when diagnosing patients as schizophrenic using fMRI data from a 
-single location and employing several approaches. The most successful of these
-approaches include the use of support vector machines (SVM) and sparse 
-gaussian markov random field (SGMRF) classifiers, described later in the 
-background. The error rate for SVM was 7\% using pairwise correlation features, 
-and 14\% for the SGMRF using the $100$ most significant voxels in the 
-degree map feature set. As part of our work we use the SGMRF approach
-detailed in their paper. In the MRF classifier, first they split training data 
-in two different group. For each group they compute the precision matrix 
-(assuming the data is centered unless $\mu$ needs to be computed as well). 
-See the appendix for the \textit{Inference} section for how they classify each 
-new subject based parameters obtained from training stage.
+when diagnosing schizophrenia using fMRI data from a single location and 
+employing several approaches. The most successful of these approaches include 
+the use of support vector machines (SVM) and SGMRF classifiers, described 
+later in the background. The error rate for SVM was 7\% using pairwise 
+correlation features, and 14\% for the SGMRF using the $100$ most significant 
+voxels in the degree map feature set. We use the SGMRF approach described by 
+Rish \emph{et al.}~\cite{Rish_2013}. In the MRF classifier, first they split 
+training data in two different groups. For each group they compute the 
+precision matrix (assuming the data is centered unless $\mu$ needs to be 
+computed as well). See the \textit{Inference} section of the Appendix for how 
+they classify each new subject based parameters obtained from training stage.
 
 %\begin{figure}
 %  \begin{center}
@@ -174,7 +175,10 @@ They obtained 85\% accuracy on their first dataset and 78.95\% on their
 second dataset using this method. Both datasets were obtained using a single 
 machine in one place. The first dataset was consisting of $19$ patients 
 and $19$ controls, and the second dataset was consisting of $30$ 
-patients and $30$ controls. They also used SVM on the correlation feature, partial correlation and non sparse precision matrix to show effectiveness of their approach. Obtained accuracies were 68\% 53\% and 45\% respectively, which are all worse than sparse precision matrix. Their 
+patients and $30$ controls. They also used SVM on the correlation feature, 
+partial correlation and non sparse precision matrix to show effectiveness of 
+their approach. Obtained accuracies were 68\% 53\% and 45\% respectively, 
+which are all worse than sparse precision matrix. Their 
 approach can be compared to our approach in the \textit{Individual MRF 
 structure classification section}.       
 
